@@ -305,7 +305,7 @@ const teamData = [
 
 const sampleNl = [];
 
-const gold = "#d4af37"; const dark = "#121828"; const cBg = "rgba(255,255,255,.035)"; const cBd = "#1e2538";
+const gold = "#d4af37"; const dark = "#1a1d24"; const cBg = "rgba(255,255,255,.035)"; const cBd = "#282b32";
 
 const NAMETAGS = {
   "공병욱": { email: "bwkong@ipzenith.com", phone: "02-888-3066(301)" },
@@ -616,34 +616,34 @@ export default function ZenithHub() {
     <div style={{ position: "fixed", inset: 0, zIndex: 100, display: "grid", placeItems: "center", background: "rgba(0,0,0,.6)", backdropFilter: "blur(6px)" }}
       onClick={() => setSelMember(null)}>
       <div onClick={(e) => e.stopPropagation()}
-        style={{ background: "#16181f", border: "1px solid #2a2d34", borderRadius: 16, padding: "32px 28px", width: 520, maxWidth: "92vw", maxHeight: "85vh", overflowY: "auto", animation: "popIn .3s ease both" }}>
-        <div style={{ display: "flex", gap: 20, alignItems: "flex-start", marginBottom: 20 }}>
+        style={{ background: "#16181f", border: "1px solid #2a2d34", borderRadius: 16, padding: "36px 32px", width: 560, maxWidth: "92vw", maxHeight: "85vh", overflowY: "auto", animation: "popIn .3s ease both" }}>
+        <div style={{ display: "flex", gap: 22, alignItems: "flex-start", marginBottom: 24 }}>
           <img src={PHOTOS[selMember.name] || ""} alt={selMember.name} style={{ width: 140, height: 170, borderRadius: 10, objectFit: "cover", border: `2px solid rgba(212,175,55,.3)` }} />
           <div>
-            <div style={{ fontSize: 20, fontWeight: 600, color: "#e8e4df" }}>{getName(selMember)}</div>
-            <div style={{ fontSize: 13, color: "#7a7670", marginTop: 2 }}>{getNameSub(selMember)}</div>
-            <div style={{ fontSize: 13, color: gold, marginTop: 6 }}>{getRole(selMember)}</div>
+            <div style={{ fontSize: 24, fontWeight: 600, color: "#e8e4df", fontFamily: "'Noto Sans KR', sans-serif" }}>{getName(selMember)}</div>
+            <div style={{ fontSize: 15, color: "#9a9590", marginTop: 4 }}>{getNameSub(selMember)}</div>
+            <div style={{ fontSize: 15, color: gold, marginTop: 8 }}>{getRole(selMember)}</div>
           </div>
         </div>
-        <div style={{ borderTop: "1px solid #2a2d34", paddingTop: 16, marginBottom: 16 }}>
-          <h4 style={{ color: gold, fontSize: 13, fontWeight: 600, marginBottom: 8 }}>{lang === "ja" ? "学歴" : lang === "en" ? "Education" : lang === "zh" ? "学历" : "학력"}</h4>
+        <div style={{ borderTop: "1px solid #2a2d34", paddingTop: 18, marginBottom: 18 }}>
+          <h4 style={{ color: gold, fontSize: 15, fontWeight: 600, marginBottom: 10, fontFamily: "'DM Serif Display', serif" }}>{lang === "ja" ? "学歴" : lang === "en" ? "Education" : lang === "zh" ? "学历" : "학력"}</h4>
           {getEdu(selMember).map((e, i) => (
-            <div key={i} style={{ fontSize: 12.5, color: "#8a8580", lineHeight: 1.6, paddingLeft: 12, position: "relative", marginBottom: 3 }}>
-              <span style={{ position: "absolute", left: 0, color: "#5a5650" }}>·</span>{e}
+            <div key={i} style={{ fontSize: 14, color: "#b5b0aa", lineHeight: 1.7, paddingLeft: 14, position: "relative", marginBottom: 4 }}>
+              <span style={{ position: "absolute", left: 0, color: "#6a6560" }}>·</span>{e}
             </div>
           ))}
         </div>
         {selMember.career && selMember.career.length > 0 && (
-          <div style={{ borderTop: "1px solid #2a2d34", paddingTop: 16, marginBottom: 16 }}>
-            <h4 style={{ color: gold, fontSize: 13, fontWeight: 600, marginBottom: 8 }}>{lang === "ja" ? "経歴" : lang === "en" ? "Career" : lang === "zh" ? "经历" : "경력"}</h4>
+          <div style={{ borderTop: "1px solid #2a2d34", paddingTop: 18, marginBottom: 18 }}>
+            <h4 style={{ color: gold, fontSize: 15, fontWeight: 600, marginBottom: 10, fontFamily: "'DM Serif Display', serif" }}>{lang === "ja" ? "経歴" : lang === "en" ? "Career" : lang === "zh" ? "经历" : "경력"}</h4>
             {getCareer(selMember).map((c, i) => (
-              <div key={i} style={{ fontSize: 12.5, color: "#8a8580", lineHeight: 1.6, paddingLeft: 12, position: "relative", marginBottom: 3 }}>
-                <span style={{ position: "absolute", left: 0, color: "#5a5650" }}>·</span>{c}
+              <div key={i} style={{ fontSize: 14, color: "#b5b0aa", lineHeight: 1.7, paddingLeft: 14, position: "relative", marginBottom: 4 }}>
+                <span style={{ position: "absolute", left: 0, color: "#6a6560" }}>·</span>{c}
               </div>
             ))}
           </div>
         )}
-        <button onClick={() => setSelMember(null)} style={{ width: "100%", marginTop: 8, padding: "10px", borderRadius: 8, border: "1px solid #2a2d34", background: "none", color: "#7a7670", fontSize: 12, cursor: "pointer" }}>
+        <button onClick={() => setSelMember(null)} style={{ width: "100%", marginTop: 10, padding: "11px", borderRadius: 8, border: "1px solid #2a2d34", background: "none", color: "#8a8580", fontSize: 13, cursor: "pointer" }}>
           {lang === "ja" ? "閉じる" : lang === "en" ? "Close" : lang === "zh" ? "关闭" : "닫기"}
         </button>
       </div>
