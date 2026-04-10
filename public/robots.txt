@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ipzenith.co.kr/sitemap.xml
