@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, orderBy, query, serverTimestamp, updateDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, orderBy, query, serverTimestamp, updateDoc, increment } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDRP0yiJKsIvGCZdt_-EopgaesGJ7aIKAI",
@@ -398,7 +398,7 @@ export default function ZenithHub() {
 
   const saveNewsletter = async (data) => {
     try {
-      await addDoc(collection(db, "newsletters"), { ...data, createdAt: serverTimestamp() });
+      await addDoc(collection(db, "newsletters"), { ...data, views: 0, createdAt: serverTimestamp() });
       loadNewsletters();
     } catch(e) { console.error("Save newsletter error:", e); }
   };
@@ -412,7 +412,7 @@ export default function ZenithHub() {
 
   const saveBoardPost = async (data) => {
     try {
-      await addDoc(collection(db, "boardPosts"), { ...data, createdAt: serverTimestamp() });
+      await addDoc(collection(db, "boardPosts"), { ...data, views: 0, createdAt: serverTimestamp() });
       loadBoardPosts();
     } catch(e) { console.error("Save board post error:", e); }
   };
@@ -438,11 +438,19 @@ export default function ZenithHub() {
     } catch(e) { console.error("Update newsletter error:", e); }
   };
 
+  const incrementViews = async (id) => {
+    try { await updateDoc(doc(db, "newsletters", id), { views: increment(1) }); } catch(e) {}
+  };
+
   const updateBoardPost = async (id, data) => {
     try {
       await updateDoc(doc(db, "boardPosts", id), data);
       loadBoardPosts();
     } catch(e) { console.error("Update board post error:", e); }
+  };
+
+  const incrementBoardViews = async (id) => {
+    try { await updateDoc(doc(db, "boardPosts", id), { views: increment(1) }); } catch(e) {}
   };
 
   const doLogin = () => {
@@ -458,7 +466,7 @@ export default function ZenithHub() {
         title: f.name.replace(/\.[^/.]+$/, ""), summary: "Uploaded",
         content: `<h2>${f.name.replace(/\.[^/.]+$/, "")}</h2><p>Uploaded by ${account.name}.</p>`,
         author: account.name, cover: "📄", type: f.name.split(".").pop().toUpperCase(),
-        size: (f.size / 1048576).toFixed(1) + " MB", createdAt: new Date(),
+        size: (f.size / 1048576).toFixed(1) + " MB", views: 0, createdAt: new Date(),
       });
     }
     setToast(fl.length); setTimeout(() => setToast(null), 2000);
@@ -662,7 +670,7 @@ export default function ZenithHub() {
           <div style={{ maxWidth: 720, margin: "0 auto", padding: "14px 32px", display: "flex", alignItems: "center" }}>
             <button className="bb" onClick={() => { setRv(null); setConfirmDel(false); }} style={{ background: "none", border: "1px solid #ddd8d0", borderRadius: 8, padding: "6px 14px", cursor: "pointer", fontSize: 13, color: "#5a5550" }}>{t.backBtn}</button>
             <div style={{ flex: 1 }} />
-            <span style={{ fontSize: 11, color: "#aaa5a0" }}>{rv.author} · {rv.date}</span>
+            <span style={{ fontSize: 11, color: "#aaa5a0" }}>{rv.author} · {rv.date} · {lang === "ja" ? "閲覧" : lang === "en" ? "Views" : lang === "zh" ? "浏览" : "조회"} {rv.views || 0}</span>
           </div>
         </div>
         <article style={{ maxWidth: 720, margin: "0 auto", padding: "48px 32px 80px" }}>
@@ -926,7 +934,7 @@ export default function ZenithHub() {
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               {items.map((f, i) => (
-                <div key={f.id} className="card" onClick={() => { window.history.pushState(null, ""); setRv(f); }}
+                <div key={f.id} className="card" onClick={() => { window.history.pushState(null, ""); setRv(f); incrementViews(f.id); }}
                   style={{ background: cBg, border: `1px solid ${cBd}`, borderRadius: 12, padding: "16px 20px", display: "flex", alignItems: "center", gap: 14, animationDelay: `${i * 60}ms` }}>
                   <div style={{ fontSize: 26, width: 40, textAlign: "center" }}>{f.cover}</div>
                   <div style={{ flex: 1, minWidth: 0 }}>
@@ -935,7 +943,7 @@ export default function ZenithHub() {
                       {f.isNew && <span style={{ background: gold, color: dark, fontSize: 9, fontWeight: 700, padding: "2px 6px", borderRadius: 4, marginLeft: 8, verticalAlign: "middle" }}>NEW</span>}
                     </div>
                     <div style={{ fontSize: 12, color: "#8a8580", marginTop: 3 }}>{f.summary}</div>
-                    <div style={{ fontSize: 11, color: "#5a5650", marginTop: 3 }}>{f.author} · {f.date}</div>
+                    <div style={{ fontSize: 11, color: "#5a5650", marginTop: 3 }}>{f.author} · {f.date} · {lang === "ja" ? "閲覧" : lang === "en" ? "Views" : lang === "zh" ? "浏览" : "조회"} {f.views || 0}</div>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                     <span style={{ fontSize: 11, color: "#4a4540", background: "rgba(255,255,255,.04)", padding: "3px 8px", borderRadius: 5 }}>{f.type}</span>
@@ -966,7 +974,7 @@ export default function ZenithHub() {
                 </button>
                 <div style={{ background: cBg, border: `1px solid ${cBd}`, borderRadius: 12, padding: "24px 28px" }}>
                   <h2 style={{ fontSize: 18, fontWeight: 600, color: "#e8e4df", marginBottom: 8 }}>{boardView.title}</h2>
-                  <div style={{ fontSize: 11, color: "#5a5650", marginBottom: 16 }}>{boardView.author} · {boardView.date}</div>
+                  <div style={{ fontSize: 11, color: "#5a5650", marginBottom: 16 }}>{boardView.author} · {boardView.date} · {lang === "ja" ? "閲覧" : lang === "en" ? "Views" : lang === "zh" ? "浏览" : "조회"} {boardView.views || 0}</div>
                   <p style={{ fontSize: 14, color: "#b5b0aa", lineHeight: 1.8, whiteSpace: "pre-wrap" }}>{boardView.content}</p>
                 </div>
                 <div style={{ marginTop: 20 }}>
@@ -1077,13 +1085,14 @@ export default function ZenithHub() {
                 )}
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                   {boardPosts.map((p, i) => (
-                    <div key={p.id} className="card" onClick={() => { window.history.pushState(null, ""); setBoardView(p); }}
+                    <div key={p.id} className="card" onClick={() => { window.history.pushState(null, ""); setBoardView(p); incrementBoardViews(p.id); }}
                       style={{ background: cBg, border: `1px solid ${cBd}`, borderRadius: 12, padding: "16px 20px", animationDelay: `${i * 50}ms` }}>
                       <div style={{ fontSize: 14, fontWeight: 500, color: "#e8e4df", marginBottom: 4 }}>{p.title}</div>
                       <div style={{ display: "flex", gap: 12, fontSize: 11, color: "#5a5650" }}>
                         <span>{p.author}</span>
                         <span>{p.date}</span>
                         <span>{lang === "ja" ? "コメント" : lang === "en" ? "Comments" : lang === "zh" ? "评论" : "댓글"} {p.comments.length}</span>
+                        <span>{lang === "ja" ? "閲覧" : lang === "en" ? "Views" : lang === "zh" ? "浏览" : "조회"} {p.views || 0}</span>
                       </div>
                     </div>
                   ))}
