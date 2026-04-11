@@ -49,7 +49,7 @@ const ACCOUNTS = [
 
 const i18n = {
   ko: {
-    siteTitle: "Zenith Patent & Law Firm",
+    siteTitle: "제니스특허법률사무소",
     since: "Since 2003",
     tabs: { about: "회사 소개", team: "구성원", newsletter: "뉴스레터", board: "사내게시판" },
     login: "로그인",
@@ -68,7 +68,7 @@ const i18n = {
     recentNl: "최근 뉴스레터",
     backBtn: "← 목록으로",
     heroTitle: "Zenith",
-    heroSub: "Zenith는 하늘의 가장 높은 점 — 빛과 비전, 열망의 정점을 뜻합니다.",
+    heroSub: "Zenith represents the highest point in the sky — the peak of light, vision, and aspiration.",
     introTitle: "제니스특허법률사무소",
     introP1: "는 제약·바이오, 전자, 기계·건설, 상표·디자인 분야의 변리사들로 구성된 국내 최상위 수준의 전문성을 갖춘 IP 법률 그룹입니다.",
     introP2: "2003년 설립 이래, 국내 지식재산 업무는 물론 국외 다양한 IP 업무를 수행하며 고객과 함께 꾸준히 성장해 왔습니다.",
