@@ -780,7 +780,7 @@ export default function ZenithHub() {
               <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: 36, color: "#e8e4df" }}><span style={{ color: "#e04040" }}>Z</span>enith</p>
               <p style={{ fontSize: 14, color: "#8a8580", maxWidth: 520, margin: "12px auto 0", lineHeight: 1.7 }}>{t.heroSub}</p>
             </div>
-            <div style={{ margin: "0 0 24px", borderRadius: 14, overflow: "hidden", animation: "fadeUp .4s ease both", position: "relative" }}>
+            <div style={{ margin: "0 0 24px", borderRadius: 0, overflow: "hidden", animation: "fadeUp .4s ease both", position: "relative" }}>
               <img src={BANNERS[bannerIdx]} alt="banner" style={{ width: "100%", height: 200, objectFit: "cover", display: "block", transition: "opacity .8s ease" }} />
               <div style={{ position: "absolute", bottom: 10, left: "50%", transform: "translateX(-50%)", display: "flex", gap: 6 }}>
                 {BANNERS.map((_, i) => (<div key={i} onClick={() => setBannerIdx(i)} style={{ width: 8, height: 8, borderRadius: "50%", background: i === bannerIdx ? gold : "rgba(255,255,255,.3)", cursor: "pointer", transition: "all .3s" }} />))}
