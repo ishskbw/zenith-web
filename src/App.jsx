@@ -788,48 +788,66 @@ export default function ZenithHub() {
               <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: 36, color: "#e8e4df" }}><span style={{ color: "#e04040" }}>Z</span>enith</p>
               <p style={{ fontSize: 14, color: "#8a8580", maxWidth: 520, margin: "12px auto 0", lineHeight: 1.7 }}>{t.heroSub}</p>
             </div>
-            <div style={{ margin: "0 0 24px", borderRadius: 0, overflow: "hidden", animation: "fadeUp .4s ease both", position: "relative" }}>
+            <div style={{ margin: "0 0 28px", borderRadius: 0, overflow: "hidden", animation: "fadeUp .4s ease both", position: "relative" }}>
               <img src={BANNERS[bannerIdx]} alt="banner" style={{ width: "100%", height: 200, objectFit: "cover", display: "block", transition: "opacity .8s ease" }} />
               <div style={{ position: "absolute", bottom: 10, left: "50%", transform: "translateX(-50%)", display: "flex", gap: 6 }}>
                 {BANNERS.map((_, i) => (<div key={i} onClick={() => setBannerIdx(i)} style={{ width: 8, height: 8, borderRadius: "50%", background: i === bannerIdx ? gold : "rgba(255,255,255,.3)", cursor: "pointer", transition: "all .3s" }} />))}
               </div>
             </div>
-            <div style={{ background: cBg, border: `1px solid ${cBd}`, borderRadius: 14, padding: "28px", marginBottom: 24, animation: "fadeUp .5s ease both" }}>
+            {/* Stats */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 28, animation: "fadeUp .5s ease both" }}>
+              {[
+                { num: "20+", label: lang === "ja" ? "年の実績" : lang === "en" ? "Years" : lang === "zh" ? "年经验" : "업력" },
+                { num: "40+", label: lang === "ja" ? "海外パートナー" : lang === "en" ? "Global Partners" : lang === "zh" ? "海外合作伙伴" : "해외 파트너" },
+                { num: "9", label: lang === "ja" ? "弁理士" : lang === "en" ? "Patent Attorneys" : lang === "zh" ? "专利代理人" : "변리사" },
+                { num: "5,000+", label: lang === "ja" ? "累計案件数" : lang === "en" ? "Cases Handled" : lang === "zh" ? "累计案件" : "누적 처리 건수" },
+              ].map((s, i) => (
+                <div key={i} className="sc" style={{ background: "rgba(212,175,55,.05)", border: "1px solid rgba(212,175,55,.12)", borderRadius: 12, padding: "20px 10px", textAlign: "center", animationDelay: `${i * 80}ms` }}>
+                  <div style={{ fontFamily: "'DM Serif Display', serif", fontSize: 28, fontWeight: 700, color: gold }}>{s.num}</div>
+                  <div style={{ fontSize: 12, color: "#8a8580", marginTop: 6 }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+            {/* Intro */}
+            <div style={{ background: cBg, border: `1px solid ${cBd}`, borderRadius: 14, padding: "28px", marginBottom: 28, animation: "fadeUp .5s ease both", animationDelay: "100ms" }}>
               <p style={{ fontSize: 14.5, lineHeight: 1.9, color: "#b5b0aa" }}><strong style={{ color: "#e8e4df" }}>{t.introTitle}</strong>{t.introP1}</p>
               <p style={{ fontSize: 14.5, lineHeight: 1.9, color: "#b5b0aa", marginTop: 14 }}>{t.introP2}</p>
             </div>
-            <h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: 18, fontWeight: 400, marginBottom: 16, marginTop: 32 }}>{t.strengthsTitle}</h3>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 10 }}>
-              {t.strengths.map((s, i) => {
-                const roman = ["Ⅰ.","Ⅱ.","Ⅲ.","Ⅳ.","Ⅴ.","Ⅵ."][i];
+            {/* Areas of Practice */}
+            <h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: 18, fontWeight: 400, marginBottom: 16, marginTop: 8 }}>{t.areasTitle}</h3>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 28 }}>
+              {t.areas.map((a, i) => {
+                const icons = [
+                  <svg key="i" width="36" height="36" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="none" stroke={gold} strokeWidth="1.2" opacity="0.4"/><path d="M11 18 L16 23 L25 13" fill="none" stroke={gold} strokeWidth="2"/></svg>,
+                  <svg key="i" width="36" height="36" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="none" stroke={gold} strokeWidth="1.2" opacity="0.4"/><circle cx="18" cy="15" r="4.5" fill="none" stroke={gold} strokeWidth="1.5"/><path d="M11 27 Q18 20 25 27" fill="none" stroke={gold} strokeWidth="1.5"/></svg>,
+                  <svg key="i" width="36" height="36" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="none" stroke={gold} strokeWidth="1.2" opacity="0.4"/><rect x="11" y="11" width="14" height="14" rx="2" fill="none" stroke={gold} strokeWidth="1.5"/><line x1="18" y1="11" x2="18" y2="25" stroke={gold} strokeWidth="1" opacity="0.5"/></svg>,
+                  <svg key="i" width="36" height="36" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="none" stroke={gold} strokeWidth="1.2" opacity="0.4"/><path d="M13 23 L18 11 L23 23" fill="none" stroke={gold} strokeWidth="1.5"/><line x1="14.5" y1="20" x2="21.5" y2="20" stroke={gold} strokeWidth="1.5"/></svg>,
+                ];
                 return (
-                <div key={i} className="sc" style={{ background: "rgba(212,175,55,.04)", border: "1px solid rgba(212,175,55,.12)", borderRadius: 12, padding: "20px 22px", animationDelay: `${i * 80}ms`, display: "flex", alignItems: "flex-start", gap: 14 }}>
-                  <span style={{ color: gold, fontSize: 22, fontFamily: "'DM Serif Display', serif", fontWeight: 700, minWidth: 34, textAlign: "center", marginTop: -2, lineHeight: 1.4 }}>{roman}</span>
-                  <span style={{ fontSize: 14.5, fontFamily: "'Noto Sans KR', sans-serif", color: "#d0cbc5", lineHeight: 1.65, fontWeight: 400 }}>{s}</span>
+                <div key={i} className="sc" style={{ background: cBg, border: `1px solid ${cBd}`, borderRadius: 12, padding: "22px 14px", textAlign: "center", animationDelay: `${i * 80}ms` }}>
+                  <div style={{ marginBottom: 12 }}>{icons[i]}</div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: "#e8e4df", marginBottom: 4 }}>{a.title}</div>
+                  <div style={{ fontSize: 11.5, color: "#8a8580", lineHeight: 1.5 }}>{a.titleLocal}</div>
                 </div>
                 );
               })}
             </div>
-            <h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: 18, fontWeight: 400, marginBottom: 16, marginTop: 36 }}>{t.areasTitle}</h3>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 12 }}>
-              {t.areas.map((a, i) => (
-                <div key={i} className="sc" style={{ background: cBg, border: `1px solid ${cBd}`, borderRadius: 12, padding: "22px", animationDelay: `${i * 80}ms` }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
-                    <span style={{ background: gold, color: dark, fontSize: 11, fontWeight: 700, width: 26, height: 26, borderRadius: 6, display: "grid", placeItems: "center" }}>{a.num}</span>
-                    <div>
-                      <div style={{ fontSize: 14, fontWeight: 600, color: "#e8e4df" }}>{a.titleLocal}</div>
-                      <div style={{ fontSize: 11, color: "#7a7670" }}>{a.title}</div>
-                    </div>
-                  </div>
-                  {a.items.map((it, j) => (
-                    <div key={j} style={{ fontSize: 12.5, color: "#8a8580", lineHeight: 1.6, paddingLeft: 12, position: "relative", marginBottom: 4 }}>
-                      <span style={{ position: "absolute", left: 0, color: "#5a5650" }}>·</span>{it}
-                    </div>
-                  ))}
+            {/* Why Zenith */}
+            <h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: 18, fontWeight: 400, marginBottom: 16, marginTop: 8 }}>Why Zenith</h3>
+            <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 28 }}>
+              {[
+                { title: "Proven expertise", desc: lang === "ja" ? "20年以上のIP専門性。特許・商標・デザインの審査、審判、訴訟分野で検証された実績。" : lang === "en" ? "Over 20 years of IP expertise. Verified track record in patent, trademark, and design prosecution, trials, and litigation." : lang === "zh" ? "20年以上IP专业能力。在专利·商标·设计审查、审判、诉讼领域拥有验证的业绩。" : "20년 이상의 IP 전문성. 특허·상표·디자인 심사, 심판, 소송 분야의 검증된 실적." },
+                { title: "Global network", desc: lang === "ja" ? "40カ国以上の海外パートナーネットワーク。弁理士全員が英語コミュニケーション可能。" : lang === "en" ? "Partners in 40+ countries. All attorneys capable of global communication in English." : lang === "zh" ? "40多个国家海外合作伙伴网络。全体专利代理人均可进行英语沟通。" : "40개국 이상 해외 파트너 네트워크. 변리사 전원 영어 커뮤니케이션 가능." },
+                { title: "End-to-end support", desc: lang === "ja" ? "創業初期からKOSDAQ上場まで。技術特例上場、NET認証、創業事業評価委員を擁する。" : lang === "en" ? "From startup to KOSDAQ listing. Our attorneys serve as evaluators for technology-based special listing, NET certification, and startup programs." : lang === "zh" ? "从创业初期到KOSDAQ上市。拥有技术特例上市、NET认证、创业项目评委。" : "창업 초기부터 코스닥 상장까지. 기술특례상장, NET 인증, 창업사업 평가위원 보유." },
+              ].map((p, i) => (
+                <div key={i} className="sc" style={{ borderLeft: `2px solid ${gold}`, paddingLeft: 18, animationDelay: `${i * 100}ms` }}>
+                  <div style={{ fontSize: 15, fontWeight: 500, color: "#e8e4df", marginBottom: 4, fontFamily: "'DM Serif Display', serif" }}>{p.title}</div>
+                  <div style={{ fontSize: 13.5, color: "#8a8580", lineHeight: 1.65 }}>{p.desc}</div>
                 </div>
               ))}
             </div>
-            <div style={{ background: cBg, border: `1px solid ${cBd}`, borderRadius: 14, padding: "24px 28px", marginTop: 32 }}>
+            {/* Contact */}
+            <div style={{ background: cBg, border: `1px solid ${cBd}`, borderRadius: 14, padding: "24px 28px" }}>
               <h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: 16, fontWeight: 400, marginBottom: 14, color: gold }}>{t.contactTitle}</h3>
               <p style={{ fontSize: 13, color: "#8a8580", lineHeight: 1.8 }}>
                 {t.contactAddr}<br/>Tel: +82-2-888-3066 | Fax: +82-2-888-3678<br/>Email: <a href="#" onClick={(e) => { e.preventDefault(); setShowEmail(true); }} style={{ color: gold, textDecoration: "none", cursor: "pointer" }}>zenith@ipzenith.com</a> | Web: <a href="https://www.ipzenith.com" target="_blank" rel="noopener noreferrer" style={{ color: gold, textDecoration: "none" }}>www.ipzenith.com</a>
