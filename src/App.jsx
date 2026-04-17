@@ -356,12 +356,27 @@ export default function ZenithHub() {
 
   const [lang, setLang] = useState(() => { try { return sessionStorage.getItem("zenith_lang") || "ko"; } catch(e) { return "ko"; } });
   const changeLang = (l) => { setLang(l); try { sessionStorage.setItem("zenith_lang", l); } catch(e){} };
-  const [tab, setTab] = useState(() => { try { return sessionStorage.getItem("zenith_tab") || "about"; } catch(e) { return "about"; } });
+  // Map tabs to URL paths for SEO (each tab gets its own URL)
+  const tabToPath = (t) => t === "about" ? "/" : `/${t}`;
+  const pathToTab = (p) => {
+    const clean = (p || "/").replace(/\/$/, "") || "/";
+    if (clean === "/team") return "team";
+    if (clean === "/newsletter") return "newsletter";
+    if (clean === "/board") return "board";
+    return "about";
+  };
+  const [tab, setTab] = useState(() => {
+    try {
+      const fromUrl = pathToTab(window.location.pathname);
+      if (fromUrl !== "about") return fromUrl;
+      return sessionStorage.getItem("zenith_tab") || "about";
+    } catch(e) { return "about"; }
+  });
   const setTabAndSave = (t) => {
     setTab(prev => {
       if (prev === t) return prev;
       try { sessionStorage.setItem("zenith_tab", t); } catch(e){}
-      try { window.history.pushState({ zenithTab: t }, "", window.location.href); } catch(e){}
+      try { window.history.pushState({ zenithTab: t }, "", tabToPath(t)); } catch(e){}
       return t;
     });
   };
@@ -370,7 +385,7 @@ export default function ZenithHub() {
     try {
       const cur = window.history.state;
       if (!cur || !cur.zenithTab) {
-        window.history.replaceState({ zenithTab: tab }, "", window.location.href);
+        window.history.replaceState({ zenithTab: tab }, "", tabToPath(tab));
       }
     } catch(e){}
     const onPop = (e) => {
@@ -380,8 +395,8 @@ export default function ZenithHub() {
       if (selAreaRef.current && state.modal !== "area") _setSelArea(null);
       if (rvRef.current && state.modal !== "rv") _setRv(null);
       if (boardViewRef.current && state.modal !== "boardView") _setBoardView(null);
-      // Restore tab
-      const t = state.zenithTab || "about";
+      // Restore tab from state, or fall back to URL path
+      const t = state.zenithTab || pathToTab(window.location.pathname);
       setTab(t);
       try { sessionStorage.setItem("zenith_tab", t); } catch(err){}
     };
@@ -478,9 +493,19 @@ export default function ZenithHub() {
   const inputRef = useRef();
   const t = i18n[lang];
   const isAdmin = account && account.role === "admin";
-  // SEO: update document title, meta description, and Open Graph tags based on language
+  // SEO: update document title, meta description, and Open Graph tags based on language and active tab
   useEffect(() => {
-    document.title = t.seoTitle || t.siteTitle;
+    // Tab-specific title suffix
+    const tabLabels = {
+      about:      { ko: "회사 소개", en: "About",     ja: "事務所紹介",     zh: "公司介绍" },
+      team:       { ko: "구성원",    en: "Our Team",  ja: "メンバー",       zh: "团队成员" },
+      newsletter: { ko: "뉴스레터",  en: "Newsletter",ja: "ニュースレター",  zh: "通讯" },
+      board:      { ko: "게시판",    en: "Board",     ja: "掲示板",         zh: "内部公告" },
+    };
+    const tabLabel = (tabLabels[tab] && tabLabels[tab][lang]) || "";
+    const fullTitle = tab === "about" ? (t.seoTitle || t.siteTitle) : `${tabLabel} | ${t.seoTitle || t.siteTitle}`;
+    document.title = fullTitle;
+    const currentUrl = `https://www.ipzenith.com${tab === "about" ? "/" : `/${tab}`}`;
     const setMeta = (selector, attr, value) => {
       let el = document.querySelector(selector);
       if (!el) {
@@ -492,22 +517,55 @@ export default function ZenithHub() {
       el.setAttribute(attr, value);
     };
     setMeta('meta[name="description"]', "content", t.seoDesc);
-    setMeta('meta[property="og:title"]', "content", t.seoTitle);
+    setMeta('meta[property="og:title"]', "content", fullTitle);
     setMeta('meta[property="og:description"]', "content", t.seoDesc);
     setMeta('meta[property="og:type"]', "content", "website");
-    setMeta('meta[property="og:url"]', "content", "https://www.ipzenith.com/");
+    setMeta('meta[property="og:url"]', "content", currentUrl);
     setMeta('meta[property="og:site_name"]', "content", "Zenith Patent & Law Firm");
     setMeta('meta[property="og:locale"]', "content", lang === "ja" ? "ja_JP" : lang === "zh" ? "zh_CN" : lang === "en" ? "en_US" : "ko_KR");
     setMeta('meta[name="twitter:card"]', "content", "summary_large_image");
-    setMeta('meta[name="twitter:title"]', "content", t.seoTitle);
+    setMeta('meta[name="twitter:title"]', "content", fullTitle);
     setMeta('meta[name="twitter:description"]', "content", t.seoDesc);
-    // Canonical URL
+    // Canonical URL (per tab)
     let canonical = document.querySelector('link[rel="canonical"]');
     if (!canonical) { canonical = document.createElement("link"); canonical.rel = "canonical"; document.head.appendChild(canonical); }
-    canonical.href = "https://www.ipzenith.com/";
+    canonical.href = currentUrl;
     // html lang attribute
     document.documentElement.lang = lang === "ja" ? "ja" : lang === "zh" ? "zh-CN" : lang === "en" ? "en" : "ko";
-  }, [lang, t.seoTitle, t.seoDesc, t.siteTitle]);
+    // JSON-LD structured data for Organization and attorneys (helps Google understand the firm's members)
+    const orgLd = {
+      "@context": "https://schema.org",
+      "@type": "LegalService",
+      "name": "제니스특허법률사무소",
+      "alternateName": "Zenith Patent & Law Firm",
+      "url": "https://www.ipzenith.com/",
+      "logo": "https://www.ipzenith.com/logo.png",
+      "foundingDate": "2003",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "서울특별시 관악구 남부순환로 1922, 청동빌딩 301호",
+        "addressLocality": "Seoul",
+        "addressCountry": "KR"
+      },
+      "telephone": "+82-2-888-3066",
+      "email": "zenith@ipzenith.com",
+      "founder": { "@type": "Person", "name": "공병욱", "alternateName": "Byung-wook Kong" },
+      "employee": [
+        { "@type": "Person", "name": "공병욱", "alternateName": "Byung-wook Kong", "jobTitle": "Managing Partner / Patent Attorney / Licensed Technology Transaction Specialist" },
+        { "@type": "Person", "name": "안효영", "alternateName": "Hyo-young Ahn", "jobTitle": "Deputy Managing Partner / Patent Attorney / Licensed Technology Transaction Specialist / Veterinarian" },
+        { "@type": "Person", "name": "김도경", "alternateName": "Do-kyung Kim", "jobTitle": "Patent Attorney" },
+        { "@type": "Person", "name": "성가영", "alternateName": "Ga-young Seong", "jobTitle": "Patent Attorney" },
+        { "@type": "Person", "name": "신정동", "alternateName": "Jung-dong Shin", "jobTitle": "Partner / Patent Attorney" },
+        { "@type": "Person", "name": "이문섭", "alternateName": "Mun-seop Lee", "jobTitle": "Managing Partner / Patent Attorney" },
+        { "@type": "Person", "name": "이지연", "alternateName": "Ji-yeon Lee", "jobTitle": "Managing Partner / Patent Attorney" },
+        { "@type": "Person", "name": "김성원", "alternateName": "Sung-won Kim", "jobTitle": "Managing Partner / Patent Attorney" },
+        { "@type": "Person", "name": "전광출", "alternateName": "Kwang-chul Jeon", "jobTitle": "Managing Partner / Patent Attorney" }
+      ]
+    };
+    let ldScript = document.getElementById("zenith-ld-org");
+    if (!ldScript) { ldScript = document.createElement("script"); ldScript.type = "application/ld+json"; ldScript.id = "zenith-ld-org"; document.head.appendChild(ldScript); }
+    ldScript.textContent = JSON.stringify(orgLd);
+  }, [lang, tab, t.seoTitle, t.seoDesc, t.siteTitle]);
   const notoFont = lang === "ja" ? "'Noto Sans JP'" : lang === "zh" ? "'Noto Sans SC'" : "'Noto Sans KR'";
   const fontStack = `'Sora', ${notoFont}, sans-serif`;
   const displayFontStack = `'DM Serif Display', ${notoFont}, serif`;
