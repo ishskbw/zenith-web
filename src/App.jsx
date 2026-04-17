@@ -342,7 +342,30 @@ export default function ZenithHub() {
   const [lang, setLang] = useState(() => { try { return sessionStorage.getItem("zenith_lang") || "ko"; } catch(e) { return "ko"; } });
   const changeLang = (l) => { setLang(l); try { sessionStorage.setItem("zenith_lang", l); } catch(e){} };
   const [tab, setTab] = useState(() => { try { return sessionStorage.getItem("zenith_tab") || "about"; } catch(e) { return "about"; } });
-  const setTabAndSave = (t) => { setTab(t); try { sessionStorage.setItem("zenith_tab", t); } catch(e){} };
+  const setTabAndSave = (t) => {
+    setTab(prev => {
+      if (prev === t) return prev;
+      try { sessionStorage.setItem("zenith_tab", t); } catch(e){}
+      try { window.history.pushState({ zenithTab: t }, "", window.location.href); } catch(e){}
+      return t;
+    });
+  };
+  // Browser back/forward support: traverse tab history (about > team > newsletter > ...)
+  useEffect(() => {
+    try {
+      const cur = window.history.state;
+      if (!cur || !cur.zenithTab) {
+        window.history.replaceState({ zenithTab: tab }, "", window.location.href);
+      }
+    } catch(e){}
+    const onPop = (e) => {
+      const t = (e.state && e.state.zenithTab) ? e.state.zenithTab : "about";
+      setTab(t);
+      try { sessionStorage.setItem("zenith_tab", t); } catch(err){}
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
   const [items, setItems] = useState([]);
   const [rv, setRv] = useState(null);
   const [dragging, setDragging] = useState(false);
@@ -834,24 +857,14 @@ body{background:${ivory}}
                     <div className="mz-hero-meta-label">{lang==="ja"?"海外パートナー":lang==="en"?"Partners":lang==="zh"?"合作伙伴":"해외 파트너"}</div>
                   </div>
                   <div className="mz-hero-meta-item">
+                    <div className="mz-hero-meta-num">9</div>
+                    <div className="mz-hero-meta-label">{lang==="ja"?"弁理士":lang==="en"?"Attorneys":lang==="zh"?"专利代理人":"변리사"}</div>
+                  </div>
+                  <div className="mz-hero-meta-item">
                     <div className="mz-hero-meta-num">5,000+</div>
                     <div className="mz-hero-meta-label">{lang==="ja"?"案件":lang==="en"?"Cases":lang==="zh"?"案件":"처리 건수"}</div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Stats */}
-          <section className="mz-section-pad">
-            <div className="mz-wide">
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 40, padding: "20px 0" }}>
-                {[
-                  { num: "22+", label: lang==="ja"?"年の実績":lang==="en"?"Years":lang==="zh"?"年经验":"업력" },
-                  { num: "40+", label: lang==="ja"?"海外パートナー":lang==="en"?"Global Partners":lang==="zh"?"海外合作伙伴":"해외 파트너" },
-                  { num: "9", label: lang==="ja"?"弁理士":lang==="en"?"Patent Attorneys":lang==="zh"?"专利代理人":"변리사" },
-                  { num: "5,000+", label: lang==="ja"?"累計案件数":lang==="en"?"Cases Handled":lang==="zh"?"累计案件":"누적 처리 건수" },
-                ].map((s,i) => (<div key={i} className="mz-stat"><div className="mz-stat-num">{s.num}</div><div className="mz-stat-label">{s.label}</div></div>))}
               </div>
             </div>
           </section>
