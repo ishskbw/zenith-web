@@ -44,7 +44,7 @@ const i18n = {
     seoTitle: "제니스특허법률사무소 | Zenith Patent & Law Firm",
     seoDesc: "바이오·전자·기계 전 분야의 지식재산 전문가 그룹. 특허·상표·디자인 출원·심판·소송·기술거래까지 원스톱 IP 서비스. 코스닥 기술특례상장·NET 인증 심사위원 보유. Since 2003.",
     since: "Since 2003",
-    tabs: { about: "회사 소개", team: "구성원", newsletter: "뉴스레터", board: "사내게시판" },
+    tabs: { about: "회사 소개", team: "구성원", newsletter: "인사이트", board: "사내게시판" },
     login: "로그인",
     logout: "로그아웃",
     loginTitle: "로그인",
@@ -56,9 +56,9 @@ const i18n = {
     uploadText: "파일을 드래그하거나 클릭하여 업로드",
     uploadSub: "PDF, DOCX, PPTX, XLSX, 이미지 지원",
     uploadAs: "님으로 업로드",
-    locked: "뉴스레터 업로드는 운영진만 가능합니다",
+    locked: "인사이트 업로드는 운영진만 가능합니다",
     uploaded: "개 파일이 업로드되었습니다",
-    recentNl: "최근 뉴스레터",
+    recentNl: "최근 인사이트",
     backBtn: "← 목록으로",
     heroTitle: "Zenith",
     heroSub: "Zenith represents the highest point in the sky — the peak of light, vision, and aspiration.",
@@ -70,7 +70,7 @@ const i18n = {
     contactTitle: "Contact",
     contactAddr: "서울특별시 관악구 남부순환로 1922, 청동빌딩 301호",
     teamDesc: "제니스의 전문 인력을 소개합니다.",
-    siteSub: "사내 뉴스레터를 블로그처럼 열람하세요",
+    siteSub: "전문가 인사이트를 블로그처럼 열람하세요",
     strengths: [
       "20년 이상 경력의 신뢰받는 IP 전문성",
       "특허·상표·디자인 심사, 심판, 소송 분야의 검증된 실적",
@@ -91,7 +91,7 @@ const i18n = {
     seoTitle: "Zenith Patent & Law Firm | Korean IP Experts",
     seoDesc: "Korea's leading IP firm specializing in patents, trademarks, and designs across pharma, biotech, electronics, and engineering. End-to-end IP services from prosecution to litigation and technology transactions. Since 2003.",
     since: "Since 2003",
-    tabs: { about: "About", team: "Our Team", newsletter: "Newsletter", board: "Board" },
+    tabs: { about: "About", team: "Our Team", newsletter: "Insights", board: "Board" },
     login: "Login",
     logout: "Logout",
     loginTitle: "Login",
@@ -103,9 +103,9 @@ const i18n = {
     uploadText: "Drag & drop or click to upload",
     uploadSub: "PDF, DOCX, PPTX, XLSX, Images supported",
     uploadAs: " uploading",
-    locked: "Only admins can upload newsletters",
+    locked: "Only admins can publish insights",
     uploaded: " file(s) uploaded",
-    recentNl: "Recent Newsletters",
+    recentNl: "Recent Insights",
     backBtn: "← Back",
     heroTitle: "Zenith",
     heroSub: "Zenith represents the highest point in the sky — the peak of light, vision, and aspiration.",
@@ -117,7 +117,7 @@ const i18n = {
     contactTitle: "Contact",
     contactAddr: "Suite 301, Cheongdong Building, 1922 Nambusunhwan-ro, Gwanak-gu, Seoul, South Korea",
     teamDesc: "Meet the professionals of Zenith.",
-    siteSub: "Read company newsletters like a blog",
+    siteSub: "Read expert insights from our attorneys",
     strengths: [
       "Trusted IP expertise backed by over 20 years of experience",
       "Proven track record in patent, trademark, and design prosecution, trials, and litigation",
@@ -138,7 +138,7 @@ const i18n = {
     seoTitle: "Zenithパテント・ローファーム | 韓国の特許・知財専門事務所",
     seoDesc: "製薬・バイオ・電子・機械分野の知的財産専門家グループ。特許・商標・デザイン出願から審判・訴訟・技術取引までワンストップ対応。2003年設立。",
     since: "2003年設立",
-    tabs: { about: "事務所紹介", team: "メンバー", newsletter: "ニュースレター", board: "掲示板" },
+    tabs: { about: "事務所紹介", team: "メンバー", newsletter: "インサイト", board: "掲示板" },
     login: "ログイン",
     logout: "ログアウト",
     loginTitle: "ログイン",
@@ -150,9 +150,9 @@ const i18n = {
     uploadText: "ファイルをドラッグまたはクリックしてアップロード",
     uploadSub: "PDF, DOCX, PPTX, XLSX, 画像対応",
     uploadAs: "としてアップロード",
-    locked: "ニュースレターのアップロードは管理者のみ可能です",
+    locked: "インサイトの公開は管理者のみ可能です",
     uploaded: "件のファイルがアップロードされました",
-    recentNl: "最新ニュースレター",
+    recentNl: "最新インサイト",
     backBtn: "← 一覧へ",
     heroTitle: "Zenith",
     heroSub: "Zenithは空の最も高い点 — 光とビジョン、志の頂点を意味します。",
@@ -164,7 +164,7 @@ const i18n = {
     contactTitle: "お問い合わせ",
     contactAddr: "ソウル特別市冠岳区南部循環路1922、青銅ビル301号",
     teamDesc: "Zenithの専門チームをご紹介します。",
-    siteSub: "社内ニュースレターをブログのように閲覧できます",
+    siteSub: "専門家のインサイトをブログのように閲覧できます",
     strengths: [
       "20年以上の経験に裏打ちされた信頼のIP専門性",
       "特許・商標・デザインの審査、審判、訴訟における実証済みの実績",
@@ -185,7 +185,7 @@ const i18n = {
     seoTitle: "Zenith专利法律事务所 | 韩国知识产权专业机构",
     seoDesc: "制药·生物·电子·机械领域知识产权专家团队。从专利·商标·设计申请到审判·诉讼·技术交易提供一站式服务。创立于2003年。",
     since: "创立于2003年",
-    tabs: { about: "公司介绍", team: "团队成员", newsletter: "通讯", board: "内部公告" },
+    tabs: { about: "公司介绍", team: "团队成员", newsletter: "洞察", board: "内部公告" },
     login: "登录",
     logout: "退出",
     loginTitle: "登录",
@@ -197,9 +197,9 @@ const i18n = {
     uploadText: "拖拽或点击上传文件",
     uploadSub: "支持PDF、DOCX、PPTX、XLSX、图片",
     uploadAs: " 上传中",
-    locked: "仅管理员可上传通讯",
+    locked: "仅管理员可发布洞察",
     uploaded: " 个文件已上传",
-    recentNl: "最新通讯",
+    recentNl: "最新洞察",
     backBtn: "← 返回",
     heroTitle: "Zenith",
     heroSub: "Zenith代表天空的最高点——光明、远见与志向的巅峰。",
@@ -211,7 +211,7 @@ const i18n = {
     contactTitle: "联系我们",
     contactAddr: "首尔特别市冠岳区南部循环路1922号，青铜大厦301室",
     teamDesc: "介绍Zenith的专业团队。",
-    siteSub: "像博客一样浏览公司通讯",
+    siteSub: "像博客一样浏览专家洞察",
     strengths: [
       "20年以上经验的值得信赖的IP专业能力",
       "在专利·商标·设计审查、审判、诉讼领域的验证实绩",
@@ -357,17 +357,26 @@ export default function ZenithHub() {
   const [lang, setLang] = useState(() => { try { return sessionStorage.getItem("zenith_lang") || "ko"; } catch(e) { return "ko"; } });
   const changeLang = (l) => { setLang(l); try { sessionStorage.setItem("zenith_lang", l); } catch(e){} };
   // Map tabs to URL paths for SEO (each tab gets its own URL)
-  const tabToPath = (t) => t === "about" ? "/" : `/${t}`;
+  // Note: internal tab key stays "newsletter" for Firebase/state compatibility; only URL changes to /insights
+  const tabToPath = (t) => {
+    if (t === "about") return "/";
+    if (t === "newsletter") return "/insights";
+    return `/${t}`;
+  };
   const pathToTab = (p) => {
     const clean = (p || "/").replace(/\/$/, "") || "/";
     if (clean === "/team") return "team";
-    if (clean === "/newsletter") return "newsletter";
+    if (clean === "/insights" || clean === "/newsletter") return "newsletter";
     if (clean === "/board") return "board";
     return "about";
   };
   const [tab, setTab] = useState(() => {
     try {
       const fromUrl = pathToTab(window.location.pathname);
+      // Legacy redirect: if user came via /newsletter, quietly rewrite URL to /insights
+      if (window.location.pathname === "/newsletter" || window.location.pathname === "/newsletter/") {
+        window.history.replaceState({ zenithTab: "newsletter" }, "", "/insights");
+      }
       if (fromUrl !== "about") return fromUrl;
       return sessionStorage.getItem("zenith_tab") || "about";
     } catch(e) { return "about"; }
@@ -499,13 +508,13 @@ export default function ZenithHub() {
     const tabLabels = {
       about:      { ko: "회사 소개", en: "About",     ja: "事務所紹介",     zh: "公司介绍" },
       team:       { ko: "구성원",    en: "Our Team",  ja: "メンバー",       zh: "团队成员" },
-      newsletter: { ko: "뉴스레터",  en: "Newsletter",ja: "ニュースレター",  zh: "通讯" },
+      newsletter: { ko: "인사이트",  en: "Insights",ja: "インサイト",  zh: "洞察" },
       board:      { ko: "게시판",    en: "Board",     ja: "掲示板",         zh: "内部公告" },
     };
     const tabLabel = (tabLabels[tab] && tabLabels[tab][lang]) || "";
     const fullTitle = tab === "about" ? (t.seoTitle || t.siteTitle) : `${tabLabel} | ${t.seoTitle || t.siteTitle}`;
     document.title = fullTitle;
-    const currentUrl = `https://www.ipzenith.com${tab === "about" ? "/" : `/${tab}`}`;
+    const currentUrl = `https://www.ipzenith.com${tabToPath(tab)}`;
     const setMeta = (selector, attr, value) => {
       let el = document.querySelector(selector);
       if (!el) {
@@ -1184,7 +1193,7 @@ body{background:${ivory}}
               <div className="mz-section-sub">{lang==="ja"?"公式審査委員":lang==="en"?"Official Evaluators":lang==="zh"?"官方评审委员":"공식 심사위원"}</div>
               <h2 className="mz-section-title">{lang==="ja"?"政府が審査を任せる専門性":lang==="en"?"Credentials the government trusts":lang==="zh"?"政府所委托的专业资质":"정부가 심사를 맡기는 전문성"}</h2>
               <p style={{ fontSize: 15, color: "#5a5550", maxWidth: 780, marginBottom: 48, lineHeight: 1.7, marginTop: 12, wordBreak: "keep-all" }}>
-                {lang==="ja"?"当事務所の弁理士は、韓国政府機関の公式審査委員として活動しています。審査基準を熟知しているため、クライアントの採択・認証・上場を的確にサポートできます。":lang==="en"?"Our attorneys serve as official evaluators for key Korean government programs. Because we sit on the panels that decide, we know exactly what it takes for our clients to pass.":lang==="zh"?"本所专利代理人担任韩国政府机构的官方评审委员。由于熟知评审标准,能够精准支持客户通过认证、评选与上市审查。":"당사 변리사는 국내 주요 정부 프로그램의 공식 심사위원으로 활동합니다. 심사 기준을 정확히 알기 때문에, 고객이 통과할 수 있도록 핵심을 짚어드립니다."}
+                {lang==="ja"?"当事務所の弁理士は、韓国政府機関の公式審査委員として活動しています。審査基準を熟知しているため、クライアントの採択・認証・上場を的確にサポートできます。":lang==="en"?"Our attorneys serve as official evaluators for key Korean government programs. Because we sit on the panels that decide, we know exactly what it takes for our clients to pass.":lang==="zh"?"本所专利代理人担任韩国政府机构的官方评审委员。由于熟知评审标准,能够精准支持客户通过认证、评选与上市审查。":"당소 변리사들은 국내 주요 정부 프로그램의 공식 심사위원으로 활동중입니다. 정확한 심사 기준을 기준으로 지원사업 선정을 위한 핵심을 짚어드립니다."}
               </p>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 0, borderLeft: `1px solid ${cBd}`, borderTop: `1px solid ${cBd}` }}>
                 {[
@@ -1317,14 +1326,14 @@ body{background:${ivory}}
         <section className="mz-section-pad" style={{ paddingTop: 60 }}>
           <div className="mz-wide">
             <div className="mz-section-sub">Knowledge Hub</div>
-            <h2 className="mz-section-title">{lang==="ja"?"ニュースレター":lang==="en"?"Newsletter":lang==="zh"?"通讯":"뉴스레터"}</h2>
+            <h2 className="mz-section-title">{lang==="ja"?"インサイト":lang==="en"?"Insights":lang==="zh"?"洞察":"인사이트"}</h2>
             <p style={{ fontSize: 15, color: "#5a5550", maxWidth: 720, marginBottom: 40, lineHeight: 1.7 }}>{t.siteSub}</p>
 
             {isAdmin && (
               <div style={{ marginBottom: 40 }}>
                 {showNlWrite ? (
                   <div style={{ background: "#fff", border: `1px solid ${cBd}`, padding: 32 }}>
-                    <h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: 22, fontWeight: 400, color: dark, marginBottom: 20 }}>{lang==="ja"?"ニュースレター作成":lang==="en"?"Write Newsletter":lang==="zh"?"撰写通讯":"뉴스레터 작성"}</h3>
+                    <h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: 22, fontWeight: 400, color: dark, marginBottom: 20 }}>{lang==="ja"?"インサイト作成":lang==="en"?"Write Insight":lang==="zh"?"撰写洞察":"인사이트 작성"}</h3>
                     <input className="mz-input" value={nlTitle} onChange={(e) => setNlTitle(e.target.value)} placeholder={lang==="ja"?"タイトル":lang==="en"?"Title":lang==="zh"?"标题":"제목"} style={{ marginBottom: 12 }} />
                     <input className="mz-input" value={nlSummary} onChange={(e) => setNlSummary(e.target.value)} placeholder={lang==="ja"?"要約 (一行)":lang==="en"?"Summary (one line)":"요약 (한 줄)"} style={{ marginBottom: 12, fontSize: 13 }} />
                     <textarea className="mz-textarea" value={nlBody} onChange={(e) => setNlBody(e.target.value)} rows={10} placeholder={lang==="ja"?"本文を入力...\n\n## 小見出し\n本文テキスト":lang==="en"?"Write content...\n\n## Subheading\nBody":"내용 작성...\n\n## 소제목\n본문"} style={{ marginBottom: 12, fontFamily: fontStack }} />
@@ -1336,7 +1345,7 @@ body{background:${ivory}}
                   </div>
                 ) : (
                   <div style={{ display: "flex", gap: 12 }}>
-                    <button onClick={() => setShowNlWrite(true)} style={{ flex: 1, padding: "18px 24px", border: `1px solid ${cBd}`, background: "#fff", color: "#5a5550", fontSize: 14, cursor: "pointer", textAlign: "left", fontFamily: "inherit", letterSpacing: .3, transition: "border-color .2s" }}>✏️ {lang==="ja"?"ニュースレターを作成...":lang==="en"?"Write a newsletter...":lang==="zh"?"撰写通讯...":"뉴스레터 작성하기..."}</button>
+                    <button onClick={() => setShowNlWrite(true)} style={{ flex: 1, padding: "18px 24px", border: `1px solid ${cBd}`, background: "#fff", color: "#5a5550", fontSize: 14, cursor: "pointer", textAlign: "left", fontFamily: "inherit", letterSpacing: .3, transition: "border-color .2s" }}>✏️ {lang==="ja"?"インサイトを作成...":lang==="en"?"Write an insight...":lang==="zh"?"撰写洞察...":"인사이트 작성하기..."}</button>
                     <div className={`mz-upload${dragging?" drag":""}`} onDragOver={(e)=>{e.preventDefault();setDragging(true)}} onDragLeave={() => setDragging(false)} onDrop={onDrop} onClick={() => inputRef.current.click()}
                       style={{ border: `1.5px dashed ${cBd}`, padding: "18px 28px", cursor: "pointer", background: "#fff", fontSize: 13, color: "#8a8580", display: "flex", alignItems: "center", gap: 10 }}>
                       <input ref={inputRef} type="file" multiple accept=".pdf,.docx,.doc,.pptx,.xlsx,.png,.jpg" style={{ display: "none" }} onChange={(e) => handleFiles(e.target.files)} />
@@ -1364,7 +1373,7 @@ body{background:${ivory}}
                   </div>
                 </div>
               ))}
-              {items.length===0 && <div style={{ padding: "60px 20px", textAlign: "center", color: "#8a8580", gridColumn: "1 / -1" }}>No newsletters yet.</div>}
+              {items.length===0 && <div style={{ padding: "60px 20px", textAlign: "center", color: "#8a8580", gridColumn: "1 / -1" }}>{lang==="ja"?"まだ投稿がありません。":lang==="en"?"No insights yet.":lang==="zh"?"暂无内容。":"아직 게시된 인사이트가 없습니다."}</div>}
             </div>
           </div>
         </section>
