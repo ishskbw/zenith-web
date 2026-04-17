@@ -235,7 +235,7 @@ const teamData = [
       edu: ["연세대 약학대학 제약산업학협동과정 약학석사 (2021)", "연세대 생화학과 학사 (2010)", "인천과학고 졸업 (2002)"],
       eduEn: ["M.S. in Pharmaceutical Industry, Yonsei Univ. (2021)", "B.S. in Biochemistry, Yonsei Univ. (2010)"],
       eduJa: ["延世大学 製薬産業学 修士 (2021)", "延世大学 生化学科 学士 (2010)"],
-      career: ["변리사시험합격 (47회, 2010)", "기술거래사 등록 (2022)", "제니스 국제특허법률사무소 (2013.1~현재)", "명신특허법률사무소 (2010.12~2012.12)", "現 보건산업진흥원 기술특례상장평가 기술성 평가위원", "現 한국보건산업진흥원 보건신기술(NET) 인증평가 위원", "現 기획재정부·조달청 주관 혁신제품 공공성평가 평가위원", "現 창업진흥원 창업사업평가위원", "現 한국과학기술원(KAIST) 바이오 분과 특허 출원 심의평가위원", "現 연세대학교 심혈관제품유효성평가센터 자문위원"], careerEn: ["Patent Attorney (47th, 2010)", "Tech Transfer Agent (2022)", "Zenith Patent & Law Firm (2013~Present)", "KHIDI Technology Listing Evaluator", "KHIDI NET Certification Evaluator", "KISED Startup Evaluator", "KAIST Bio Patent Review Committee"] },
+      career: ["변리사시험합격 (47회, 2010)", "기술거래사 등록 (2022)", "제니스 국제특허법률사무소 (2013.1~현재)", "명신특허법률사무소 (2010.12~2012.12)", "現 보건산업진흥원 기술특례상장 전문평가위원", "現 보건산업혁신창업센터 보건신기술(NET) 심의평가위원", "現 기획재정부·조달청 주관 혁신제품 공공성평가 평가위원", "現 창업진흥원 창업사업평가위원", "現 창업진흥원 창업경진대회 평가위원", "現 한국조달연구원 혁신제품 평가위원", "現 연세대학교 심혈관질환제품 유효성 평가센터 자문위원", "現 한국과학기술원(KAIST) 월례 국내/국외 특허 심의 평가위원", "現 건국대학교 KU:nnect IP Value Changer 그룹 위원", "現 연세대학교 K-NIBRT 사업단 바이오헬스 아카데미 NCS 확인강사", "前 영남대학교 국내/국외 특허 심의 평가위원", "前 건국대학교 PRIME 학과 산업연계 교육과정 편성 자문위원", "前 한국발명진흥회 우수발명 우선구매 추천사업 심사위원 (2014)", "前 유한대학교 유한생명바이오학과 출강 (2022)", "[강의] 연세대학교 약학대학 대학원 IP 출강 (2019~현재, 의약품 허가특허연계제도·IP management 등 다회)", "[강의] 연세대학교 K-NIBRT 사업단 IP·RA 출강 (2024~현재, 일부 영어강의)", "[강의] 건국대·경남대·창원대·한성대·가천대 등 대학 IP 특강 다수", "[강의] 아리바이오·㈜아이진·㈜에버텍엔터프라이즈 등 기업 IP 교육", "[강연] 한국줄기세포학회 KASCRM 심포지엄 기조발표 '기술특례상장을 위한 IP 전략' (2024.08)"], careerEn: ["Patent Attorney (47th, 2010)", "Licensed Technology Transaction Specialist (2022)", "Zenith Patent & Law Firm (2013~Present)", "Myungshin Patent Firm (2010~2012)", "Expert Evaluator, KOSDAQ Tech-Based Listing, KHIDI", "Reviewer, NET Certification, Health Industry Innovation Center", "Evaluator, Innovative Product Public Assessment, MOEF/PPS", "Evaluator, K-Startup Program, KISED", "Evaluator, K-Startup Pitch Competition, KISED", "Evaluator, Innovative Products, Korea Institute of Procurement", "Advisor, Cardiovascular Device Validation Center, Yonsei Univ.", "Monthly Patent Review Committee, KAIST", "Member, KU:nnect IP Value Changer Group, Konkuk Univ.", "NCS Certified Lecturer, K-NIBRT Bio-Health Academy, Yonsei Univ.", "Former Patent Review Committee, Yeungnam Univ.", "Former Advisor, PRIME Program, Konkuk Univ.", "Former Evaluator, Korea Invention Promotion Association (2014)", "Former Lecturer, Yuhan Univ. Life Bioscience Dept. (2022)", "Lectures: Yonsei Pharmacy Graduate School (2019~Present), Yonsei K-NIBRT (2024~Present), and various universities and biotech companies", "Keynote: 'IP Strategy for Tech-Based Listing', Korean Stem Cell Research Society KASCRM Symposium (2024)"] },
     { name: "안효영", nameEn: "Hyo-young Ahn", role: "부대표변리사 / 기술거래사 / 수의사", roleEn: "Deputy Managing Partner / Patent Attorney / Licensed Technology Transaction Specialist / Veterinarian", roleJa: "副代表弁理士 / 技術取引士 / 獣医師", roleZh: "副首席专利代理人 / 技术交易师 / 兽医师",
       edu: ["서울대 대학원 법학과 지식재산전공 석사 수료 (2023)", "건국대 수의학과 학사 (2013)", "한국방송통신대 법학과 학사 (2018)", "의약품 규제과학전문가 양성 교육 수료 (2019)"],
       eduEn: ["M.A. in Law (IP), Seoul National Univ. (2023)", "B.S. in Veterinary Medicine, Konkuk Univ. (2013)"],
@@ -701,6 +701,15 @@ body{background:${ivory}}
 .mz-rv-article p{font-size:16px;line-height:1.9;color:#3a3530;margin-bottom:20px;word-break:keep-all}
 .mz-rv-article blockquote{border-left:3px solid ${oxblood};margin:28px 0;padding:18px 28px;background:${ivory};font-style:italic;color:#3a3530;line-height:1.8;font-size:15.5px}
 .mz-rv-article strong{color:${dark};font-weight:600}
+/* CJK line-break: break at word/phrase boundaries, not mid-character */
+[lang="ko"] p, [lang="ja"] p, [lang="zh"] p,
+[lang="ko"] .mz-card-desc, [lang="ja"] .mz-card-desc, [lang="zh"] .mz-card-desc,
+[lang="ko"] .mz-section-title, [lang="ja"] .mz-section-title, [lang="zh"] .mz-section-title,
+[lang="ko"] .mz-card-title, [lang="ja"] .mz-card-title, [lang="zh"] .mz-card-title,
+[lang="ko"] h1, [lang="ja"] h1, [lang="zh"] h1,
+[lang="ko"] h2, [lang="ja"] h2, [lang="zh"] h2,
+[lang="ko"] h3, [lang="ja"] h3, [lang="zh"] h3,
+[lang="ko"] li, [lang="ja"] li, [lang="zh"] li{word-break:keep-all}
 /* CJK font fallback for display (serif) elements */
 :is(.mz-logo,.mz-hero h1,.mz-hero h1 em,.mz-hero-meta-num,.mz-section-title,.mz-card-title,.mz-life-num,.mz-life-card h3,.mz-stat-num,.mz-member-photo-fallback,.mz-member-name,.mz-rv-article h2):lang(ja),
 [style*="DM Serif Display"]:lang(ja){font-family:'DM Serif Display','Noto Sans JP',serif !important}
@@ -1116,7 +1125,7 @@ body{background:${ivory}}
             <div className="mz-wide">
               <div className="mz-section-sub">{lang==="ja"?"公式審査委員":lang==="en"?"Official Evaluators":lang==="zh"?"官方评审委员":"공식 심사위원"}</div>
               <h2 className="mz-section-title">{lang==="ja"?"政府が審査を任せる専門性":lang==="en"?"Credentials the government trusts":lang==="zh"?"政府所委托的专业资质":"정부가 심사를 맡기는 전문성"}</h2>
-              <p style={{ fontSize: 15, color: "#5a5550", maxWidth: 780, marginBottom: 48, lineHeight: 1.7, marginTop: 12 }}>
+              <p style={{ fontSize: 15, color: "#5a5550", maxWidth: 780, marginBottom: 48, lineHeight: 1.7, marginTop: 12, wordBreak: "keep-all" }}>
                 {lang==="ja"?"当事務所の弁理士は、韓国政府機関の公式審査委員として活動しています。審査基準を熟知しているため、クライアントの採択・認証・上場を的確にサポートできます。":lang==="en"?"Our attorneys serve as official evaluators for key Korean government programs. Because we sit on the panels that decide, we know exactly what it takes for our clients to pass.":lang==="zh"?"本所专利代理人担任韩国政府机构的官方评审委员。由于熟知评审标准,能够精准支持客户通过认证、评选与上市审查。":"당사 변리사는 국내 주요 정부 프로그램의 공식 심사위원으로 활동합니다. 심사 기준을 정확히 알기 때문에, 고객이 통과할 수 있도록 핵심을 짚어드립니다."}
               </p>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 0, borderLeft: `1px solid ${cBd}`, borderTop: `1px solid ${cBd}` }}>
