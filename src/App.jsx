@@ -310,6 +310,12 @@ const BANNERS = ["data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAoHBwg
 
 
 export default function ZenithHub() {
+  // Ensure mobile viewport meta tag is set
+  useEffect(() => {
+    let m = document.querySelector('meta[name="viewport"]');
+    if (!m) { m = document.createElement("meta"); m.name = "viewport"; document.head.appendChild(m); }
+    m.content = "width=device-width, initial-scale=1, viewport-fit=cover";
+  }, []);
   // Firebase dynamic loader (preview-safe)
   const [fbReady, setFbReady] = useState(false);
   const fbRef = useRef({ db: null, auth: null });
@@ -536,7 +542,7 @@ body{background:${ivory}}
 .mz-hero-meta{margin-top:48px;display:flex;gap:48px}
 .mz-hero-meta-item{border-left:1px solid rgba(255,255,255,.2);padding-left:22px}
 .mz-hero-meta-num{font-family:'DM Serif Display',serif;font-size:44px;color:#fff;line-height:1}
-.mz-hero-meta-label{font-size:11px;color:#c9c4be;letter-spacing:2px;text-transform:uppercase;margin-top:8px;font-weight:500}
+.mz-hero-meta-label{font-size:11px;color:#c9c4be;letter-spacing:2px;text-transform:uppercase;margin-top:8px;font-weight:500;white-space:nowrap}
 @keyframes kenburns{0%{transform:scale(1.0)}100%{transform:scale(1.08)}}
 .mz-wide{max-width:1320px;margin:0 auto;padding:0 48px}
 .mz-section-pad{padding:80px 0}
@@ -597,6 +603,70 @@ body{background:${ivory}}
 .mz-rv-article p{font-size:16px;line-height:1.9;color:#3a3530;margin-bottom:20px;word-break:keep-all}
 .mz-rv-article blockquote{border-left:3px solid ${oxblood};margin:28px 0;padding:18px 28px;background:${ivory};font-style:italic;color:#3a3530;line-height:1.8;font-size:15.5px}
 .mz-rv-article strong{color:${dark};font-weight:600}
+@media (max-width: 768px) {
+  .mz-top{padding:10px 0;font-size:10px;position:relative;top:auto}
+  .mz-top-inner{padding:0 16px;overflow-x:auto;gap:12px;-webkit-overflow-scrolling:touch}
+  .mz-top-inner::-webkit-scrollbar{display:none}
+  .mz-top a{margin-right:10px}
+  .mz-header{position:relative;top:auto}
+  .mz-header-inner{flex-wrap:wrap;gap:10px;padding:14px 16px;align-items:center}
+  .mz-logo{font-size:24px}
+  .mz-logo span{font-size:32px}
+  .mz-logo-sub{font-size:9px;letter-spacing:2px}
+  .mz-tabs{order:3;width:100%;margin-left:0;overflow-x:auto;-webkit-overflow-scrolling:touch;border-top:1px solid ${cBd};padding-top:8px;scrollbar-width:none}
+  .mz-tabs::-webkit-scrollbar{display:none}
+  .mz-tab{padding:8px 12px;font-size:11px;letter-spacing:.5px;flex-shrink:0}
+  .mz-tab.active::after{left:12px;right:12px;bottom:-2px;height:2px}
+  .mz-hero{padding:72px 0 88px}
+  .mz-hero-inner{padding:0 20px}
+  .mz-hero-text{max-width:100%}
+  .mz-hero-eyebrow{font-size:10px;letter-spacing:2px;margin-bottom:18px;gap:10px}
+  .mz-hero-eyebrow::before{width:26px}
+  .mz-hero h1{font-size:42px;letter-spacing:-.5px;line-height:1.05}
+  .mz-hero p{font-size:14px;margin-top:20px;line-height:1.7}
+  .mz-hero-meta{margin-top:32px;gap:18px;flex-wrap:wrap}
+  .mz-hero-meta-item{padding-left:14px;flex:1 1 calc(50% - 18px);min-width:0}
+  .mz-hero-meta-num{font-size:30px}
+  .mz-hero-meta-label{font-size:9px;letter-spacing:1.2px;margin-top:6px;white-space:normal}
+  .mz-wide{padding:0 20px}
+  .mz-section-pad{padding:50px 0}
+  .mz-section-title{font-size:26px;line-height:1.2;word-break:keep-all}
+  .mz-section-sub{font-size:11px;letter-spacing:1.5px;margin-bottom:22px}
+  .mz-lifecycle{padding:50px 0}
+  .mz-life-grid{grid-template-columns:1fr !important}
+  .mz-life-card{padding:32px 24px}
+  .mz-life-num{font-size:44px;margin-bottom:12px}
+  .mz-life-card h3{font-size:22px;margin-bottom:14px}
+  .mz-life-card li{font-size:13px;padding:5px 0}
+  .mz-card{padding:26px 22px}
+  .mz-card-title{font-size:19px}
+  .mz-card-desc{font-size:13px}
+  .mz-stat-num{font-size:40px}
+  .mz-stat-label{font-size:10px;letter-spacing:1.2px}
+  .mz-news-card{flex-direction:column;padding:20px;gap:12px}
+  .mz-modal{padding:24px !important;max-width:94vw !important;max-height:90vh}
+  .mz-member-card .mz-member-body{padding:16px 18px 20px}
+  .mz-member-name{font-size:19px}
+  /* Override inline grid layouts */
+  [style*="repeat(4, 1fr)"]{grid-template-columns:repeat(2,1fr) !important;gap:0 !important}
+  [style*="repeat(3, 1fr)"]{grid-template-columns:1fr !important}
+  [style*="grid-template-columns: 1fr 2fr"]{grid-template-columns:1fr !important;gap:24px !important;padding:20px 0 !important}
+  [style*="grid-template-columns: 1fr 1fr"]{grid-template-columns:1fr !important;gap:36px !important}
+  [style*="grid-template-columns: 2fr 1fr 1fr 1fr"]{grid-template-columns:1fr 1fr !important;gap:28px !important;margin-bottom:32px !important}
+  [style*="minmax(280px, 360px) 1fr"]{grid-template-columns:1fr !important}
+  [style*="minmax(260px, 1fr)"]{grid-template-columns:repeat(auto-fill,minmax(160px,1fr)) !important;gap:16px !important}
+  [style*="minmax(400px, 1fr)"]{grid-template-columns:1fr !important;gap:14px !important}
+  /* Footer */
+  footer{padding:44px 0 24px !important;margin-top:40px !important}
+  footer [style*="flex"][style*="justify-content: space-between"]{flex-direction:column;gap:10px;align-items:flex-start !important}
+}
+@media (max-width: 480px) {
+  .mz-hero h1{font-size:36px}
+  .mz-section-title{font-size:22px}
+  .mz-hero-meta-num{font-size:26px}
+  [style*="repeat(4, 1fr)"]{grid-template-columns:1fr !important}
+  [style*="grid-template-columns: 2fr 1fr 1fr 1fr"]{grid-template-columns:1fr !important;gap:24px !important}
+}
   `;
 
   // ── Reading View ──
@@ -854,7 +924,7 @@ body{background:${ivory}}
                   </div>
                   <div className="mz-hero-meta-item">
                     <div className="mz-hero-meta-num">40+</div>
-                    <div className="mz-hero-meta-label">{lang==="ja"?"海外パートナー":lang==="en"?"Partners":lang==="zh"?"合作伙伴":"해외 파트너"}</div>
+                    <div className="mz-hero-meta-label">{lang==="ja"?"海外パートナー":lang==="en"?"Global Partners":lang==="zh"?"合作伙伴":"해외 파트너"}</div>
                   </div>
                   <div className="mz-hero-meta-item">
                     <div className="mz-hero-meta-num">9</div>
@@ -913,7 +983,7 @@ body{background:${ivory}}
           <section className="mz-lifecycle">
             <div className="mz-wide">
               <div className="mz-section-sub">Our Approach</div>
-              <h2 className="mz-section-title">{lang==="ja"?"IPライフサイクルのすべての段階":lang==="en"?"We work at every stage of the IP lifecycle":lang==="zh"?"我们参与IP生命周期的每一个阶段":"IP 라이프사이클의 모든 단계에서"}</h2>
+              <h2 className="mz-section-title">We work at every stage of the IP lifecycle</h2>
               <div className="mz-life-grid" style={{ marginTop: 48 }}>
                 {[
                   { num: "01", title: lang==="ja"?"保護":lang==="en"?"Protect":lang==="zh"?"保护":"보호", items: lang==="ja"?["出願・登録手続き","先行技術調査","ポートフォリオ管理","年金管理・EP検証"]:lang==="en"?["Drafting, Filing, Prosecution","Searching & Watching","Portfolio Management","Renewals & EP Validations"]:lang==="zh"?["申请·注册手续","现有技术检索","组合管理","年费管理·EP确认"]:["출원·등록 절차","선행기술조사","포트폴리오 관리","연차료·EP검증"] },
@@ -934,7 +1004,7 @@ body{background:${ivory}}
           <section className="mz-section-pad" style={{ background: "#fff" }}>
             <div className="mz-wide">
               <div className="mz-section-sub">Why Zenith</div>
-              <h2 className="mz-section-title">{lang==="ja"?"私たちの強み":lang==="en"?"Our Strengths":lang==="zh"?"我们的优势":"우리의 강점"}</h2>
+              <h2 className="mz-section-title">Our Strengths</h2>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 0, marginTop: 48, borderLeft: `1px solid ${cBd}`, borderTop: `1px solid ${cBd}` }}>
                 {[
                   { title: lang==="ja"?"実証された専門性":lang==="en"?"Proven expertise":lang==="zh"?"经过验证的专业":"검증된 전문성", desc: lang==="ja"?"20年以上のIP専門性。特許・商標・デザインの審査、審判、訴訟分野で検証された実績。":lang==="en"?"Over 20 years of IP expertise. Verified track record in patent, trademark, and design prosecution, trials, and litigation.":lang==="zh"?"20年以上IP专业能力。在专利·商标·设计审查、审判、诉讼领域拥有验证的业绩。":"20년 이상의 IP 전문성. 특허·상표·디자인 심사, 심판, 소송 분야의 검증된 실적." },
