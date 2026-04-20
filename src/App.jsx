@@ -53,6 +53,22 @@ const i18n = {
     idPh: "you@ipzenith.com", pwPh: "비밀번호 입력",
     loginBtn: "로그인", testAccount: "",
     loginError: "이메일 또는 비밀번호가 올바르지 않습니다.",
+    forgotPw: "비밀번호 찾기",
+    resetPwTitle: "비밀번호 재설정",
+    resetPwDesc: "가입하신 이메일로 비밀번호 재설정 링크를 보내드립니다.",
+    resetPwBtn: "재설정 링크 보내기",
+    resetPwSent: "재설정 링크를 이메일로 전송했습니다. 메일함을 확인해 주세요.",
+    resetPwError: "해당 이메일로 등록된 계정이 없습니다.",
+    changePw: "비밀번호 변경",
+    changePwDesc: "보안을 위해 현재 비밀번호를 한 번 더 입력해 주세요.",
+    currentPw: "현재 비밀번호",
+    newPw: "새 비밀번호",
+    newPwConfirm: "새 비밀번호 확인",
+    changePwBtn: "변경하기",
+    changePwSuccess: "비밀번호가 변경되었습니다.",
+    changePwWrong: "현재 비밀번호가 일치하지 않습니다.",
+    changePwMismatch: "새 비밀번호가 일치하지 않습니다.",
+    changePwWeak: "비밀번호는 6자 이상이어야 합니다.",
     uploadText: "파일을 드래그하거나 클릭하여 업로드",
     uploadSub: "PDF, DOCX, PPTX, XLSX, 이미지 지원",
     uploadAs: "님으로 업로드",
@@ -100,6 +116,22 @@ const i18n = {
     idPh: "you@ipzenith.com", pwPh: "Enter password",
     loginBtn: "Sign In", testAccount: "",
     loginError: "Invalid ID or password.",
+    forgotPw: "Forgot password?",
+    resetPwTitle: "Reset Password",
+    resetPwDesc: "We'll send a password reset link to your registered email.",
+    resetPwBtn: "Send Reset Link",
+    resetPwSent: "Reset link sent. Please check your inbox.",
+    resetPwError: "No account found with this email.",
+    changePw: "Change Password",
+    changePwDesc: "For security, please re-enter your current password.",
+    currentPw: "Current password",
+    newPw: "New password",
+    newPwConfirm: "Confirm new password",
+    changePwBtn: "Change",
+    changePwSuccess: "Password changed successfully.",
+    changePwWrong: "Current password is incorrect.",
+    changePwMismatch: "New passwords do not match.",
+    changePwWeak: "Password must be at least 6 characters.",
     uploadText: "Drag & drop or click to upload",
     uploadSub: "PDF, DOCX, PPTX, XLSX, Images supported",
     uploadAs: " uploading",
@@ -147,6 +179,22 @@ const i18n = {
     idPh: "you@ipzenith.com", pwPh: "パスワード入力",
     loginBtn: "ログイン", testAccount: "",
     loginError: "IDまたはパスワードが正しくありません。",
+    forgotPw: "パスワードをお忘れですか？",
+    resetPwTitle: "パスワードリセット",
+    resetPwDesc: "登録されたメールアドレスにリセットリンクを送信します。",
+    resetPwBtn: "リセットリンクを送信",
+    resetPwSent: "リセットリンクを送信しました。メールをご確認ください。",
+    resetPwError: "該当メールのアカウントが見つかりません。",
+    changePw: "パスワード変更",
+    changePwDesc: "セキュリティのため現在のパスワードを再入力してください。",
+    currentPw: "現在のパスワード",
+    newPw: "新しいパスワード",
+    newPwConfirm: "新しいパスワード（確認）",
+    changePwBtn: "変更",
+    changePwSuccess: "パスワードを変更しました。",
+    changePwWrong: "現在のパスワードが一致しません。",
+    changePwMismatch: "新しいパスワードが一致しません。",
+    changePwWeak: "パスワードは6文字以上必要です。",
     uploadText: "ファイルをドラッグまたはクリックしてアップロード",
     uploadSub: "PDF, DOCX, PPTX, XLSX, 画像対応",
     uploadAs: "としてアップロード",
@@ -194,6 +242,22 @@ const i18n = {
     idPh: "you@ipzenith.com", pwPh: "输入密码",
     loginBtn: "登录", testAccount: "",
     loginError: "账号或密码不正确。",
+    forgotPw: "忘记密码？",
+    resetPwTitle: "重置密码",
+    resetPwDesc: "我们将向您注册的邮箱发送密码重置链接。",
+    resetPwBtn: "发送重置链接",
+    resetPwSent: "重置链接已发送，请查收邮件。",
+    resetPwError: "未找到此邮箱对应的账号。",
+    changePw: "修改密码",
+    changePwDesc: "为了安全起见，请再次输入当前密码。",
+    currentPw: "当前密码",
+    newPw: "新密码",
+    newPwConfirm: "确认新密码",
+    changePwBtn: "修改",
+    changePwSuccess: "密码已成功修改。",
+    changePwWrong: "当前密码不正确。",
+    changePwMismatch: "两次输入的新密码不一致。",
+    changePwWeak: "密码至少需要6位字符。",
     uploadText: "拖拽或点击上传文件",
     uploadSub: "支持PDF、DOCX、PPTX、XLSX、图片",
     uploadAs: " 上传中",
@@ -423,6 +487,16 @@ export default function ZenithHub() {
   const [loginId, setLoginId] = useState("");
   const [loginPw, setLoginPw] = useState("");
   const [loginErr, setLoginErr] = useState("");
+  // Password reset (forgot password) state
+  const [showReset, setShowReset] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [resetMsg, setResetMsg] = useState({ type: "", text: "" });
+  // Password change (logged-in) state
+  const [showChangePw, setShowChangePw] = useState(false);
+  const [curPw, setCurPw] = useState("");
+  const [newPw, setNewPw] = useState("");
+  const [newPw2, setNewPw2] = useState("");
+  const [pwMsg, setPwMsg] = useState({ type: "", text: "" });
   const [showEmail, setShowEmail] = useState(false);
   const [selMember, _setSelMember] = useState(null);
   const [selArea, _setSelArea] = useState(null);
@@ -629,6 +703,47 @@ export default function ZenithHub() {
       try { await signOut(auth); } catch(e) {}
     }
     setAccount(null);
+  };
+  // Send password reset email
+  const doPasswordReset = async () => {
+    const { auth, sendPasswordResetEmail } = fbRef.current;
+    if (!auth || !sendPasswordResetEmail) return;
+    const email = resetEmail.trim();
+    if (!email) return;
+    try {
+      await sendPasswordResetEmail(auth, email);
+      setResetMsg({ type: "ok", text: t.resetPwSent });
+      setResetEmail("");
+    } catch(e) {
+      setResetMsg({ type: "err", text: t.resetPwError });
+    }
+  };
+  // Change password (while logged in) with re-authentication
+  const doChangePassword = async () => {
+    const { auth, EmailAuthProvider, reauthenticateWithCredential, updatePassword } = fbRef.current;
+    if (!auth || !auth.currentUser) return;
+    setPwMsg({ type: "", text: "" });
+    // Validate
+    if (newPw.length < 6) { setPwMsg({ type: "err", text: t.changePwWeak }); return; }
+    if (newPw !== newPw2) { setPwMsg({ type: "err", text: t.changePwMismatch }); return; }
+    try {
+      // Re-auth with current password
+      const cred = EmailAuthProvider.credential(auth.currentUser.email, curPw);
+      await reauthenticateWithCredential(auth.currentUser, cred);
+      // Update password
+      await updatePassword(auth.currentUser, newPw);
+      setPwMsg({ type: "ok", text: t.changePwSuccess });
+      setCurPw(""); setNewPw(""); setNewPw2("");
+      setTimeout(() => { setShowChangePw(false); setPwMsg({ type: "", text: "" }); }, 1500);
+    } catch(e) {
+      if (e && (e.code === "auth/wrong-password" || e.code === "auth/invalid-credential")) {
+        setPwMsg({ type: "err", text: t.changePwWrong });
+      } else if (e && e.code === "auth/weak-password") {
+        setPwMsg({ type: "err", text: t.changePwWeak });
+      } else {
+        setPwMsg({ type: "err", text: t.changePwWrong });
+      }
+    }
   };
   const handleFiles = async (fl) => {
     const {db,collection,addDoc}=fbRef.current;
@@ -929,6 +1044,45 @@ body{background:${ivory}}
         <input className="mz-input" value={loginPw} onChange={(e) => setLoginPw(e.target.value)} onKeyDown={(e) => e.key==="Enter"&&doLogin()} type="password" autoComplete="current-password" placeholder={t.pwPh} style={{ marginBottom: 8 }} />
         {loginErr && <p style={{ fontSize: 12, color: "#b83030", marginTop: 8 }}>{loginErr}</p>}
         <button className="mz-btn" onClick={doLogin} style={{ width: "100%", marginTop: 24 }}>{t.loginBtn}</button>
+        <div style={{ textAlign: "center", marginTop: 16 }}>
+          <button type="button" onClick={() => { setShowLogin(false); setLoginErr(""); setResetEmail(loginId); setResetMsg({type:"",text:""}); setShowReset(true); }} style={{ background: "none", border: "none", color: "#6a6560", fontSize: 12, cursor: "pointer", textDecoration: "underline", fontFamily: "inherit", padding: 4 }}>{t.forgotPw}</button>
+        </div>
+      </div>
+    </div>
+  );
+
+  const resetPwModal = showReset && (
+    <div className="mz-modal-bg" onClick={() => { setShowReset(false); setResetMsg({type:"",text:""}); }}>
+      <div className="mz-modal" onClick={(e) => e.stopPropagation()} style={{ width: 420, maxWidth: "92vw" }}>
+        <h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: 26, fontWeight: 400, marginBottom: 8, color: dark }}>{t.resetPwTitle}</h3>
+        <p style={{ fontSize: 13, color: "#8a8580", marginBottom: 28, lineHeight: 1.6 }}>{t.resetPwDesc}</p>
+        <label style={{ fontSize: 11, color: "#6a6560", display: "block", marginBottom: 8, letterSpacing: 1, textTransform: "uppercase", fontWeight: 600 }}>{t.idLabel}</label>
+        <input className="mz-input" type="email" autoComplete="email" value={resetEmail} onChange={(e) => setResetEmail(e.target.value)} onKeyDown={(e) => e.key==="Enter"&&doPasswordReset()} placeholder={t.idPh} style={{ marginBottom: 8 }} />
+        {resetMsg.text && <p style={{ fontSize: 12, color: resetMsg.type==="ok"?oxblood:"#b83030", marginTop: 12, lineHeight: 1.5 }}>{resetMsg.text}</p>}
+        <div style={{ display: "flex", gap: 10, marginTop: 24 }}>
+          <button className="mz-btn-ghost" onClick={() => { setShowReset(false); setResetMsg({type:"",text:""}); }} style={{ flex: 1 }}>{lang==="ja"?"キャンセル":lang==="en"?"Cancel":lang==="zh"?"取消":"취소"}</button>
+          <button className="mz-btn" onClick={doPasswordReset} disabled={!resetEmail.trim()} style={{ flex: 2, opacity: resetEmail.trim()?1:.4 }}>{t.resetPwBtn}</button>
+        </div>
+      </div>
+    </div>
+  );
+
+  const changePwModal = showChangePw && (
+    <div className="mz-modal-bg" onClick={() => { setShowChangePw(false); setCurPw(""); setNewPw(""); setNewPw2(""); setPwMsg({type:"",text:""}); }}>
+      <div className="mz-modal" onClick={(e) => e.stopPropagation()} style={{ width: 420, maxWidth: "92vw" }}>
+        <h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: 26, fontWeight: 400, marginBottom: 8, color: dark }}>{t.changePw}</h3>
+        <p style={{ fontSize: 13, color: "#8a8580", marginBottom: 28, lineHeight: 1.6 }}>{t.changePwDesc}</p>
+        <label style={{ fontSize: 11, color: "#6a6560", display: "block", marginBottom: 8, letterSpacing: 1, textTransform: "uppercase", fontWeight: 600 }}>{t.currentPw}</label>
+        <input className="mz-input" type="password" autoComplete="current-password" value={curPw} onChange={(e) => setCurPw(e.target.value)} style={{ marginBottom: 16 }} />
+        <label style={{ fontSize: 11, color: "#6a6560", display: "block", marginBottom: 8, letterSpacing: 1, textTransform: "uppercase", fontWeight: 600 }}>{t.newPw}</label>
+        <input className="mz-input" type="password" autoComplete="new-password" value={newPw} onChange={(e) => setNewPw(e.target.value)} style={{ marginBottom: 16 }} />
+        <label style={{ fontSize: 11, color: "#6a6560", display: "block", marginBottom: 8, letterSpacing: 1, textTransform: "uppercase", fontWeight: 600 }}>{t.newPwConfirm}</label>
+        <input className="mz-input" type="password" autoComplete="new-password" value={newPw2} onChange={(e) => setNewPw2(e.target.value)} onKeyDown={(e) => e.key==="Enter"&&doChangePassword()} style={{ marginBottom: 8 }} />
+        {pwMsg.text && <p style={{ fontSize: 12, color: pwMsg.type==="ok"?oxblood:"#b83030", marginTop: 12, lineHeight: 1.5 }}>{pwMsg.text}</p>}
+        <div style={{ display: "flex", gap: 10, marginTop: 24 }}>
+          <button className="mz-btn-ghost" onClick={() => { setShowChangePw(false); setCurPw(""); setNewPw(""); setNewPw2(""); setPwMsg({type:"",text:""}); }} style={{ flex: 1 }}>{lang==="ja"?"キャンセル":lang==="en"?"Cancel":lang==="zh"?"取消":"취소"}</button>
+          <button className="mz-btn" onClick={doChangePassword} disabled={!curPw || !newPw || !newPw2} style={{ flex: 2, opacity: (curPw&&newPw&&newPw2)?1:.4 }}>{t.changePwBtn}</button>
+        </div>
       </div>
     </div>
   );
@@ -1054,7 +1208,7 @@ body{background:${ivory}}
   return (
     <div lang={lang} style={{ minHeight: "100vh", background: ivory, color: dark, fontFamily: fontStack }}>
       <style>{css}</style>
-      {loginModal}{emailModal}{memberModal}{areaModal}
+      {loginModal}{resetPwModal}{changePwModal}{emailModal}{memberModal}{areaModal}
 
       {/* Top bar */}
       <div className="mz-top">
@@ -1069,6 +1223,7 @@ body{background:${ivory}}
             {isAdmin ? (
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginLeft: 16 }}>
                 <span style={{ fontSize: 10, color: oxblood, fontWeight: 600, letterSpacing: 1, textTransform: "uppercase" }}>{account.name}</span>
+                <button onClick={() => { setPwMsg({type:"",text:""}); setShowChangePw(true); }} title={t.changePw} style={{ background: "none", border: "1px solid #3a3530", color: "#b5b0aa", padding: "3px 10px", fontSize: 9, letterSpacing: 1, textTransform: "uppercase", cursor: "pointer", textAlign: "center", boxSizing: "border-box" }}>{lang==="ja"?"PW変更":lang==="en"?"PW":lang==="zh"?"改密":"비번"}</button>
                 <button onClick={logoutAccount} style={{ background: "none", border: "1px solid #3a3530", color: "#b5b0aa", padding: "3px 10px", fontSize: 9, letterSpacing: 1, textTransform: "uppercase", cursor: "pointer", minWidth: 72, textAlign: "center", boxSizing: "border-box" }}>{t.logout}</button>
               </div>
             ) : (
