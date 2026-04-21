@@ -761,7 +761,7 @@ export default function ZenithHub() {
   const onDrop = (e) => { e.preventDefault(); setDragging(false); if (isAdmin && e.dataTransfer.files.length) handleFiles(e.dataTransfer.files); };
 
   const langBtns = ["ko", "en", "ja", "zh"];
-  const langLabels = { ko: "국문", en: "ENG", ja: "日本語", zh: "中文" };
+  const langLabels = { ko: "KO", en: "EN", ja: "JP", zh: "CN" };
   const getGroupName = (g) => lang==="en"?g.groupEn:lang==="ja"?g.groupJa:lang==="zh"?g.groupZh:g.groupKo;
   const getRole = (m) => lang==="en"?m.roleEn:lang==="ja"?m.roleJa:lang==="zh"?m.roleZh:m.role;
   const getEdu = (m) => lang==="en"?m.eduEn:lang==="ja"?m.eduJa:lang==="zh"?(m.eduZh||m.eduEn):m.edu;
@@ -848,9 +848,11 @@ body{background:${ivory}}
 .mz-stat{text-align:center}
 .mz-stat-num{font-family:'DM Serif Display',serif;font-size:56px;font-weight:400;color:${oxblood};line-height:1}
 .mz-stat-label{font-size:12px;color:#6a6560;letter-spacing:2px;text-transform:uppercase;margin-top:10px;font-weight:500}
-.mz-lang{background:none;border:1px solid ${cBd};padding:4px 10px;font-size:10px;color:#6a6560;cursor:pointer;letter-spacing:1px;transition:all .2s;text-transform:uppercase;margin-left:4px;font-family:'Sora','Noto Sans KR',sans-serif;min-width:54px;text-align:center;box-sizing:border-box;display:inline-block}
-.mz-lang:hover{border-color:${oxblood};color:${oxblood}}
-.mz-lang.active{background:${oxblood};color:#fff;border-color:${oxblood}}
+.mz-lang-group{display:inline-flex;align-items:center;gap:0}
+.mz-lang-sep{color:#4a4540;font-size:11px;padding:0 2px;user-select:none}
+.mz-lang{background:none;border:none;padding:4px 8px;font-size:11px;color:#8a8580;cursor:pointer;letter-spacing:1.5px;transition:color .2s;font-family:'Sora',sans-serif;line-height:1;font-weight:500;position:relative}
+.mz-lang:hover{color:#fff}
+.mz-lang.active{color:#fff}
 .mz-btn{background:${oxblood};color:#fff;border:none;padding:12px 28px;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;font-family:'Sora',sans-serif}
 .mz-btn:hover{background:${dark}}
 .mz-btn-ghost{background:none;border:1px solid ${cBd};color:#5a5550;padding:8px 18px;font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s;font-family:'Sora',sans-serif}
@@ -1219,7 +1221,14 @@ body{background:${ivory}}
             <a href="#" onClick={(e)=>{e.preventDefault();setShowEmail(true);}}>zenith@ipzenith.com</a>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            {langBtns.map((l) => (<button key={l} className={`mz-lang${lang===l?" active":""}`} onClick={() => changeLang(l)}>{langLabels[l]}</button>))}
+            <div className="mz-lang-group">
+              {langBtns.map((l, i) => (
+                <span key={l} style={{ display: "inline-flex", alignItems: "center" }}>
+                  {i > 0 && <span className="mz-lang-sep">|</span>}
+                  <button className={`mz-lang${lang===l?" active":""}`} onClick={() => changeLang(l)}>{langLabels[l]}</button>
+                </span>
+              ))}
+            </div>
             {isAdmin ? (
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginLeft: 16 }}>
                 <span style={{ fontSize: 10, color: oxblood, fontWeight: 600, letterSpacing: 1, textTransform: "uppercase" }}>{account.name}</span>
