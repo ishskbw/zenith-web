@@ -64,7 +64,7 @@
     <div id="helpPanel" class="hidden mt-3 p-4 bg-amber-50 border border-amber-200 rounded-lg text-sm text-slate-700 leading-relaxed">
       <p class="font-semibold text-slate-800 mb-2">사용법</p>
       <ol class="list-decimal ml-5 space-y-1">
-        <li><b>[상품·서비스업 검색]</b> 탭: 사업 내용을 자연어로 입력하면 관련 지정상품/서비스업을 류별로 묶어 보여줍니다. 체크박스로 선택하세요.</li>
+        <li><b>[상품·서비스업 검색]</b> 탭: 사업 내용을 자연어로 입력하면 관련 지정상품/서비스업을 류별로 묶어 보여줍니다. <b>검색어 없이 류 필터만 클릭하면 해당 류의 지정상품 전체를 가나다순으로 볼 수 있습니다.</b> 체크박스로 선택하세요.</li>
         <li><b>[35류 판매업]</b> 탭: 취급 상품을 검색·선택한 뒤, 판매유형(도매/소매/중개/판매대행/판매알선/구매대행)을 골라 "추가" 하면 35류 고시명칭이 자동 생성됩니다.</li>
         <li>하단 <b>선택 목록</b>은 누적됩니다. 탭을 오가도 유지됩니다.</li>
         <li>[엑셀 다운로드] 시 한/영 명칭·NICE 류·유사군이 모두 포함됩니다 (마드리드 출원용).</li>
@@ -115,7 +115,7 @@
       </div>
 
       <div class="mt-4 border-t border-slate-100 pt-3">
-        <div id="searchSummary" class="text-sm text-slate-600 mb-2">검색어를 입력하세요.</div>
+        <div id="searchSummary" class="text-sm text-slate-600 mb-2">검색어를 입력하거나, 위의 <b>류 필터</b>에서 원하는 류를 클릭하면 해당 류 전체를 볼 수 있습니다.</div>
         <div id="searchResults" class="scroll-area" style="max-height:55vh; overflow-y:auto;"></div>
       </div>
     </div>
@@ -387,6 +387,7 @@ function literalsFromInput(elId) {
 let SELECTED = new Map();  // key -> {ko, en, nice, simCode, source, origIdx?}
 let niceFilter = new Set();  // 선택된 NICE 류 (빈 Set = 전체)
 let currentSearchResults = [];
+let currentIsBrowse = false;  // 현재 결과가 "류 전체 보기" 모드인지
 let sales35Selected = new Set();  // 원본 상품 인덱스
 let sales35Types = new Set();  // 선택한 판매유형
 
@@ -433,57 +434,105 @@ function toggleNice(n) {
   if (niceFilter.has(n)) niceFilter.delete(n);
   else niceFilter.add(n);
   renderNiceFilter();
+  doSearch();  // 류 클릭 즉시 결과 갱신
 }
 function setAllNice(on) {
   niceFilter.clear();
   if (on) for (let n = 1; n <= 45; n++) niceFilter.add(n);
   renderNiceFilter();
+  doSearch();  // 전체/해제 즉시 결과 갱신
 }
 
-function renderSearchResults(results, tokens) {
+// 한 류의 rows HTML을 생성 (체크박스 + 국/영문 + 유사군)
+function buildRowsHtml(rows, tokens) {
+  return rows.map(r => {
+    const [ko, en, nice, simIdx] = r.item;
+    const key = keyOf(r.idx);
+    const checked = SELECTED.has(key);
+    const simCode = SIM_CODES[simIdx];
+    return `<label class="row-hover flex items-start gap-2 px-3 py-2 border-t border-slate-100 cursor-pointer">
+      <input type="checkbox" class="mt-1 shrink-0" ${checked?'checked':''} onchange="toggleItem(${r.idx}, this.checked)">
+      <span class="flex-1 min-w-0">
+        <span class="text-sm text-slate-900 font-medium">${highlight(ko, tokens)}</span>
+        <span class="block text-xs text-slate-500 mt-0.5">${highlight(en, tokens)}</span>
+      </span>
+      <span class="text-xs text-slate-400 font-mono shrink-0">${simCode}</span>
+    </label>`;
+  }).join('');
+}
+
+// 접혀 있는 류의 rows 데이터를 보관했다가 펼치는 순간에 그린다 (초기 렌더링 부하 절감)
+let _pendingRowsByNice = new Map();
+
+function lazyRenderNice(n, detailsEl) {
+  if (!detailsEl.open) return;
+  const pending = _pendingRowsByNice.get(n);
+  if (!pending) return;  // 이미 렌더됐거나 보관된 게 없음
+  const container = detailsEl.querySelector('.rows-container');
+  if (!container) return;
+  container.innerHTML = buildRowsHtml(pending.rows, pending.tokens);
+  _pendingRowsByNice.delete(n);
+}
+
+function renderSearchResults(results, tokens, opts) {
+  opts = opts || {};
+  const browseMode = !!opts.browseMode;
   const el = document.getElementById('searchResults');
   const summary = document.getElementById('searchSummary');
+
+  // 이전 렌더에서 남은 대기 데이터 초기화
+  _pendingRowsByNice = new Map();
+
   if (results.length === 0) {
-    summary.textContent = '매칭되는 항목이 없습니다. 다른 키워드를 시도해 보세요.';
+    summary.textContent = browseMode
+      ? '선택한 류에 해당하는 지정상품이 없습니다.'
+      : '매칭되는 항목이 없습니다. 다른 키워드를 시도해 보세요.';
     el.innerHTML = '';
     return;
   }
-  summary.innerHTML = `<b>${results.length.toLocaleString()}</b>건 검색됨. 상위 1,000건 표시 · 류별 그룹화.`;
-  const limited = results.slice(0, 1000);
+  if (browseMode) {
+    const niceList = [...niceFilter].sort((a,b)=>a-b).map(n=>`제${n}류`).join(', ');
+    const total = results.length.toLocaleString();
+    summary.innerHTML = `📖 <b>${niceList}</b> 전체 보기 · 총 <b>${total}</b>건 · 국문 가나다순 · 류를 펼치면 전체 표시`;
+  } else {
+    summary.innerHTML = `총 <b>${results.length.toLocaleString()}</b>건 검색됨 · 류별 그룹화 · 류를 펼치면 전체 표시`;
+  }
+
+  // 전체 결과를 류별로 그룹화 (1,000건 제한 없음)
   const byNice = new Map();
-  for (const r of limited) {
+  for (const r of results) {
     const n = r.item[2];
     if (!byNice.has(n)) byNice.set(n, []);
     byNice.get(n).push(r);
   }
   const sortedNice = [...byNice.keys()].sort((a,b) => a-b);
+
+  // 전체 보기 모드: 류가 1개일 때만 자동 펼침
+  // 검색 모드: 30건 미만이면 자동 펼침 (기존 동작 유지)
+  const shouldOpen = (rows) => browseMode ? (sortedNice.length === 1) : (rows.length < 30);
+
   const html = sortedNice.map(n => {
     const rows = byNice.get(n);
+    const open = shouldOpen(rows);
     const niceLabel = `제${n}류 · ${NICE_NAMES[n] || ''}`;
-    const rowsHtml = rows.map(r => {
-      const [ko, en, nice, simIdx] = r.item;
-      const key = keyOf(r.idx);
-      const checked = SELECTED.has(key);
-      const simCode = SIM_CODES[simIdx];
-      return `<label class="row-hover flex items-start gap-2 px-3 py-2 border-t border-slate-100 cursor-pointer">
-        <input type="checkbox" class="mt-1 shrink-0" ${checked?'checked':''} onchange="toggleItem(${r.idx}, this.checked)">
-        <span class="flex-1 min-w-0">
-          <span class="text-sm text-slate-900 font-medium">${highlight(ko, tokens)}</span>
-          <span class="block text-xs text-slate-500 mt-0.5">${highlight(en, tokens)}</span>
-        </span>
-        <span class="text-xs text-slate-400 font-mono shrink-0">${simCode}</span>
-      </label>`;
-    }).join('');
-    return `<details class="border-b border-slate-200" ${rows.length<30?'open':''}>
+    // 펼쳐진 그룹은 즉시 렌더, 접힌 그룹은 펼칠 때 지연 렌더 → 수만 건도 초기 로딩 빠름
+    let bodyHtml;
+    if (open) {
+      bodyHtml = buildRowsHtml(rows, tokens);
+    } else {
+      _pendingRowsByNice.set(n, { rows, tokens });
+      bodyHtml = '';
+    }
+    return `<details class="border-b border-slate-200" ${open?'open':''} ontoggle="lazyRenderNice(${n}, this)">
       <summary class="px-3 py-2 bg-slate-50 flex items-center justify-between">
         <span class="flex items-center gap-2">
           <span class="chevron text-slate-400">▶</span>
           <span class="text-sm font-semibold text-slate-800">${niceLabel}</span>
-          <span class="text-xs text-slate-500">${rows.length}건</span>
+          <span class="text-xs text-slate-500">${rows.length.toLocaleString()}건</span>
         </span>
         <button class="text-xs text-slate-500 hover:text-slate-900" onclick="event.preventDefault(); event.stopPropagation(); selectAllInNice(${n})">이 류 전체 선택</button>
       </summary>
-      <div>${rowsHtml}</div>
+      <div class="rows-container">${bodyHtml}</div>
     </details>`;
   }).join('');
   el.innerHTML = html;
@@ -508,7 +557,7 @@ function toggleItem(origIdx, checked) {
 
 function selectAllInNice(n) {
   // 현재 검색 결과 중 해당 류를 모두 선택
-  const tokensLocal = literalsFromInput('searchInput');
+  const tokensLocal = currentIsBrowse ? [] : literalsFromInput('searchInput');
   let added = 0;
   for (const r of currentSearchResults) {
     if (r.item[2] !== n) continue;
@@ -519,40 +568,70 @@ function selectAllInNice(n) {
       added++;
     }
   }
-  // 체크박스 시각 갱신
-  renderSearchResults(currentSearchResults, tokensLocal);
+  // 체크박스 시각 갱신 (현재 모드 유지)
+  renderSearchResults(currentSearchResults, tokensLocal, { browseMode: currentIsBrowse });
   renderSelected();
   if (added === 0) flashToast(`제${n}류 항목이 이미 모두 선택되어 있습니다.`);
   else flashToast(`제${n}류에서 ${added}건 추가되었습니다.`);
+}
+
+// 검색어 없이 선택한 류의 전체 지정상품 가져오기 (가나다순)
+function browseByNice(niceSet) {
+  const results = [];
+  for (let i = 0; i < DATA.length; i++) {
+    const it = DATA[i];
+    if (!niceSet.has(it[2])) continue;
+    results.push({ idx: i, item: it, score: 0 });
+  }
+  results.sort((a, b) => {
+    if (a.item[2] !== b.item[2]) return a.item[2] - b.item[2];
+    return a.item[0].localeCompare(b.item[0], 'ko');
+  });
+  return results;
 }
 
 function doSearch() {
   const q = document.getElementById('searchInput').value.trim();
   const summaryEl = document.getElementById('searchSummary');
   const resultsEl = document.getElementById('searchResults');
+
+  // [류 전체 보기 모드] 검색어가 비어 있지만 류 필터가 있으면 해당 류 전체 표시
   if (!q) {
-    summaryEl.textContent = '검색어를 입력하세요.';
+    if (niceFilter.size > 0) {
+      const results = browseByNice(niceFilter);
+      currentSearchResults = results;
+      currentIsBrowse = true;
+      renderSearchResults(results, [], { browseMode: true });
+      return;
+    }
+    // 검색어도 류 필터도 없으면 안내
+    summaryEl.innerHTML = '검색어를 입력하거나, 위의 <b>류 필터</b>에서 원하는 류를 클릭하면 해당 류 전체를 볼 수 있습니다.';
     resultsEl.innerHTML = '';
     currentSearchResults = [];
+    currentIsBrowse = false;
     return;
   }
+
   const filterSet = niceFilter.size === 0 ? null : niceFilter;
   const { results, literals, error } = searchItems(q, filterSet);
   if (error) {
     summaryEl.innerHTML = `<span class="text-red-600">⚠️ 검색식 오류: ${escHtml(error)}</span>`;
     resultsEl.innerHTML = '';
     currentSearchResults = [];
+    currentIsBrowse = false;
     return;
   }
   currentSearchResults = results;
+  currentIsBrowse = false;
   renderSearchResults(results, literals);
 }
 
 function clearSearch() {
   document.getElementById('searchInput').value = '';
   document.getElementById('searchResults').innerHTML = '';
-  document.getElementById('searchSummary').textContent = '검색어를 입력하세요.';
+  document.getElementById('searchSummary').innerHTML = '검색어를 입력하거나, 위의 <b>류 필터</b>에서 원하는 류를 클릭하면 해당 류 전체를 볼 수 있습니다.';
   currentSearchResults = [];
+  currentIsBrowse = false;
   niceFilter.clear();
   renderNiceFilter();
 }
