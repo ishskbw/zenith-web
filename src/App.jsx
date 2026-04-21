@@ -1649,6 +1649,12 @@ body{background:${ivory}}
               <div style={{ fontSize: 13, lineHeight: 2.2 }}>
                 {t.areas.map((a,i) => (<div key={i} style={{ color: "#b5b0aa" }}>{a.title}</div>))}
               </div>
+              <div style={{ fontSize: 11, color: "#fff", letterSpacing: 2, textTransform: "uppercase", fontWeight: 600, marginTop: 24, marginBottom: 10 }}>Tools</div>
+              <div>
+                <a href="/trademark-goods-search.html" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontSize: 12, color: "#fff", background: oxblood, padding: "8px 14px", borderRadius: 2, textDecoration: "none", letterSpacing: .3, fontWeight: 500, transition: "background .2s, transform .2s" }} onMouseEnter={(e)=>{e.currentTarget.style.background="#8b2a3d";}} onMouseLeave={(e)=>{e.currentTarget.style.background=oxblood;}}>
+                  {lang==="ja"?"商標指定商品検索 (2026)":lang==="en"?"Trademark Goods Search (2026)":lang==="zh"?"商标指定商品检索 (2026)":"상표 지정상품 검색 (2026)"}
+                </a>
+              </div>
             </div>
             <div>
               <div style={{ fontSize: 11, color: "#fff", letterSpacing: 2, textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>Contact</div>
