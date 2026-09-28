@@ -61,6 +61,7 @@ button{font:inherit;cursor:pointer}
 
 .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:22px}
 .meta label{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--muted);font-weight:500}
+.meta input[type=text]::placeholder{color:var(--muted);opacity:.6}
 .meta input[type=text]{font:inherit;font-size:14.5px;color:var(--ink);background:var(--surface);border:1px solid var(--line-strong);border-radius:5px;padding:8px 10px}
 .pre{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px 16px;margin-bottom:26px;display:flex;flex-direction:column;gap:8px}
 .pre h3{margin:0;font-size:13px;letter-spacing:.06em;color:var(--muted);font-weight:600}
@@ -136,13 +137,13 @@ footer b{color:var(--ink);font-weight:600}
     <main>
       <div class="meta">
         <label for="fAppNo">출원번호
-          <input type="text" id="fAppNo" placeholder="10-2026-0000000">
+          <input type="text" id="fAppNo" placeholder="예) 10-2026-0123456">
         </label>
         <label for="fApplicant">출원인
-          <input type="text" id="fApplicant" placeholder="출원인 명칭">
+          <input type="text" id="fApplicant" placeholder="예) 주식회사 바이오랩">
         </label>
         <label for="fTitle">발명의 명칭
-          <input type="text" id="fTitle" placeholder="발명의 명칭">
+          <input type="text" id="fTitle" placeholder="예) 피하투여용 단백질 제형">
         </label>
       </div>
 
@@ -387,9 +388,6 @@ function reset(){
 }
 
 function sample(){
-  document.getElementById("fAppNo").value = "10-2026-0123456";
-  document.getElementById("fApplicant").value = "(예시) 주식회사 바이오랩";
-  document.getElementById("fTitle").value = "(예시) 피하투여용 단백질 제형";
   document.getElementById("preExam").checked = true;
   document.getElementById("preDecision").checked = true;
   check("venture",[0,1]);
