@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="특허·실용신안 우선심사 신청 대상 여부를 현행 고시 기준으로 확인하는 체크리스트 — 제니스국제특허법률사무소">
+<title>우선심사 해당성 검토</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+:root{
+  --paper:#F3F5F8; --surface:#FFFFFF; --sunk:#EAEEF3;
+  --ink:#17202D; --muted:#5A6576; --line:#D5DBE3; --line-strong:#B9C2CE;
+  --accent:#6B1D2E; --accent-soft:#F5E9EC;
+  --ok:#1C7449; --ok-soft:#E2F2E9; --warn:#9A5B07; --warn-soft:#FBF0DC;
+  --fast:#7A2E8C; --fast-soft:#F3E6F6;
+  --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --serif:"Noto Serif KR","AppleMyungjo","Batang",serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#10151D; --surface:#171E28; --sunk:#1E2733;
+    --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3441; --line-strong:#3A4656;
+    --accent:#E8C88A; --accent-soft:#2E2518;
+    --ok:#6FCF9E; --ok-soft:#16301F; --warn:#E9B25C; --warn-soft:#352812;
+    --fast:#D49BE3; --fast-soft:#2F1C35;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#10151D; --surface:#171E28; --sunk:#1E2733;
+  --ink:#E6EBF2; --muted:#98A3B3; --line:#2A3441; --line-strong:#3A4656;
+  --accent:#E8C88A; --accent-soft:#2E2518;
+  --ok:#6FCF9E; --ok-soft:#16301F; --warn:#E9B25C; --warn-soft:#352812;
+  --fast:#D49BE3; --fast-soft:#2F1C35;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:20px;padding-block:28px 60px}
+header.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px;border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:22px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--muted)}
+h1{font-family:var(--serif);font-size:clamp(24px,3.2vw,32px);font-weight:700;margin:4px 0 0;text-wrap:balance;letter-spacing:-.01em}
+.basis{font-size:13px;color:var(--muted);max-width:44ch;text-align:right}
+.basis b{color:var(--ink);font-weight:600}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:28px;align-items:start}
+@media (max-width:900px){.grid{grid-template-columns:1fr}.basis{text-align:left}}
+
+.sample{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;background:var(--accent-soft);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:10px 14px;font-size:13.5px;margin-bottom:18px}
+.sample[hidden]{display:none!important}
+button{font:inherit;cursor:pointer}
+.btn{border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:5px;padding:6px 12px;font-size:13.5px;font-weight:500}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.home{color:var(--accent);text-decoration:none;font-weight:500}.home:hover{text-decoration:underline}
+.btn.primary:hover{filter:brightness(1.08);color:var(--surface)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:22px}
+.meta label{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--muted);font-weight:500}
+.meta input[type=text]{font:inherit;font-size:14.5px;color:var(--ink);background:var(--surface);border:1px solid var(--line-strong);border-radius:5px;padding:8px 10px}
+.pre{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px 16px;margin-bottom:26px;display:flex;flex-direction:column;gap:8px}
+.pre h3{margin:0;font-size:13px;letter-spacing:.06em;color:var(--muted);font-weight:600}
+
+section.grp{margin-bottom:26px}
+section.grp>h2{font-size:17px;font-weight:700;margin:0 0 4px;display:flex;align-items:baseline;gap:10px}
+section.grp>h2 .cnt{font-family:var(--mono);font-size:12px;font-weight:400;color:var(--muted)}
+section.grp>p{margin:0 0 10px;color:var(--muted);font-size:13.5px}
+.items{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.item{border-bottom:1px solid var(--line);padding:11px 4px 11px 2px}
+.item.on{background:linear-gradient(90deg,var(--accent-soft),transparent 70%)}
+.row{display:grid;grid-template-columns:22px 1fr auto;gap:10px;align-items:start}
+.row input{margin:4px 0 0;width:17px;height:17px;accent-color:var(--accent)}
+.lab{font-weight:600;font-size:15px;cursor:pointer}
+.desc{display:block;font-weight:400;font-size:13.5px;color:var(--muted);margin-top:2px}
+.ref{font-family:var(--mono);font-size:11.5px;color:var(--accent);white-space:nowrap;padding-top:4px}
+.subs{margin:8px 0 2px 32px;display:flex;flex-direction:column;gap:6px;padding:10px 12px;background:var(--sunk);border-radius:5px}
+.subs[hidden]{display:none!important}
+.subs .st{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.04em}
+.sub{display:grid;grid-template-columns:20px 1fr;gap:8px;font-size:13.8px;align-items:start;cursor:pointer}
+.sub input{margin:4px 0 0;accent-color:var(--ok)}
+.chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.chip{font-size:11.5px;border:1px solid var(--line-strong);border-radius:99px;padding:1px 8px;color:var(--muted);background:var(--surface)}
+
+aside{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px)}
+@media (max-width:900px){aside{position:static}}
+.panel{background:var(--surface);border:1px solid var(--line-strong);border-radius:8px;overflow:hidden}
+.verdict{padding:18px 18px 16px;border-bottom:1px solid var(--line)}
+.verdict .k{font-size:12px;letter-spacing:.06em;color:var(--muted);font-weight:600}
+.verdict .v{font-family:var(--serif);font-size:24px;font-weight:700;margin-top:2px;text-wrap:balance}
+.verdict .v.ok{color:var(--ok)} .verdict .v.warn{color:var(--warn)} .verdict .v.no{color:var(--muted)}
+.tally{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.pill{font-size:12px;font-weight:600;border-radius:99px;padding:2px 10px;font-variant-numeric:tabular-nums}
+.pill.ok{background:var(--ok-soft);color:var(--ok)} .pill.warn{background:var(--warn-soft);color:var(--warn)} .pill.fast{background:var(--fast-soft);color:var(--fast)}
+.pbody{padding:14px 18px 18px;display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - 220px);overflow:auto}
+@media (max-width:900px){.pbody{max-height:none}}
+.pbody h4{margin:0 0 6px;font-size:12.5px;letter-spacing:.05em;color:var(--muted);font-weight:600}
+.res{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.res li{border-left:3px solid var(--line-strong);padding:2px 0 2px 10px;font-size:13.8px}
+.res li.ok{border-color:var(--ok)} .res li.warn{border-color:var(--warn)} .res li.fast{border-color:var(--fast)}
+.res li b{display:block;font-weight:600}
+.res li small{display:block;color:var(--muted);font-size:12.5px}
+.res li .mono{font-family:var(--mono);font-size:11.5px;color:var(--accent)}
+.empty{color:var(--muted);font-size:13.5px;margin:0}
+.ev{margin:0;padding-left:18px;font-size:13.5px;display:flex;flex-direction:column;gap:3px}
+.note{font-size:12.5px;color:var(--muted);margin:0}
+textarea#memo{width:100%;min-height:170px;font-family:var(--sans);font-size:13px;line-height:1.55;color:var(--ink);background:var(--sunk);border:1px solid var(--line);border-radius:5px;padding:10px;resize:vertical}
+.copyrow{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.copied{font-size:12.5px;color:var(--ok)}
+footer{margin-top:36px;border-top:1px solid var(--line);padding-top:16px;font-size:12.8px;color:var(--muted);display:flex;flex-direction:column;gap:6px;max-width:80ch}
+footer b{color:var(--ink);font-weight:600}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="eyebrow"><a class="home" href="https://www.ipzenith.com">제니스국제특허법률사무소</a> · 특허·실용신안 | 특허법 제61조 · 시행령 제9조</div>
+      <h1>우선심사 해당성 검토</h1>
+    </div>
+    <p class="basis">기준: <b>특허·실용신안 우선심사의 신청에 관한 고시</b> (지식재산처고시 제2026-3호, 2026. 2. 23. 시행) 제4조</p>
+  </header>
+
+  <div class="sample" id="sampleBar">
+    <span><b>예시 입력</b>이 채워져 있습니다. 실제 사건은 초기화 후 입력하십시오.</span>
+    <button class="btn" id="resetBtn" type="button">초기화</button>
+  </div>
+
+  <div class="grid">
+    <main>
+      <div class="meta">
+        <label for="fAppNo">출원번호
+          <input type="text" id="fAppNo" placeholder="10-2026-0000000">
+        </label>
+        <label for="fApplicant">출원인
+          <input type="text" id="fApplicant" placeholder="출원인 명칭">
+        </label>
+        <label for="fTitle">발명의 명칭
+          <input type="text" id="fTitle" placeholder="발명의 명칭">
+        </label>
+      </div>
+
+      <div class="pre">
+        <h3>공통 전제</h3>
+        <label class="sub" for="preExam"><input type="checkbox" id="preExam"><span>심사청구가 되어 있거나, 우선심사 신청과 동시에 심사청구할 예정임 <span class="desc">고시 제4조제1항 본문: 심사청구가 있는 출원에 한정</span></span></label>
+        <label class="sub" for="preDecision"><input type="checkbox" id="preDecision"><span>아직 특허여부결정 전임</span></label>
+      </div>
+
+      <div id="groups"></div>
+
+      <footer>
+        <div><b>삭제된 사유 주의.</b> 65세 이상 고령자·건강상 이유(구 제2호거목)와 선행기술조사 전문기관 의뢰(구 제4호)는 2024. 1. 1. 시행 개정으로 삭제되어 현재 신청 사유가 아님.</div>
+        <div><b>공고 사항 확인.</b> 첨단기술(러목)은 분야별 공고의 대상·신청기간, 탄소중립 녹색기술(나목)은 지식재산처 홈페이지 게시 특허분류, 초고속심사는 연간 공고된 대상·기간·제한건수에 따라 달라지므로 신청 전 최신 공고 확인 필요.</div>
+        <div><b>안내.</b> 이 검토 결과는 참고용이며 법률 자문이 아님. 구체적 사건은 <a class="home" href="https://www.ipzenith.com">제니스국제특허법률사무소</a>(02-888-3066, zenith@ipzenith.com)로 문의 바람.</div>
+        <div><b>증명서류.</b> 화면의 서류 목록은 실무상 통상 제출되는 예시임. 정확한 요건은 고시 별표 1(증명서류)·별표 2(PPH 신청요건)로 확인 필요.</div>
+      </footer>
+    </main>
+
+    <aside>
+      <div class="panel">
+        <div class="verdict">
+          <div class="k">검토 결과</div>
+          <div class="v" id="vText">—</div>
+          <div class="tally" id="tally"></div>
+        </div>
+        <div class="pbody">
+          <div>
+            <h4>신청 가능 사유</h4>
+            <ul class="res" id="okList"></ul>
+          </div>
+          <div id="warnWrap">
+            <h4>요건 보완 필요</h4>
+            <ul class="res" id="warnList"></ul>
+          </div>
+          <div id="fastWrap">
+            <h4>초고속심사 (제4조제2항)</h4>
+            <ul class="res" id="fastList"></ul>
+          </div>
+          <div id="evWrap">
+            <h4>준비 서류 (예시)</h4>
+            <ul class="ev" id="evList"></ul>
+          </div>
+          <div>
+            <h4>검토의견 (복사용)</h4>
+            <textarea id="memo" readonly aria-label="검토의견"></textarea>
+            <div class="copyrow">
+              <button class="btn primary" id="copyBtn" type="button">검토의견 복사</button>
+              <span class="copied" id="copied" hidden>복사됨</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+const REL = "발명이 해당 기업의 업종과 관련성이 있음";
+const FIRST = "최초 출원 시 출원인 중 1인 이상이 해당 기업임";
+
+const GROUPS = [
+ { id:"A", title:"출원인·기업 자격", desc:"기업 인증·지정에 근거한 사유. 대부분 업종 관련성과 최초 출원 시 출원인 요건이 함께 붙음.", items:[
+  {id:"venture", label:"벤처기업 확인 기업의 출원", ref:"2호 마목(1)", desc:"벤처기업육성에 관한 특별법 제25조에 따른 벤처기업 확인", subs:[REL,FIRST], ev:["벤처기업확인서"]},
+  {id:"innobiz", label:"기술혁신형 중소기업(이노비즈)의 출원", ref:"2호 마목(2)", desc:"중소기업 기술혁신 촉진법 제15조에 따른 선정", subs:[REL,FIRST], ev:["기술혁신형 중소기업 확인서"]},
+  {id:"jikmu", label:"직무발명보상 우수기업의 출원", ref:"2호 마목(3)", desc:"발명진흥법 제11조의2에 따른 선정", subs:[REL,FIRST], ev:["직무발명보상 우수기업 인증서"]},
+  {id:"ipm", label:"지식재산 경영인증 중소기업의 출원", ref:"2호 마목(4)", desc:"발명진흥법 제24조의2에 따른 인증", subs:[REL,FIRST], ev:["지식재산 경영인증서"]},
+  {id:"gov", label:"국가·지방자치단체 직무에 관한 출원", ref:"2호 라목", desc:"국·공립학교 기술이전·사업화 전담조직(TLO)의 출원 포함", subs:["신청인이 국가·해당 지자체(국·공립학교 TLO 포함) 본인임 (고시 제3조 단서)"], ev:["직무 관련 출원임을 소명하는 자료"]},
+  {id:"sobujang", label:"소재·부품·장비 특화선도기업의 출원", ref:"2호 자목(1)", desc:"소부장 특별조치법 제13조 선정 기업. 실시(준비) 중인 출원으로 간주", subs:[REL,FIRST], ev:["특화선도기업 선정 확인 자료"]},
+  {id:"startup", label:"창업 3년 이내 기업으로 정부지원·투자 유치", ref:"2호 자목(3)", desc:"정부 출연·보조 1천만원 이상, 또는 VC·크라우드펀딩·엔젤·액셀러레이터 투자 5천만원 이상. 실시(준비) 중 간주", subs:["창업 후 3년 이내 기업임","정부 출연·보조 1천만원 이상 또는 투자 5천만원 이상 받음",FIRST], ev:["사업자등록증명(개업일)","협약서 또는 투자계약서·입금 확인 자료"]},
+  {id:"meddevice", label:"혁신의료기기 지정 기업의 출원", ref:"2호 자목(6)", desc:"의료기기산업법 제21조제2항에 따른 지정. 실시(준비) 중 간주", subs:["혁신의료기기 기술에 관한 출원임",FIRST], ev:["혁신의료기기 지정서"]}
+ ]},
+ { id:"B", title:"기술 분야", desc:"청구 발명의 기술 분야나 부여된 특허분류에 근거한 사유.", items:[
+  {id:"ir4", label:"4차 산업혁명 관련 기술 활용 출원", ref:"2호 너목", desc:"별표 3의 4차 산업혁명 관련 新특허분류가 부여된 출원", chips:["인공지능","사물인터넷","3D 프린팅","자율주행차","빅데이터","클라우드","지능형로봇","스마트시티","가상증강현실","혁신신약","신재생에너지","맞춤형 헬스케어","드론","차세대 통신","지능형반도체","첨단소재","블록체인","스마트제조","차세대바이오의약품"], subs:["해당 출원에 4차 산업혁명 新특허분류가 실제로 부여되어 있음"], ev:["우선심사신청설명서(新특허분류 부여 사실 기재)"]},
+  {id:"adv", label:"반도체 등 첨단기술 관련 출원 (공고 대상)", ref:"2호 러목", desc:"국가첨단전략산업 관련 기술 포함. 지식재산처장이 공고한 대상·신청기간에 한정", chips:["반도체","디스플레이","이차전지","바이오(생명공학)","바이오(헬스케어)","첨단로봇","인공지능"], subs:["분야별 공고의 우선심사 대상 기술에 해당함","공고된 신청기간 내 신청임"], ev:["우선심사신청설명서(공고 대상 기술 해당성 기재)"]},
+  {id:"green", label:"탄소중립 녹색기술 직접 관련 출원", ref:"2호 나목", desc:"홈페이지 게시 우선심사 대상 탄소중립 녹색기술 특허분류가 부여된 출원", subs:["게시된 녹색기술 특허분류가 부여되어 있음"], ev:["우선심사신청설명서(특허분류 기재)"]},
+  {id:"defense", label:"방위산업분야 출원", ref:"2호 가목", desc:"방위사업법상 방산물자 또는 그 제조방법에 관한 출원", subs:["방산물자 지정 사실 확인 가능"], ev:["방산물자 지정 확인 자료"]},
+  {id:"pollution", label:"공해방지·제거가 주목적인 출원", ref:"2호 하목", desc:"소음·진동, 수질, 대기, 폐기물, 가축분뇨, 재활용, 하수·중수도 관련 환경오염방지시설 또는 그 방법", subs:["관계 법령에서 정한 방지시설·처리시설에 해당함"], ev:["해당 시설임을 설명하는 자료"]},
+  {id:"medprotect", label:"의료·방역 물품 직접 관련 출원", ref:"5호 가목", desc:"감염병예방법 제2조제21호의 의료·방역 물품", subs:[], ev:["우선심사신청설명서"]},
+  {id:"disaster", label:"인증 재난안전제품 직접 관련 출원", ref:"5호 나목", desc:"재난안전산업 진흥법 제16조에 따른 인증 제품", subs:["재난안전제품 인증 받음"], ev:["재난안전제품 인증서"]},
+  {id:"disnotice", label:"재난 대응 공고 대상 출원", ref:"5호 다목", desc:"재난으로 인한 긴급 상황에 대응해 신청기간을 정해 공고한 대상", subs:["현재 유효한 공고의 대상·기간에 해당함"], ev:["우선심사신청설명서"]}
+ ]},
+ { id:"C", title:"정부사업·과제 연계", desc:"국가 R&D, 수출지원사업, 특구·단지, 공모전 등 정부 지원과 연결된 사유.", items:[
+  {id:"rnd", label:"국가연구개발사업 결과물 출원", ref:"2호 바목", desc:"주관·공동연구개발기관이 협약 사업계획서에 따라 수행한 결과. 과제 유형: ① 중소·중견기업 수행 ② 사전조사·기획 시 특허동향조사 실시 ③ 지재권 연계 R&D 전략지원사업(IP-R&D) ④ 국방 R&D ⑤ 국가전략기술 과제", subs:["협약한 사업계획서에 따른 연구개발 결과에 관한 출원임","①~⑤ 과제 유형 중 하나에 해당함"], ev:["연구개발 협약서·사업계획서","과제 유형 소명 자료(특허동향조사·IP-R&D 결과 등)"]},
+  {id:"export", label:"수출촉진 직접 관련 출원", ref:"2호 다목", desc:"다음 사업 지원 중소·중견기업도 해당: 글로벌 IP스타기업, 수출 도전기업 IP위험 대응, 특허분쟁 대응전략(이상 지식재산처), 글로벌 기업 협업, 코리아 스타트업센터, 글로벌 액셀러레이팅(이상 중기부)", subs:["수출 관련성 소명 가능 또는 위 사업 수혜 중소·중견기업임","(사업 수혜 시) 선정일·계약일로부터 3년 이내이고 사업과 관련된 발명임",FIRST], ev:["수출계약서·수출실적 자료 또는 사업 선정·협약 확인서"]},
+  {id:"contest", label:"국가·지자체 공모전·경진대회 선정 발명", ref:"2호 자목(2)", desc:"실시(준비) 중 간주", subs:["국가·지자체로부터 출원 또는 사업화 지원을 받음"], ev:["선정 확인서","출원·사업화 지원 확인 자료"]},
+  {id:"proto", label:"혁신시제품 지정 신청이 확인된 기업의 출원", ref:"2호 자목(4)", desc:"실시(준비) 중 간주", subs:["혁신시제품 지정 신청 기술에 관한 출원임"], ev:["혁신시제품 지정 신청 확인 자료"]},
+  {id:"sandbox", label:"규제 샌드박스 신청 관련 출원", ref:"2호 자목(5)", desc:"실시(준비) 중 간주", subs:["규제 샌드박스 신청 제품·서비스와 관련된 발명임","최초 출원 시 출원인 중 1인 이상이 샌드박스 신청인임"], ev:["규제 샌드박스 신청서 접수 확인 자료"]},
+  {id:"freezone", label:"규제자유특구 특화사업 직접 관련 출원", ref:"2호 타목", desc:"규제특례법 제55조에 따라 규제특례가 적용된 특화사업", subs:[], ev:["특화사업 관련성 소명 자료"]},
+  {id:"medcluster", label:"첨단의료복합단지 입주기관 출원", ref:"2호 파목", desc:"규제 특례가 적용되는 입주의료연구개발기관의 단지 안 의료연구개발 관련 출원", subs:[], ev:["입주 확인 자료"]}
+ ]},
+ { id:"D", title:"실시 현황·해외 절차", desc:"출원 발명의 실시 상황, 해외 출원 연계에 근거한 사유.", items:[
+  {id:"selfwork", label:"출원인이 업으로서 실시 중이거나 실시 준비 중", ref:"2호 자목", desc:"실무상 가장 많이 쓰는 사유. 청구 발명과 실시 제품의 대응 관계 설명이 핵심", subs:["실시(준비) 사실을 보여주는 객관적 자료가 있음"], ev:["사업자등록증","제품 사진·카탈로그·홈페이지 캡처, 거래·발주 자료 또는 시제품 제작 자료"]},
+  {id:"third", label:"출원공개 후 제3자가 업으로서 실시", ref:"1호", desc:"제3자: 출원인이 아니고 실시허락도 받지 않은 자", subs:["출원공개가 되어 있음","제3자의 실시 상황을 구체적으로 기재할 수 있음 (고시 제6조제1항)"], ev:["제3자 실시 증거(제품·판매 자료 등)"]},
+  {id:"prio", label:"조약우선권 주장의 기초 출원으로 해외 절차 진행 중", ref:"2호 아목", desc:"이 출원을 기초로 우선권을 주장한 외국 출원(PCT 포함)이 외국 특허청에 계속 중", subs:["해당 외국 출원이 외국 특허담당 정부기관에서 계속 중임"], ev:["외국 출원 사실 증명(출원번호 통지서 등)"]},
+  {id:"pph", label:"특허심사하이웨이(PPH) 등 우선심사 합의 대상", ref:"3호", desc:"대상국가 출원 또는 대상국가가 ISA·IPEA인 PCT 출원과 최우선일이 같은 출원", subs:["대상국가 출원(또는 PCT)과 최우선일이 동일함","별표 2 신청요건(대상국 특허가능 청구항과의 대응 등)을 갖춤"], ev:["대상국 특허가능 판단 청구항 및 번역문","청구항 대응표","대상국 심사결과 통지서 등(별표 1)"]},
+  {id:"isa", label:"지식재산처가 국제조사기관(ISA)인 PCT 국내단계 출원", ref:"2호 더목", desc:"특허법 제198조의2에 따라 KIPO가 국제조사 수행", subs:["특허법 제203조의 서면(국내서면)이 제출되어 있음"], ev:["국제조사 수행 사실 확인(국제출원번호 기재)"]}
+ ]}
+];
+
+const ALL = GROUPS.flatMap(g => g.items);
+const byId = Object.fromEntries(ALL.map(i => [i.id, i]));
+const state = {};
+
+function build(){
+  const host = document.getElementById("groups");
+  host.innerHTML = GROUPS.map(g => `
+   <section class="grp">
+     <h2>${g.title} <span class="cnt">${g.items.length}개 사유</span></h2>
+     <p>${g.desc}</p>
+     <div class="items">
+      ${g.items.map(it => `
+       <div class="item" id="wrap-${it.id}">
+         <div class="row">
+           <input type="checkbox" id="c-${it.id}" data-id="${it.id}">
+           <label class="lab" for="c-${it.id}">${it.label}<span class="desc">${it.desc}</span>
+             ${it.chips ? `<span class="chips">${it.chips.map(c=>`<span class="chip">${c}</span>`).join("")}</span>` : ""}
+           </label>
+           <span class="ref">${it.ref}</span>
+         </div>
+         ${it.subs.length ? `<div class="subs" id="subs-${it.id}" hidden>
+           <span class="st">세부 요건</span>
+           ${it.subs.map((s,k)=>`<label class="sub" for="s-${it.id}-${k}"><input type="checkbox" id="s-${it.id}-${k}" data-id="${it.id}" data-k="${k}"><span>${s}</span></label>`).join("")}
+         </div>` : ""}
+       </div>`).join("")}
+     </div>
+   </section>`).join("");
+  host.addEventListener("change", onChange);
+  ["preExam","preDecision"].forEach(id=>document.getElementById(id).addEventListener("change",render));
+  ["fAppNo","fApplicant","fTitle"].forEach(id=>document.getElementById(id).addEventListener("input",render));
+}
+
+function onChange(e){
+  const t = e.target; if(!t.dataset.id) return;
+  document.getElementById("sampleBar").hidden = true;
+  const id = t.dataset.id;
+  if(t.dataset.k === undefined){
+    const sb = document.getElementById("subs-"+id);
+    if(sb) sb.hidden = !t.checked;
+    document.getElementById("wrap-"+id).classList.toggle("on", t.checked);
+  }
+  render();
+}
+
+function status(it){
+  const on = document.getElementById("c-"+it.id).checked;
+  if(!on) return null;
+  const missing = it.subs.filter((s,k)=>!document.getElementById(`s-${it.id}-${k}`).checked);
+  return {it, missing, ok: missing.length===0};
+}
+
+function refFull(it){
+  if(it.ref.startsWith("1호")||it.ref.startsWith("3호")||it.ref.startsWith("5호")) return "고시 제4조제1항제"+it.ref.replace("호","호").replace(" ","");
+  return "고시 제4조제1항제"+it.ref.replace(" ","");
+}
+
+function render(){
+  const res = ALL.map(status).filter(Boolean);
+  const ok = res.filter(r=>r.ok), warn = res.filter(r=>!r.ok);
+  const isOk = id => ok.some(r=>r.it.id===id);
+  const preExam = document.getElementById("preExam").checked;
+  const preDec = document.getElementById("preDecision").checked;
+
+  // 초고속심사
+  const fast = [];
+  if(isOk("export")) fast.push({t:"수출촉진 직접 관련 출원", r:"제4조제2항제1호"});
+  if(isOk("prio") && isOk("adv")) fast.push({t:"조약우선권 기초 출원 + 첨단기술 공고 대상", r:"제4조제2항제2호"});
+  if(isOk("adv") && (isOk("startup"))) fast.push({t:"첨단기술 공고 대상 + 창업기업 (지식재산처장 공고 기업인지 별도 확인)", r:"제4조제2항제3호"});
+
+  const v = document.getElementById("vText");
+  if(ok.length && preExam && preDec){ v.textContent="우선심사 신청 가능"; v.className="v ok"; }
+  else if(ok.length){ v.textContent="사유 충족 · 전제 확인 필요"; v.className="v warn"; }
+  else if(warn.length){ v.textContent="요건 보완 시 가능"; v.className="v warn"; }
+  else { v.textContent="해당 사유 미선택"; v.className="v no"; }
+
+  document.getElementById("tally").innerHTML =
+    `<span class="pill ok">충족 ${ok.length}</span><span class="pill warn">보완 ${warn.length}</span>` +
+    (fast.length ? `<span class="pill fast">초고속 대상</span>` : "");
+
+  document.getElementById("okList").innerHTML = ok.length ? ok.map(r=>
+    `<li class="ok"><b>${r.it.label}</b><span class="mono">${refFull(r.it)}</span></li>`).join("")
+    : `<p class="empty">요건을 모두 충족한 사유가 없습니다.</p>`;
+
+  document.getElementById("warnWrap").hidden = !warn.length && (preExam && preDec);
+  let wl = warn.map(r=>`<li class="warn"><b>${r.it.label}</b><small>미확인: ${r.missing.join(" / ")}</small></li>`);
+  if(!preExam) wl.unshift(`<li class="warn"><b>공통 전제</b><small>심사청구 여부 확인 (우선심사 신청과 동시 청구 가능)</small></li>`);
+  if(!preDec) wl.unshift(`<li class="warn"><b>공통 전제</b><small>특허여부결정 전인지 확인</small></li>`);
+  document.getElementById("warnList").innerHTML = wl.join("");
+
+  document.getElementById("fastList").innerHTML = fast.length
+    ? fast.map(f=>`<li class="fast"><b>${f.t}</b><span class="mono">${f.r}</span><small>연간 공고된 신청기간·제한건수 내에서만 인정, 초과 시 일반 우선심사로 간주</small></li>`).join("")
+    : `<p class="empty">해당 없음</p>`;
+
+  const ev = new Set(["우선심사신청서(특허법 시행규칙 별지 제22호서식)","우선심사신청설명서(사유별 서식)"]);
+  ok.concat(warn).forEach(r=>r.it.ev.forEach(e=>ev.add(e)));
+  ev.add("대리인 절차 시 위임장");
+  document.getElementById("evList").innerHTML = [...ev].map(e=>`<li>${e}</li>`).join("");
+
+  document.getElementById("memo").value = memo(ok, warn, fast, preExam, preDec);
+}
+
+function memo(ok, warn, fast, preExam, preDec){
+  const d = new Date(); const ds = `${d.getFullYear()}. ${d.getMonth()+1}. ${d.getDate()}.`;
+  const n = document.getElementById("fAppNo").value.trim();
+  const a = document.getElementById("fApplicant").value.trim();
+  const t = document.getElementById("fTitle").value.trim();
+  const L = [];
+  L.push(`■ 우선심사 해당성 검토 (${ds} 검토, 지식재산처고시 제2026-3호 기준)`);
+  if(n||a||t) L.push(`- 대상: ${[n,a,t].filter(Boolean).join(" / ")}`);
+  if(ok.length){
+    L.push(`- 결론: 우선심사 신청 가능함${(!preExam||!preDec)?" (공통 전제 확인 조건부)":""}`);
+    L.push(`- 신청 사유:`);
+    ok.forEach(r=>L.push(`  · ${r.it.label} — ${refFull(r.it)}에 해당함`));
+  } else {
+    L.push(`- 결론: 현재 확인된 자료로는 요건을 모두 충족하는 사유가 없음`);
+  }
+  if(warn.length){
+    L.push(`- 추가 확인 필요:`);
+    warn.forEach(r=>L.push(`  · ${r.it.label}: ${r.missing.join(", ")} 여부 확인 필요함`));
+  }
+  if(!preExam) L.push(`- 심사청구 미완료 시 우선심사 신청과 동시에 심사청구 필요함`);
+  if(!preDec) L.push(`- 특허여부결정 전인지 확인 필요함`);
+  L.push(`- 초고속심사: ${fast.length ? fast.map(f=>f.r).join(", ")+" 대상임(연간 공고 범위 내)" : "해당 없음"}`);
+  if(ok.length > 1) L.push(`- 복수 사유 해당 시 증빙이 가장 간명한 사유로 신청하는 것이 바람직함`);
+  return L.join("\n");
+}
+
+function check(id, subsAll){
+  const c = document.getElementById("c-"+id); c.checked = true;
+  const sb = document.getElementById("subs-"+id); if(sb) sb.hidden=false;
+  document.getElementById("wrap-"+id).classList.add("on");
+  (subsAll||[]).forEach(k=>{ const s=document.getElementById(`s-${id}-${k}`); if(s) s.checked=true; });
+}
+
+function reset(){
+  document.querySelectorAll("#groups input, .pre input").forEach(i=>i.checked=false);
+  document.querySelectorAll(".subs").forEach(s=>s.hidden=true);
+  document.querySelectorAll(".item").forEach(s=>s.classList.remove("on"));
+  ["fAppNo","fApplicant","fTitle"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("sampleBar").hidden = true;
+  render();
+}
+
+function sample(){
+  document.getElementById("fAppNo").value = "10-2026-0123456";
+  document.getElementById("fApplicant").value = "(예시) 주식회사 바이오랩";
+  document.getElementById("fTitle").value = "(예시) 피하투여용 단백질 제형";
+  document.getElementById("preExam").checked = true;
+  document.getElementById("preDecision").checked = true;
+  check("venture",[0,1]);
+  check("selfwork",[0]);
+  check("adv",[0]);
+}
+
+document.getElementById("resetBtn").addEventListener("click", reset);
+document.getElementById("copyBtn").addEventListener("click", ()=>{
+  const ta = document.getElementById("memo");
+  const done = ()=>{ const c=document.getElementById("copied"); c.hidden=false; setTimeout(()=>c.hidden=true,1600); };
+  try{
+    navigator.clipboard.writeText(ta.value).then(done).catch(()=>{ ta.focus(); ta.select(); });
+  }catch(e){ ta.focus(); ta.select(); }
+});
+
+build(); sample(); render();
+</script>
+
+</body>
+</html>

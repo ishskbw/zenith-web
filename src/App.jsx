@@ -1679,9 +1679,12 @@ body{background:${ivory}}
                 {t.areas.map((a,i) => (<div key={i} style={{ color: "#b5b0aa" }}>{a.title}</div>))}
               </div>
               <div style={{ fontSize: 11, color: "#fff", letterSpacing: 2, textTransform: "uppercase", fontWeight: 600, marginTop: 24, marginBottom: 10 }}>Tools</div>
-              <div>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 8 }}>
                 <a href="/trademark-goods-search.html" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontSize: 12, color: "#fff", background: oxblood, padding: "8px 14px", borderRadius: 2, textDecoration: "none", letterSpacing: .3, fontWeight: 500, transition: "background .2s, transform .2s" }} onMouseEnter={(e)=>{e.currentTarget.style.background="#8b2a3d";}} onMouseLeave={(e)=>{e.currentTarget.style.background=oxblood;}}>
                   {lang==="ja"?"商標指定商品検索 (2026)":lang==="en"?"Trademark Goods Search (2026)":lang==="zh"?"商标指定商品检索 (2026)":"상표 지정상품 검색 (2026)"}
+                </a>
+                <a href="/priority-exam.html" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontSize: 12, color: "#fff", background: oxblood, padding: "8px 14px", borderRadius: 2, textDecoration: "none", letterSpacing: .3, fontWeight: 500, transition: "background .2s, transform .2s" }} onMouseEnter={(e)=>{e.currentTarget.style.background="#8b2a3d";}} onMouseLeave={(e)=>{e.currentTarget.style.background=oxblood;}}>
+                  {lang==="ja"?"優先審査申請確認":lang==="en"?"Priority Examination Check":lang==="zh"?"优先审查申请确认":"우선심사신청확인"}
                 </a>
               </div>
             </div>
