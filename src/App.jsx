@@ -445,10 +445,14 @@ export default function ZenithHub() {
   const pathToTab = (p) => {
     const clean = (p || "/").replace(/\/$/, "") || "/";
     if (clean === "/team") return "team";
-    if (clean === "/insights" || clean === "/newsletter") return "newsletter";
+    if (clean === "/insights" || clean === "/newsletter" || clean.startsWith("/insights/")) return "newsletter";
     if (clean === "/board") return "board";
     return "about";
   };
+  // Individual insight post URL: /insights/<postId>
+  const insightIdFromPath = (p) => { const m = (p || "").match(/^\/insights\/([^/?#]+)/); return m ? decodeURIComponent(m[1]) : null; };
+  const insightUrl = (id) => `https://www.ipzenith.com/insights/${encodeURIComponent(id)}`;
+  const pendingInsightRef = useRef((() => { try { return insightIdFromPath(window.location.pathname); } catch(e) { return null; } })());
   const [tab, setTab] = useState(() => {
     try {
       const fromUrl = pathToTab(window.location.pathname);
@@ -472,7 +476,11 @@ export default function ZenithHub() {
   useEffect(() => {
     try {
       const cur = window.history.state;
-      if (!cur || !cur.zenithTab) {
+      if (pendingInsightRef.current) {
+        // Opened via a direct post link: put the insights list behind it so "back" returns to the list
+        window.history.replaceState({ zenithTab: "newsletter" }, "", "/insights");
+        window.history.pushState({ zenithTab: "newsletter", modal: "rv" }, "", `/insights/${encodeURIComponent(pendingInsightRef.current)}`);
+      } else if (!cur || !cur.zenithTab) {
         window.history.replaceState({ zenithTab: tab }, "", tabToPath(tab));
       }
     } catch(e){}
@@ -482,6 +490,11 @@ export default function ZenithHub() {
       if (selMemberRef.current && state.modal !== "member") _setSelMember(null);
       if (selAreaRef.current && state.modal !== "area") _setSelArea(null);
       if (rvRef.current && state.modal !== "rv") _setRv(null);
+      if (state.modal === "rv" && !rvRef.current) {
+        const pid = insightIdFromPath(window.location.pathname);
+        const found = pid && itemsRef.current.find(x => x.id === pid);
+        if (found) _setRv(found);
+      }
       if (boardViewRef.current && state.modal !== "boardView") _setBoardView(null);
       // Restore tab from state, or fall back to URL path
       const t = state.zenithTab || pathToTab(window.location.pathname);
@@ -492,6 +505,10 @@ export default function ZenithHub() {
     return () => window.removeEventListener("popstate", onPop);
   }, []);
   const [items, setItems] = useState([]);
+  const itemsRef = useRef([]);
+  useEffect(() => { itemsRef.current = items; }, [items]);
+  const [nlLoaded, setNlLoaded] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
   const [rv, _setRv] = useState(null);
   const [boardView, _setBoardView] = useState(null);
   const [dragging, setDragging] = useState(false);
@@ -548,7 +565,7 @@ export default function ZenithHub() {
     const willOpen = !!v;
     _setRv(v);
     if (!wasOpen && willOpen) {
-      try { window.history.pushState({ ...(window.history.state || {}), modal: "rv" }, "", window.location.href); } catch(e){}
+      try { window.history.pushState({ ...(window.history.state || {}), modal: "rv" }, "", v.id ? `/insights/${encodeURIComponent(v.id)}` : window.location.href); } catch(e){}
     } else if (wasOpen && !willOpen) {
       try { if (window.history.state && window.history.state.modal === "rv") window.history.back(); } catch(e){}
     }
@@ -601,9 +618,11 @@ export default function ZenithHub() {
       board:      { ko: "게시판",    en: "Board",     ja: "掲示板",         zh: "内部公告" },
     };
     const tabLabel = (tabLabels[tab] && tabLabels[tab][lang]) || "";
-    const fullTitle = tab === "about" ? (t.seoTitle || t.siteTitle) : `${tabLabel} | ${t.seoTitle || t.siteTitle}`;
+    const baseTitle = tab === "about" ? (t.seoTitle || t.siteTitle) : `${tabLabel} | ${t.seoTitle || t.siteTitle}`;
+    const fullTitle = rv && rv.id ? `${rv.title} | ${t.seoTitle || t.siteTitle}` : baseTitle;
     document.title = fullTitle;
-    const currentUrl = `https://www.ipzenith.com${tabToPath(tab)}`;
+    const currentUrl = rv && rv.id ? insightUrl(rv.id) : `https://www.ipzenith.com${tabToPath(tab)}`;
+    const pageDesc = rv && rv.summary && rv.summary !== "Uploaded" ? rv.summary : t.seoDesc;
     const setMeta = (selector, attr, value) => {
       let el = document.querySelector(selector);
       if (!el) {
@@ -614,16 +633,16 @@ export default function ZenithHub() {
       }
       el.setAttribute(attr, value);
     };
-    setMeta('meta[name="description"]', "content", t.seoDesc);
+    setMeta('meta[name="description"]', "content", pageDesc);
     setMeta('meta[property="og:title"]', "content", fullTitle);
-    setMeta('meta[property="og:description"]', "content", t.seoDesc);
-    setMeta('meta[property="og:type"]', "content", "website");
+    setMeta('meta[property="og:description"]', "content", pageDesc);
+    setMeta('meta[property="og:type"]', "content", rv && rv.id ? "article" : "website");
     setMeta('meta[property="og:url"]', "content", currentUrl);
     setMeta('meta[property="og:site_name"]', "content", "Zenith Patent & Law Firm");
     setMeta('meta[property="og:locale"]', "content", lang === "ja" ? "ja_JP" : lang === "zh" ? "zh_CN" : lang === "en" ? "en_US" : "ko_KR");
     setMeta('meta[name="twitter:card"]', "content", "summary_large_image");
     setMeta('meta[name="twitter:title"]', "content", fullTitle);
-    setMeta('meta[name="twitter:description"]', "content", t.seoDesc);
+    setMeta('meta[name="twitter:description"]', "content", pageDesc);
     // Canonical URL (per tab)
     let canonical = document.querySelector('link[rel="canonical"]');
     if (!canonical) { canonical = document.createElement("link"); canonical.rel = "canonical"; document.head.appendChild(canonical); }
@@ -663,7 +682,7 @@ export default function ZenithHub() {
     let ldScript = document.getElementById("zenith-ld-org");
     if (!ldScript) { ldScript = document.createElement("script"); ldScript.type = "application/ld+json"; ldScript.id = "zenith-ld-org"; document.head.appendChild(ldScript); }
     ldScript.textContent = JSON.stringify(orgLd);
-  }, [lang, tab, t.seoTitle, t.seoDesc, t.siteTitle]);
+  }, [lang, tab, rv, t.seoTitle, t.seoDesc, t.siteTitle]);
   const notoFont = lang === "ja" ? "'Noto Sans JP'" : lang === "zh" ? "'Noto Sans SC'" : "'Noto Sans KR'";
   const fontStack = `'Sora', ${notoFont}, sans-serif`;
   const displayFontStack = `'DM Serif Display', ${notoFont}, serif`;
@@ -673,6 +692,7 @@ export default function ZenithHub() {
   const loadNewsletters = async () => {
     const { db, collection, query, orderBy, getDocs } = fbRef.current; if (!db) return;
     try { const q = query(collection(db, "newsletters"), orderBy("createdAt", "desc")); const snap = await getDocs(q); setItems(snap.docs.map(d => ({ ...d.data(), id: d.id }))); } catch(e) { console.error(e); }
+    setNlLoaded(true);
   };
   const loadBoardPosts = async () => {
     const { db, collection, query, orderBy, getDocs } = fbRef.current; if (!db) return;
@@ -691,6 +711,15 @@ export default function ZenithHub() {
     } catch(e) { console.error(e); }
   };
   useEffect(() => { if (fbReady) { loadNewsletters(); loadBoardPosts(); } }, [fbReady]);
+  // Open the post requested by a direct link (/insights/<id>) once posts are loaded
+  useEffect(() => {
+    const pid = pendingInsightRef.current;
+    if (!pid || !nlLoaded) return;
+    pendingInsightRef.current = null;
+    const found = items.find(x => x.id === pid);
+    if (found) { _setRv(found); incrementViews(found.id); }
+    else { try { if (window.history.state && window.history.state.modal === "rv") window.history.back(); } catch(e){} }
+  }, [nlLoaded, items]);
   const saveNewsletter = async (data) => { const {db,collection,addDoc,serverTimestamp}=fbRef.current; if(!db)return; try{ await addDoc(collection(db,"newsletters"),{...data,views:0,createdAt:serverTimestamp()}); loadNewsletters(); } catch(e){console.error(e);} };
   const deleteNewsletter = async (id) => { const {db,deleteDoc,doc}=fbRef.current; if(!db)return; try{ await deleteDoc(doc(db,"newsletters",id)); loadNewsletters(); }catch(e){console.error(e);} };
   const saveBoardPost = async (data) => { const {db,collection,addDoc,serverTimestamp}=fbRef.current; if(!db)return; try{ await addDoc(collection(db,"boardPosts"),{...data,views:0,createdAt:serverTimestamp()}); loadBoardPosts(); }catch(e){console.error(e);} };
@@ -996,7 +1025,19 @@ body{background:${ivory}}
         <header className="mz-header">
           <div className="mz-header-inner" style={{ justifyContent: "space-between" }}>
             <button className="mz-btn-ghost" onClick={() => { setRv(null); setConfirmDel(false); }}>{t.backBtn}</button>
-            <span style={{ fontSize: 11, color: "#8a8580", letterSpacing: 1 }}>{rv.author} · {rv.date} · {lang==="ja"?"閲覧":lang==="en"?"Views":lang==="zh"?"浏览":"조회"} {rv.views||0}</span>
+            <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap", justifyContent: "flex-end" }}>
+              <span style={{ fontSize: 11, color: "#8a8580", letterSpacing: 1 }}>{rv.author} · {rv.date} · {lang==="ja"?"閲覧":lang==="en"?"Views":lang==="zh"?"浏览":"조회"} {rv.views||0}</span>
+              {rv.id && (
+                <button className="mz-btn-ghost" onClick={async () => {
+                  const url = insightUrl(rv.id);
+                  try { await navigator.clipboard.writeText(url); }
+                  catch(e) { const ta = document.createElement("textarea"); ta.value = url; document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); } catch(err){} document.body.removeChild(ta); }
+                  setLinkCopied(true); setTimeout(() => setLinkCopied(false), 2000);
+                }}>{linkCopied
+                  ? (lang==="ja"?"コピーしました":lang==="en"?"Link copied":lang==="zh"?"已复制":"복사됨 ✓")
+                  : (lang==="ja"?"リンクをコピー":lang==="en"?"Copy link":lang==="zh"?"复制链接":"링크 복사")}</button>
+              )}
+            </div>
           </div>
         </header>
         <article style={{ maxWidth: 820, margin: "0 auto", padding: "80px 48px 120px" }}>
