@@ -1,0 +1,850 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PCT 도면 변환기 by Zenith v1.0</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<style>
+/* Layout: 좌측 설정 패널 + 우측 미리보기(도면 용지) + 하단 도면 목록. 전부 이 컴퓨터 안에서 처리 */
+:root{
+  --bg:#F3F4F7; --panel:#FFFFFF; --fg:#1B1F2A; --muted:#5E6676; --line:#D9DDE5;
+  --accent:#2541B2; --accent-soft:#E6EAFA; --ok:#1E7A4C; --warn:#B0521C; --stage:#E4E7EE;
+  --font:"Pretendard","Pretendard Variable","Malgun Gothic","맑은 고딕","Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;
+  --mono:ui-monospace,"Cascadia Mono","D2Coding",Consolas,"SFMono-Regular",monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12151C; --panel:#1A1E28; --fg:#E7E9EF; --muted:#9AA2B3; --line:#2C3242;
+  --accent:#8299FF; --accent-soft:#232C4D; --ok:#5CC48E; --warn:#F09A5E; --stage:#0D1016; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151C; --panel:#1A1E28; --fg:#E7E9EF; --muted:#9AA2B3; --line:#2C3242;
+  --accent:#8299FF; --accent-soft:#232C4D; --ok:#5CC48E; --warn:#F09A5E; --stage:#0D1016; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.55 var(--font);padding-inline:16px;padding-block:0 24px}
+button,select,input{font:inherit;color:inherit}
+header{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;padding-block:18px 14px;max-width:1440px;margin:0 auto}
+header h1{margin:0;font-size:20px;font-weight:700;letter-spacing:-.01em}
+header .by{font-size:15px;font-weight:600;color:var(--accent);margin-left:2px}
+header .ver{font-size:11px;font-weight:600;font-family:var(--mono);color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:1px 8px;vertical-align:3px}
+header p{margin:0;color:var(--muted);font-size:13px}
+header .lock{margin-left:auto;font-size:12px;color:var(--ok);display:flex;align-items:center;gap:6px}
+.wrap{display:grid;grid-template-columns:300px minmax(0,1fr);gap:16px;max-width:1440px;margin:0 auto}
+@media (max-width:860px){.wrap{grid-template-columns:1fr}}
+aside{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:6px 16px 16px;align-self:start}
+.grp{padding-block:14px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.grp:last-child{border-bottom:0}
+.lbl{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.04em}
+.hint{font-size:12px;color:var(--muted);margin:0}
+.seg{display:flex;border:1px solid var(--line);border-radius:7px;overflow:hidden}
+.seg button{flex:1;border:0;background:transparent;padding:7px 4px;cursor:pointer;font-size:13px;border-left:1px solid var(--line)}
+.seg button:first-child{border-left:0}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff;font-weight:600}
+:root[data-theme="dark"] .seg button[aria-pressed="true"]{color:#0E1220}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .seg button[aria-pressed="true"]{color:#0E1220}}
+.seg button small{display:block;font-size:10.5px;opacity:.8;font-weight:400}
+select,input[type=number]{width:100%;padding:7px 8px;border:1px solid var(--line);border-radius:7px;background:var(--panel)}
+label.chk{display:flex;gap:8px;align-items:flex-start;cursor:pointer;font-size:13px}
+label.chk input{margin-top:3px;accent-color:var(--accent)}
+.row{display:flex;gap:8px;align-items:center}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.rng-ends{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+main{display:flex;flex-direction:column;gap:12px;min-width:0}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.toolbar .seg{width:auto}
+.toolbar .seg button{flex:none;padding:6px 12px}
+.spacer{flex:1}
+.btn{border:1px solid var(--line);background:var(--panel);padding:8px 14px;border-radius:7px;cursor:pointer;font-weight:600;font-size:13px}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+:root[data-theme="dark"] .btn.primary{color:#0E1220}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.primary{color:#0E1220}}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.stage{position:relative;background:var(--stage);border:1px solid var(--line);border-radius:10px;height:min(64vh,720px);min-height:320px;overflow:auto;display:grid;place-items:center}
+.stage.zoomed{place-items:start}
+.stage canvas{display:block;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.18);margin:16px}
+.stage canvas.px{image-rendering:pixelated}
+.busy{position:absolute;inset:0;display:grid;place-items:center;background:color-mix(in srgb,var(--stage) 60%,transparent);font-weight:600}
+.drop{border:1.5px dashed var(--line);border-radius:10px;padding:18px;text-align:center;color:var(--muted);cursor:pointer;background:var(--panel)}
+.drop.over{border-color:var(--accent);background:var(--accent-soft);color:var(--fg)}
+.drop b{color:var(--fg)}
+.info{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+@media (max-width:520px){.info{grid-template-columns:1fr}}
+.facts{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px}
+.facts div{display:flex;flex-direction:column}
+.facts span{font-size:11px;color:var(--muted)}
+.facts b{font-family:var(--mono);font-weight:600;font-variant-numeric:tabular-nums}
+.checks{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.pill{font-size:12px;padding:2px 9px;border-radius:99px;border:1px solid currentColor}
+.pill.ok{color:var(--ok)} .pill.warn{color:var(--warn)}
+.sheet svg{width:64px;height:auto;display:block}
+.strip{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px}
+.item{flex:none;width:132px;border:1px solid var(--line);border-radius:8px;background:var(--panel);padding:6px;cursor:pointer;display:flex;flex-direction:column;gap:4px}
+.item[aria-current="true"]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.item .th{height:84px;background:#fff;border-radius:4px;display:grid;place-items:center;overflow:hidden}
+.item .th canvas{max-width:100%;max-height:84px}
+.item .nm{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item .ops{display:flex;gap:4px}
+.item .ops button{flex:1;border:1px solid var(--line);background:transparent;border-radius:5px;font-size:12px;padding:2px;cursor:pointer}
+.tag{font-size:10.5px;color:var(--accent);font-weight:600}
+.msg{font-size:13px;color:var(--warn);min-height:1em;margin:0}
+details{font-size:13px;color:var(--muted)}
+details summary{cursor:pointer;font-weight:600;color:var(--fg)}
+details ul{margin:6px 0 0;padding-left:18px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <h1><img src="data:image/png;base64,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" alt="" width="26" height="26" style="vertical-align:-6px;margin-right:6px">PCT 도면 변환기 <span class="by">by Zenith</span> <span class="ver">v1.0</span></h1>
+  <p>명세서 첨부용 흑백 도면 이미지 · TIFF(CCITT G4) / PNG / JPG · 300·400 dpi</p>
+  <span class="lock">● 파일은 이 컴퓨터 안에서만 처리되며 외부로 전송되지 않음</span>
+</header>
+
+<div class="wrap">
+<aside>
+  <div class="grp">
+    <span class="lbl">출력 형식</span>
+    <div class="seg" id="fmt">
+      <button data-v="tif" aria-pressed="true">TIFF<small>G4 흑백</small></button>
+      <button data-v="png" aria-pressed="false">PNG<small>무손실</small></button>
+      <button data-v="jpg" aria-pressed="false">JPG<small>손실 압축</small></button>
+    </div>
+    <p class="hint" id="fmtHint">PCT 전자출원 표준(TIFF 6.0, Group 4 압축, 흑백). 파일이 가장 작고 선이 깨끗함.</p>
+  </div>
+
+  <div class="grp">
+    <span class="lbl">해상도</span>
+    <div class="seg" id="dpi">
+      <button data-v="300" aria-pressed="true">300 dpi</button>
+      <button data-v="400" aria-pressed="false">400 dpi</button>
+    </div>
+  </div>
+
+  <div class="grp">
+    <span class="lbl">크기</span>
+    <select id="size">
+      <option value="fit">도면 영역(17.0 × 26.2 cm)에 맞춤</option>
+      <option value="shrink">큰 그림만 영역에 맞게 축소</option>
+      <option value="width">가로 폭 직접 지정</option>
+    </select>
+    <div class="row" id="widthRow" hidden><input type="number" id="widthCm" min="1" max="17" step="0.5" value="15"><span>cm</span></div>
+    <label class="chk"><input type="checkbox" id="autoCrop" checked><span>그림 둘레 빈 여백 자동 정리</span></label>
+    <label class="chk"><input type="checkbox" id="sheet"><span>A4 도면 용지에 배치<br><small class="hint">PCT 규칙 11.6 여백(상 2.5 · 좌 2.5 · 우 1.5 · 하 1.0 cm) 적용</small></span></label>
+  </div>
+
+  <div class="grp">
+    <span class="lbl">도면 종류</span>
+    <div class="seg" id="mode">
+      <button data-v="line" aria-pressed="true">선 도면</button>
+      <button data-v="dither" aria-pressed="false">음영·사진</button>
+    </div>
+    <p class="hint" id="modeHint">선과 글자를 검정/흰색으로 깔끔하게 분리함. 대부분의 특허 도면에 적합.</p>
+  </div>
+
+  <div class="grp" id="lineOpts">
+    <span class="lbl">선 진하기 <span id="thrVal" style="font-family:var(--mono);font-weight:400"></span></span>
+    <input type="range" id="bias" min="-60" max="60" step="2" value="0" aria-label="선 진하기">
+    <div class="rng-ends"><span>가늘고 연하게</span><span>자동</span><span>굵고 진하게</span></div>
+    <label class="lbl" for="thick" style="margin-top:6px">선 굵기 보정</label>
+    <select id="thick"><option value="0">없음</option><option value="1">약간 굵게</option><option value="2">굵게</option></select>
+    <label class="lbl" for="speck" style="margin-top:6px">잡티 제거</label>
+    <select id="speck"><option value="0">끄기</option><option value="1" selected>약하게 (작은 점)</option><option value="2">강하게 (작은 글자 점에 주의)</option></select>
+  </div>
+
+  <div class="grp">
+    <span class="lbl">원본 보정</span>
+    <label class="chk"><input type="checkbox" id="colorToBlack"><span>색깔 선도 검정으로<br><small class="hint">빨강·파랑 등 컬러로 그린 선이 흐려질 때</small></span></label>
+    <label class="chk"><input type="checkbox" id="bgFix" checked><span>스캔 배경 얼룩 제거<br><small class="hint">누런 종이, 그림자, 회색 배경을 흰색으로</small></span></label>
+  </div>
+
+  <div class="grp">
+    <details>
+      <summary>규격 메모</summary>
+      <ul>
+        <li>PCT 전자출원 도면: TIFF(G4, 흑백) 300 또는 400 dpi만 허용</li><li>KIPO: 300~400 dpi (300 dpi 권장)</li><li>공보 게재 시 300 dpi로 재변환됨</li>
+        <li>최대 크기 17.0 × 26.2 cm (A4에서 여백 제외)</li>
+        <li>도면은 흑백 선으로, 컬러·음영은 원칙적으로 불가 (회색조로 내도 흑백으로 변환되어 공개됨)</li>
+        <li>JPG는 압축 잡음이 생기므로 TIFF/PNG 권장</li>
+      </ul>
+    </details>
+  </div>
+</aside>
+
+<main>
+  <div class="drop" id="drop" tabindex="0" role="button" aria-label="이미지 추가">
+    <b>도면 이미지를 여기에 끌어 놓거나 클릭해서 선택</b> · 화면 캡처는 <b>Ctrl+V</b>로 붙여넣기<br>
+    <small>PNG · JPG · BMP · GIF · WebP 지원, 여러 장 한꺼번에 가능</small>
+    <input type="file" id="file" accept="image/*" multiple hidden>
+  </div>
+  <p class="msg" id="msg"></p>
+
+  <div class="toolbar">
+    <div class="seg" id="view">
+      <button data-v="out" aria-pressed="true">변환 결과</button>
+      <button data-v="src" aria-pressed="false">원본</button>
+    </div>
+    <div class="seg" id="zoom">
+      <button data-v="fit" aria-pressed="true">화면 맞춤</button>
+      <button data-v="1" aria-pressed="false">100%</button>
+      <button data-v="2" aria-pressed="false">200%</button>
+    </div>
+    <span class="spacer"></span>
+    <button class="btn primary" id="saveOne">이 도면 저장</button>
+    <button class="btn" id="saveAll">전체 저장 (ZIP)</button>
+    <button class="btn" id="saveMulti" title="모든 도면을 페이지로 묶은 TIFF 한 개">다중 페이지 TIFF</button>
+  </div>
+
+  <div class="stage" id="stage"><canvas id="cv" width="10" height="10"></canvas><div class="busy" id="busy" hidden>변환 중…</div></div>
+
+  <div class="info">
+    <div class="sheet" id="sheetSvg"></div>
+    <div>
+      <div class="facts" id="facts"></div>
+      <div class="checks" id="checks"></div>
+    </div>
+  </div>
+
+  <div class="strip" id="strip"></div>
+</main>
+</div>
+<footer style="max-width:1440px;margin:20px auto 0;font-size:12px;color:var(--muted);text-align:center">PCT 도면 변환기 v1.0 · by Zenith (제니스국제특허법률사무소)</footer>
+
+<script>
+// ===== PCT 도면 변환기 core (encoders) =====
+const FAX = (() => {
+  const WT = "00110101 000111 0111 1000 1011 1100 1110 1111 10011 10100 00111 01000 001000 000011 110100 110101 101010 101011 0100111 0001100 0001000 0010111 0000011 0000100 0101000 0101011 0010011 0100100 0011000 00000010 00000011 00011010 00011011 00010010 00010011 00010100 00010101 00010110 00010111 00101000 00101001 00101010 00101011 00101100 00101101 00000100 00000101 00001010 00001011 01010010 01010011 01010100 01010101 00100100 00100101 01011000 01011001 01011010 01011011 01001010 01001011 00110010 00110011 00110100".split(" ");
+  const WM = "11011 10010 010111 0110111 00110110 00110111 01100100 01100101 01101000 01100111 011001100 011001101 011010010 011010011 011010100 011010101 011010110 011010111 011011000 011011001 011011010 011011011 010011000 010011001 010011010 011000 010011011".split(" ");
+  const BT = "0000110111 010 11 10 011 0011 0010 00011 000101 000100 0000100 0000101 0000111 00000100 00000111 000011000 0000010111 0000011000 0000001000 00001100111 00001101000 00001101100 00000110111 00000101000 00000010111 00000011000 000011001010 000011001011 000011001100 000011001101 000001101000 000001101001 000001101010 000001101011 000011010010 000011010011 000011010100 000011010101 000011010110 000011010111 000001101100 000001101101 000011011010 000011011011 000001010100 000001010101 000001010110 000001010111 000001100100 000001100101 000001010010 000001010011 000000100100 000000110111 000000111000 000000100111 000000101000 000001011000 000001011001 000000101011 000000101100 000001011010 000001100110 000001100111".split(" ");
+  const BM = "0000001111 000011001000 000011001001 000001011011 000000110011 000000110100 000000110101 0000001101100 0000001101101 0000001001010 0000001001011 0000001001100 0000001001101 0000001110010 0000001110011 0000001110100 0000001110101 0000001110110 0000001110111 0000001010010 0000001010011 0000001010100 0000001010101 0000001011010 0000001011011 0000001100100 0000001100101".split(" ");
+  const EM = "00000001000 00000001100 00000001101 000000010010 000000010011 000000010100 000000010101 000000010110 000000010111 000000011100 000000011101 000000011110 000000011111".split(" ");
+  const toCode = s => [parseInt(s, 2), s.length];
+  const mk = (term, make) => {
+    const t = term.map(toCode);
+    const m = {};
+    make.forEach((s, i) => { m[(i + 1) * 64] = toCode(s); });
+    EM.forEach((s, i) => { m[1792 + i * 64] = toCode(s); });
+    return { t, m };
+  };
+  return { W: mk(WT, WM), B: mk(BT, BM) };
+})();
+
+class BitWriter {
+  constructor(cap) { this.buf = new Uint8Array(cap || 65536); this.pos = 0; this.acc = 0; this.n = 0; }
+  grow() { const b = new Uint8Array(this.buf.length * 2); b.set(this.buf); this.buf = b; }
+  put(code, len) {
+    for (let i = len - 1; i >= 0; i--) {
+      this.acc = (this.acc << 1) | ((code >>> i) & 1);
+      if (++this.n === 8) { if (this.pos >= this.buf.length) this.grow(); this.buf[this.pos++] = this.acc; this.acc = 0; this.n = 0; }
+    }
+  }
+  flush() { while (this.n !== 0) this.put(0, 1); return this.buf.subarray(0, this.pos); }
+}
+
+function putRun(bw, run, black) {
+  const T = black ? FAX.B : FAX.W;
+  while (run >= 2560) { bw.put(...T.m[2560]); run -= 2560; }
+  if (run >= 64) { const mk = run - (run % 64); bw.put(...T.m[mk]); run -= mk; }
+  bw.put(...T.t[run]);
+}
+
+// bits: Uint8Array, 1 = black, row-major
+function g4Encode(bits, w, h) {
+  const bw = new BitWriter(Math.max(65536, (w * h) >> 4));
+  let ref = new Int32Array(w + 2), refN = 0; // changing elements of reference line
+  let cur = new Int32Array(w + 2);
+  for (let y = 0; y < h; y++) {
+    const off = y * w; let n = 0, prev = 0;
+    for (let x = 0; x < w; x++) { const v = bits[off + x]; if (v !== prev) { cur[n++] = x; prev = v; } }
+    cur[n] = w; cur[n + 1] = w; ref[refN] = w; ref[refN + 1] = w;
+    let a0 = -1, color = 0; // 0 white, 1 black
+    let ai = 0; // index into cur for a1 search
+    let bi = 0;
+    while (true) {
+      // a1: first change on coding line > a0
+      while (ai < n && cur[ai] <= a0) ai++;
+      const a1 = ai < n ? cur[ai] : w;
+      // b1: first change on ref > a0 with color opposite to a0's color (index parity: even -> becomes black)
+      while (bi > 0 && ref[bi - 1] > a0) bi--;
+      while (bi < refN && ref[bi] <= a0) bi++;
+      // ensure parity: if color white we need even index (to black); black need odd
+      if (bi < refN && (bi & 1) !== color) bi++;
+      const b1 = bi < refN ? ref[bi] : w;
+      const b2 = bi + 1 < refN ? ref[bi + 1] : w;
+      if (b2 < a1) { // pass
+        bw.put(1, 4); a0 = b2; continue;
+      }
+      const d = a1 - b1;
+      if (d >= -3 && d <= 3) {
+        switch (d) {
+          case 0: bw.put(1, 1); break;
+          case 1: bw.put(3, 3); break; case 2: bw.put(3, 6); break; case 3: bw.put(3, 7); break;
+          case -1: bw.put(2, 3); break; case -2: bw.put(2, 6); break; case -3: bw.put(2, 7); break;
+        }
+        a0 = a1; color ^= 1;
+        if (a0 >= w) break;
+        continue;
+      }
+      const a2 = ai + 1 < n ? cur[ai + 1] : w;
+      bw.put(1, 3);
+      const start = a0 < 0 ? 0 : a0;
+      putRun(bw, a1 - start, color === 1);
+      putRun(bw, a2 - a1, color !== 1);
+      a0 = a2;
+      if (a0 >= w) break;
+    }
+    const t = ref; ref = cur; cur = t; refN = n;
+  }
+  bw.put(1, 12); bw.put(1, 12);
+  return bw.flush().slice();
+}
+
+// pages: [{w,h,dpi,kind:'g4'|'gray', data:Uint8Array}]  (gray data = 8bit, 0 black)
+function buildTiff(pages) {
+  const ENTRY = 12;
+  const parts = []; let size = 8;
+  const layout = pages.map(p => {
+    const dataOff = size; size += p.data.length; if (size & 1) size++;
+    const tags = [];
+    const g4 = p.kind === 'g4';
+    tags.push([256, 4, 1, p.w]);
+    tags.push([257, 4, 1, p.h]);
+    tags.push([258, 3, 1, g4 ? 1 : 8]);
+    tags.push([259, 3, 1, g4 ? 4 : 1]);
+    tags.push([262, 3, 1, g4 ? 0 : 1]);
+    if (g4) tags.push([266, 3, 1, 1]);
+    tags.push([273, 4, 1, dataOff]);
+    tags.push([277, 3, 1, 1]);
+    tags.push([278, 4, 1, p.h]);
+    tags.push([279, 4, 1, p.data.length]);
+    tags.push([282, 5, 1, 'X']);
+    tags.push([283, 5, 1, 'Y']);
+    if (g4) tags.push([293, 4, 1, 0]);
+    tags.push([296, 3, 1, 2]);
+    if (pages.length > 1) tags.push([297, 3, 2, 'PN']);
+    const ifdOff = size; const ifdLen = 2 + tags.length * ENTRY + 4;
+    size += ifdLen; const ratOff = size; size += 16;
+    return { p, dataOff, tags, ifdOff, ratOff };
+  });
+  const out = new Uint8Array(size); const dv = new DataView(out.buffer);
+  out[0] = 0x49; out[1] = 0x49; dv.setUint16(2, 42, true); dv.setUint32(4, layout[0].ifdOff, true);
+  layout.forEach((L, idx) => {
+    out.set(L.p.data, L.dataOff);
+    let o = L.ifdOff; dv.setUint16(o, L.tags.length, true); o += 2;
+    for (const [tag, type, cnt, val] of L.tags) {
+      dv.setUint16(o, tag, true); dv.setUint16(o + 2, type, true); dv.setUint32(o + 4, cnt, true);
+      if (val === 'X') dv.setUint32(o + 8, L.ratOff, true);
+      else if (val === 'Y') dv.setUint32(o + 8, L.ratOff + 8, true);
+      else if (val === 'PN') { dv.setUint16(o + 8, idx, true); dv.setUint16(o + 10, pages.length, true); }
+      else if (type === 3) dv.setUint16(o + 8, val, true);
+      else dv.setUint32(o + 8, val, true);
+      o += 12;
+    }
+    dv.setUint32(o, idx + 1 < layout.length ? layout[idx + 1].ifdOff : 0, true);
+    const dpi = L.p.dpi;
+    dv.setUint32(L.ratOff, dpi, true); dv.setUint32(L.ratOff + 4, 1, true);
+    dv.setUint32(L.ratOff + 8, dpi, true); dv.setUint32(L.ratOff + 12, 1, true);
+  });
+  return out;
+}
+
+const CRC_T = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+function crc32(u8, crc = 0) { crc = ~crc >>> 0; for (let i = 0; i < u8.length; i++) crc = CRC_T[(crc ^ u8[i]) & 0xFF] ^ (crc >>> 8); return (~crc) >>> 0; }
+
+async function zlibDeflate(u8) {
+  const cs = new CompressionStream('deflate');
+  const stream = new Blob([u8]).stream().pipeThrough(cs);
+  return new Uint8Array(await new Response(stream).arrayBuffer());
+}
+
+function pngChunk(type, data) {
+  const out = new Uint8Array(12 + data.length); const dv = new DataView(out.buffer);
+  dv.setUint32(0, data.length);
+  for (let i = 0; i < 4; i++) out[4 + i] = type.charCodeAt(i);
+  out.set(data, 8);
+  dv.setUint32(8 + data.length, crc32(out.subarray(4, 8 + data.length)));
+  return out;
+}
+
+// bits: 1=black (bitDepth 1) or gray 8bit (0=black) when depth=8
+async function buildPng(data, w, h, dpi, depth) {
+  const rowBytes = depth === 1 ? Math.ceil(w / 8) : w;
+  const raw = new Uint8Array((rowBytes + 1) * h);
+  for (let y = 0; y < h; y++) {
+    const ro = y * (rowBytes + 1); raw[ro] = 0; const so = y * w;
+    if (depth === 1) {
+      for (let x = 0; x < w; x++) if (!data[so + x]) raw[ro + 1 + (x >> 3)] |= 0x80 >> (x & 7); // white = 1
+    } else raw.set(data.subarray(so, so + w), ro + 1);
+  }
+  const ihdr = new Uint8Array(13); const dv = new DataView(ihdr.buffer);
+  dv.setUint32(0, w); dv.setUint32(4, h); ihdr[8] = depth; ihdr[9] = 0; ihdr[10] = 0; ihdr[11] = 0; ihdr[12] = 0;
+  const ppm = Math.round(dpi / 0.0254);
+  const phys = new Uint8Array(9); const pv = new DataView(phys.buffer); pv.setUint32(0, ppm); pv.setUint32(4, ppm); phys[8] = 1;
+  const idat = await zlibDeflate(raw);
+  const sig = new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10]);
+  return concatU8([sig, pngChunk('IHDR', ihdr), pngChunk('pHYs', phys), pngChunk('IDAT', idat), pngChunk('IEND', new Uint8Array(0))]);
+}
+
+function concatU8(arr) {
+  let n = 0; for (const a of arr) n += a.length;
+  const o = new Uint8Array(n); let p = 0; for (const a of arr) { o.set(a, p); p += a.length; } return o;
+}
+
+// set JFIF density (dpi) in a JPEG byte array; inserts APP0 if missing
+function jpegSetDpi(u8, dpi) {
+  if (u8[2] === 0xFF && u8[3] === 0xE0 && String.fromCharCode(u8[6], u8[7], u8[8], u8[9]) === 'JFIF') {
+    const o = u8.slice(); o[13] = 1; o[14] = dpi >> 8; o[15] = dpi & 255; o[16] = dpi >> 8; o[17] = dpi & 255; return o;
+  }
+  const app0 = new Uint8Array([0xFF, 0xE0, 0, 16, 0x4A, 0x46, 0x49, 0x46, 0, 1, 1, 1, dpi >> 8, dpi & 255, dpi >> 8, dpi & 255, 0, 0]);
+  return concatU8([u8.subarray(0, 2), app0, u8.subarray(2)]);
+}
+
+// minimal ZIP (store)
+function buildZip(files) { // [{name, data}]
+  const enc = new TextEncoder(); const locals = []; const centrals = []; let off = 0;
+  for (const f of files) {
+    const name = enc.encode(f.name); const crc = crc32(f.data);
+    const lh = new Uint8Array(30 + name.length); const lv = new DataView(lh.buffer);
+    lv.setUint32(0, 0x04034b50, true); lv.setUint16(4, 20, true); lv.setUint16(6, 0x0800, true); lv.setUint16(8, 0, true);
+    lv.setUint32(14, crc, true); lv.setUint32(18, f.data.length, true); lv.setUint32(22, f.data.length, true);
+    lv.setUint16(26, name.length, true); lh.set(name, 30);
+    const ch = new Uint8Array(46 + name.length); const cv = new DataView(ch.buffer);
+    cv.setUint32(0, 0x02014b50, true); cv.setUint16(4, 20, true); cv.setUint16(6, 20, true); cv.setUint16(8, 0x0800, true);
+    cv.setUint32(16, crc, true); cv.setUint32(20, f.data.length, true); cv.setUint32(24, f.data.length, true);
+    cv.setUint16(28, name.length, true); cv.setUint32(42, off, true); ch.set(name, 46);
+    locals.push(lh, f.data); centrals.push(ch); off += lh.length + f.data.length;
+  }
+  const cd = concatU8(centrals);
+  const end = new Uint8Array(22); const ev = new DataView(end.buffer);
+  ev.setUint32(0, 0x06054b50, true); ev.setUint16(8, files.length, true); ev.setUint16(10, files.length, true);
+  ev.setUint32(12, cd.length, true); ev.setUint32(16, off, true);
+  return concatU8([...locals, cd, end]);
+}
+
+if (typeof module !== 'undefined') module.exports = { g4Encode, buildTiff, buildPng, jpegSetDpi, buildZip };
+
+// ===== image processing (pure functions) =====
+const PCT = { areaW: 17.0, areaH: 26.2, sheetW: 21.0, sheetH: 29.7, mTop: 2.5, mLeft: 2.5 };
+const cm2px = (cm, dpi) => Math.round(cm * dpi / 2.54);
+
+// rgba Uint8ClampedArray -> Float32 gray 0..255 (alpha composited on white)
+function toGray(rgba, n, colorToBlack) {
+  const g = new Float32Array(n);
+  for (let i = 0, p = 0; i < n; i++, p += 4) {
+    const a = rgba[p + 3] / 255;
+    let r = rgba[p], gg = rgba[p + 1], b = rgba[p + 2];
+    let v = colorToBlack ? Math.min(r, gg, b) : 0.299 * r + 0.587 * gg + 0.114 * b;
+    g[i] = v * a + 255 * (1 - a);
+  }
+  return g;
+}
+
+// flatten uneven scan background toward white
+function normalizeBackground(g, w, h) {
+  const k = Math.max(4, Math.round(Math.max(w, h) / 160));
+  const sw = Math.ceil(w / k), sh = Math.ceil(h / k);
+  let s = new Float32Array(sw * sh);
+  for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) {
+    let m = 0; const y1 = Math.min(h, (y + 1) * k), x1 = Math.min(w, (x + 1) * k);
+    for (let yy = y * k; yy < y1; yy++) for (let xx = x * k; xx < x1; xx++) { const v = g[yy * w + xx]; if (v > m) m = v; }
+    s[y * sw + x] = m;
+  }
+  // max filter radius 2 then box blur radius 2 (twice)
+  const filt = (src, fn, r) => {
+    const o = new Float32Array(src.length);
+    for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) {
+      let acc = fn === 'max' ? 0 : 0, c = 0;
+      for (let dy = -r; dy <= r; dy++) { const yy = y + dy; if (yy < 0 || yy >= sh) continue;
+        for (let dx = -r; dx <= r; dx++) { const xx = x + dx; if (xx < 0 || xx >= sw) continue;
+          const v = src[yy * sw + xx]; if (fn === 'max') { if (v > acc) acc = v; } else { acc += v; c++; } } }
+      o[y * sw + x] = fn === 'max' ? acc : acc / c;
+    }
+    return o;
+  };
+  s = filt(filt(filt(s, 'max', 2), 'avg', 2), 'avg', 2);
+  const out = new Float32Array(w * h);
+  for (let y = 0; y < h; y++) {
+    const fy = Math.min(sh - 1, Math.max(0, (y + 0.5) / k - 0.5)); const y0 = Math.floor(fy), y1 = Math.min(sh - 1, y0 + 1), ty = fy - y0;
+    for (let x = 0; x < w; x++) {
+      const fx = Math.min(sw - 1, Math.max(0, (x + 0.5) / k - 0.5)); const x0 = Math.floor(fx), x1 = Math.min(sw - 1, x0 + 1), tx = fx - x0;
+      const bg = (s[y0 * sw + x0] * (1 - tx) + s[y0 * sw + x1] * tx) * (1 - ty) + (s[y1 * sw + x0] * (1 - tx) + s[y1 * sw + x1] * tx) * ty;
+      const v = g[y * w + x] / Math.max(bg, 40) * 255;
+      out[y * w + x] = v > 255 ? 255 : v;
+    }
+  }
+  return out;
+}
+
+function contentBox(g, w, h, thr) {
+  let x0 = w, y0 = h, x1 = -1, y1 = -1;
+  for (let y = 0; y < h; y++) { const o = y * w; for (let x = 0; x < w; x++) if (g[o + x] < thr) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; y1 = y; } }
+  if (x1 < 0) return { x: 0, y: 0, w, h };
+  const pad = Math.max(4, Math.round(Math.max(x1 - x0, y1 - y0) * 0.015));
+  x0 = Math.max(0, x0 - pad); y0 = Math.max(0, y0 - pad); x1 = Math.min(w - 1, x1 + pad); y1 = Math.min(h - 1, y1 + pad);
+  return { x: x0, y: y0, w: x1 - x0 + 1, h: y1 - y0 + 1 };
+}
+
+function crop(g, w, b) {
+  const o = new Float32Array(b.w * b.h);
+  for (let y = 0; y < b.h; y++) o.set(g.subarray((b.y + y) * w + b.x, (b.y + y) * w + b.x + b.w), y * b.w);
+  return o;
+}
+
+function lanczosWeights(sn, dn) {
+  const scale = dn / sn, fs = Math.min(scale, 1), sup = 3 / fs;
+  const idx = [], wts = [], start = new Int32Array(dn + 1);
+  const L = x => { if (x === 0) return 1; if (x <= -3 || x >= 3) return 0; const px = Math.PI * x; return 3 * Math.sin(px) * Math.sin(px / 3) / (px * px); };
+  for (let i = 0; i < dn; i++) {
+    start[i] = idx.length;
+    const c = (i + 0.5) / scale - 0.5;
+    const a = Math.ceil(c - sup), b = Math.floor(c + sup);
+    let sum = 0; const s0 = idx.length;
+    for (let j = a; j <= b; j++) { const wv = L((j - c) * fs); if (wv === 0) continue; idx.push(Math.min(sn - 1, Math.max(0, j))); wts.push(wv); sum += wv; }
+    for (let k = s0; k < wts.length; k++) wts[k] /= sum;
+  }
+  start[dn] = idx.length;
+  return { idx: Int32Array.from(idx), wts: Float32Array.from(wts), start };
+}
+
+function resample(g, w, h, nw, nh) {
+  if (nw === w && nh === h) return g;
+  const H = lanczosWeights(w, nw), V = lanczosWeights(h, nh);
+  const tmp = new Float32Array(nw * h);
+  for (let y = 0; y < h; y++) { const ro = y * w, oo = y * nw;
+    for (let x = 0; x < nw; x++) { let s = 0; for (let k = H.start[x]; k < H.start[x + 1]; k++) s += g[ro + H.idx[k]] * H.wts[k]; tmp[oo + x] = s; } }
+  const out = new Float32Array(nw * nh);
+  for (let y = 0; y < nh; y++) { const oo = y * nw; const s0 = V.start[y], s1 = V.start[y + 1];
+    for (let k = s0; k < s1; k++) { const ro = V.idx[k] * nw, wt = V.wts[k]; for (let x = 0; x < nw; x++) out[oo + x] += tmp[ro + x] * wt; } }
+  for (let i = 0; i < out.length; i++) { const v = out[i]; out[i] = v < 0 ? 0 : v > 255 ? 255 : v; }
+  return out;
+}
+
+function otsu(g) {
+  const hist = new Float64Array(256);
+  for (let i = 0; i < g.length; i++) hist[g[i] | 0]++;
+  const total = g.length; let sum = 0; for (let i = 0; i < 256; i++) sum += i * hist[i];
+  let sB = 0, wB = 0, best = 0, t = 128;
+  for (let i = 0; i < 256; i++) { wB += hist[i]; if (!wB) continue; const wF = total - wB; if (!wF) break;
+    sB += i * hist[i]; const mB = sB / wB, mF = (sum - sB) / wF; const between = wB * wF * (mB - mF) * (mB - mF);
+    if (between > best) { best = between; t = i; } }
+  return Math.min(225, Math.max(70, t));
+}
+
+function binarize(g, t) { const b = new Uint8Array(g.length); for (let i = 0; i < g.length; i++) b[i] = g[i] < t ? 1 : 0; return b; }
+
+function dither(g, w, h) {
+  const e = Float32Array.from(g); const b = new Uint8Array(g.length);
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const i = y * w + x; const old = e[i]; const nv = old < 128 ? 0 : 255; b[i] = nv === 0 ? 1 : 0; const err = old - nv;
+    if (x + 1 < w) e[i + 1] += err * 7 / 16;
+    if (y + 1 < h) { if (x > 0) e[i + w - 1] += err * 3 / 16; e[i + w] += err * 5 / 16; if (x + 1 < w) e[i + w + 1] += err / 16; }
+  }
+  return b;
+}
+
+function dilate(b, w, h, square) {
+  const o = b.slice();
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { const i = y * w + x; if (!b[i]) continue;
+    if (x > 0) o[i - 1] = 1; if (x + 1 < w) o[i + 1] = 1; if (y > 0) o[i - w] = 1; if (y + 1 < h) o[i + w] = 1;
+    if (square) { if (y > 0) { if (x > 0) o[i - w - 1] = 1; if (x + 1 < w) o[i - w + 1] = 1; } if (y + 1 < h) { if (x > 0) o[i + w - 1] = 1; if (x + 1 < w) o[i + w + 1] = 1; } } }
+  return o;
+}
+
+function despeckle(b, w, h, minArea) {
+  if (minArea <= 0) return b;
+  const seen = new Uint8Array(b.length); let stack = new Int32Array(1 << 16); let comp = new Int32Array(1 << 16);
+  for (let s = 0; s < b.length; s++) {
+    if (!b[s] || seen[s]) continue;
+    let sp = 0, cn = 0; stack[sp++] = s; seen[s] = 1;
+    while (sp) {
+      const i = stack[--sp];
+      if (cn <= minArea) { if (cn >= comp.length) { const c = new Int32Array(comp.length * 2); c.set(comp); comp = c; } comp[cn] = i; }
+      cn++;
+      const x = i % w, y = (i - x) / w;
+      for (let dy = -1; dy <= 1; dy++) { const yy = y + dy; if (yy < 0 || yy >= h) continue;
+        for (let dx = -1; dx <= 1; dx++) { const xx = x + dx; if (xx < 0 || xx >= w) continue; const j = yy * w + xx;
+          if (b[j] && !seen[j]) { seen[j] = 1; if (sp >= stack.length) { const st = new Int32Array(stack.length * 2); st.set(stack); stack = st; } stack[sp++] = j; } } }
+    }
+    if (cn <= minArea) for (let k = 0; k < cn; k++) b[comp[k]] = 0;
+  }
+  return b;
+}
+
+// opts: {dpi, size:'fit'|'shrink'|'width', widthCm, autoCrop, sheet, mode:'line'|'dither'|'gray', bias, thick:0|1|2, speck:0|1|2, colorToBlack, bgFix}
+function processGray(g, w, h, opts) {
+  if (opts.bgFix) g = normalizeBackground(g, w, h);
+  let box = { x: 0, y: 0, w, h };
+  if (opts.autoCrop) { box = contentBox(g, w, h, 215); if (box.w !== w || box.h !== h) { g = crop(g, w, box); w = box.w; h = box.h; } }
+  const dpi = opts.dpi, maxW = cm2px(PCT.areaW, dpi), maxH = cm2px(PCT.areaH, dpi);
+  let scale = Math.min(maxW / w, maxH / h);
+  if (opts.size === 'shrink') scale = Math.min(1, scale);
+  else if (opts.size === 'width') scale = Math.min(scale, cm2px(Math.max(1, opts.widthCm || 15), dpi) / w);
+  const nw = Math.max(1, Math.round(w * scale)), nh = Math.max(1, Math.round(h * scale));
+  g = resample(g, w, h, nw, nh); w = nw; h = nh;
+  let out, kind, thr = null;
+  if (opts.mode === 'gray') {
+    kind = 'gray'; out = new Uint8Array(w * h); for (let i = 0; i < out.length; i++) out[i] = Math.round(g[i]);
+  } else if (opts.mode === 'dither') {
+    kind = 'bits'; out = dither(g, w, h);
+  } else {
+    kind = 'bits'; thr = Math.min(250, Math.max(10, otsu(g) + (opts.bias || 0)));
+    out = binarize(g, thr);
+    if (opts.thick === 1) out = dilate(out, w, h, false); else if (opts.thick === 2) out = dilate(out, w, h, true);
+    if (opts.speck) out = despeckle(out, w, h, Math.round((opts.speck === 1 ? 10 : 36) * (dpi / 300) * (dpi / 300)));
+  }
+  let figW = w, figH = h;
+  if (opts.sheet) {
+    const SW = cm2px(PCT.sheetW, dpi), SH = cm2px(PCT.sheetH, dpi);
+    const ox = cm2px(PCT.mLeft, dpi) + Math.floor((maxW - w) / 2), oy = cm2px(PCT.mTop, dpi) + Math.floor((maxH - h) / 2);
+    const s = new Uint8Array(SW * SH); if (kind === 'gray') s.fill(255);
+    for (let y = 0; y < h; y++) s.set(out.subarray(y * w, y * w + w), (oy + y) * SW + ox);
+    out = s; w = SW; h = SH;
+  }
+  return { w, h, dpi, kind, data: out, thr, figW, figH };
+}
+
+if (typeof module !== 'undefined') module.exports = { processGray, otsu, resample, toGray, PCT, cm2px };
+
+
+// ===== app =====
+const $ = id => document.getElementById(id);
+const S = { fmt:'tif', dpi:300, mode:'line', view:'out', zoom:'fit' };
+let items = [], sel = -1, seq = 0, timer = null;
+
+function segInit(id, key, after){
+  $(id).addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    [...$(id).children].forEach(x => x.setAttribute('aria-pressed', x === b));
+    S[key] = /^\d+$/.test(b.dataset.v) && key === 'dpi' ? +b.dataset.v : b.dataset.v;
+    after && after();
+  });
+}
+const FMT_HINT = {
+  tif:'PCT 전자출원 표준(TIFF 6.0, Group 4 압축, 흑백). 파일이 가장 작고 선이 깨끗함.',
+  png:'무손실 PNG(흑백 1비트). 해상도 정보 포함. 명세서 작성기에서 PNG를 받는 경우에 사용.',
+  jpg:'JPG는 압축 과정에서 선 주변에 잡음이 생길 수 있음. 제출처가 JPG만 받을 때 사용.'
+};
+const MODE_HINT = {
+  line:'선과 글자를 검정/흰색으로 깔끔하게 분리함. 대부분의 특허 도면에 적합.',
+  dither:'사진·그래프 음영을 흑백 점으로 표현함. 현미경 사진, 겔 사진 등에 사용.',
+  gray:'회색조를 유지함(흑백 아님). 사진 제출이 허용될 때만 사용. TIFF는 무압축 8비트로 저장됨.'
+};
+segInit('fmt','fmt',()=>{ $('fmtHint').textContent = FMT_HINT[S.fmt]; refreshUI(); updateInfo(); });
+segInit('dpi','dpi',schedule);
+segInit('mode','mode',()=>{ $('modeHint').textContent = MODE_HINT[S.mode]; $('lineOpts').hidden = S.mode !== 'line'; schedule(); });
+segInit('view','view',draw);
+segInit('zoom','zoom',draw);
+['size','widthCm','autoCrop','sheet','bias','thick','speck','colorToBlack','bgFix'].forEach(id => $(id).addEventListener('input', () => {
+  $('widthRow').hidden = $('size').value !== 'width'; schedule(id === 'bias' ? 250 : 120);
+}));
+
+function opts(){
+  return { dpi:S.dpi, size:$('size').value, widthCm:parseFloat($('widthCm').value), autoCrop:$('autoCrop').checked,
+    sheet:$('sheet').checked, mode:S.mode, bias:+$('bias').value, thick:+$('thick').value, speck:+$('speck').value,
+    colorToBlack:$('colorToBlack').checked, bgFix:$('bgFix').checked };
+}
+function schedule(ms){ items.forEach(it => it.res = null); clearTimeout(timer); timer = setTimeout(() => runSelected(), ms || 60); }
+
+// ----- loading -----
+function msg(t){ $('msg').textContent = t || ''; }
+async function addFiles(files){
+  msg(''); const bad = [];
+  for (const f of files){
+    try {
+      const bmp = await createImageBitmap(f);
+      items.push({ id:++seq, name:f.name || ('캡처_' + seq + '.png'), bmp, rot:0, res:null });
+    } catch(e){ bad.push(f.name || '붙여넣은 이미지'); }
+  }
+  items = items.filter(it => !it.sample || items.length === 1);
+  if (bad.length) msg(`열 수 없는 파일: ${bad.join(', ')} — TIF/PDF 원본은 PNG나 JPG로 저장(또는 캡처)한 뒤 넣어 주세요.`);
+  sel = items.length - 1; renderStrip(); runSelected();
+}
+$('drop').addEventListener('click', () => $('file').click());
+$('drop').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); $('file').click(); } });
+$('file').addEventListener('change', e => { addFiles([...e.target.files]); e.target.value = ''; });
+['dragenter','dragover'].forEach(t => document.addEventListener(t, e => { e.preventDefault(); $('drop').classList.add('over'); }));
+document.addEventListener('dragleave', e => { if (!e.relatedTarget) $('drop').classList.remove('over'); });
+document.addEventListener('drop', e => { e.preventDefault(); $('drop').classList.remove('over'); });
+document.addEventListener('drop', e => { const fs = [...(e.dataTransfer?.files || [])].filter(f => f.type.startsWith('image/') || /\.(png|jpe?g|bmp|gif|webp|tiff?)$/i.test(f.name)); if (fs.length) addFiles(fs); });
+document.addEventListener('paste', e => { const fs = [...(e.clipboardData?.items || [])].filter(i => i.type.startsWith('image/')).map(i => i.getAsFile()).filter(Boolean); if (fs.length) addFiles(fs); });
+
+// ----- processing -----
+function sourceCanvas(it){
+  const r = it.rot % 360, sw = it.bmp.width, sh = it.bmp.height, swap = r === 90 || r === 270;
+  const c = document.createElement('canvas'); c.width = swap ? sh : sw; c.height = swap ? sw : sh;
+  const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0,0,c.width,c.height);
+  x.translate(c.width/2, c.height/2); x.rotate(r * Math.PI / 180); x.drawImage(it.bmp, -sw/2, -sh/2);
+  return c;
+}
+function processItem(it){
+  if (it.res) return it.res;
+  const c = sourceCanvas(it), o = opts();
+  const id = c.getContext('2d').getImageData(0,0,c.width,c.height);
+  const g = toGray(id.data, c.width * c.height, o.colorToBlack);
+  it.res = processGray(g, c.width, c.height, o);
+  it.res.srcW = c.width; it.res.srcH = c.height;
+  return it.res;
+}
+async function runSelected(){
+  if (sel < 0) { draw(); updateInfo(); return; }
+  const it = items[sel];
+  if (!it.res){ $('busy').hidden = false; await new Promise(r => requestAnimationFrame(() => setTimeout(r, 0))); }
+  try { processItem(it); } catch(e){ msg('변환 중 오류: ' + e.message); }
+  $('busy').hidden = true;
+  draw(); updateInfo(); renderThumb(it);
+}
+
+// ----- drawing -----
+function resultCanvas(res){
+  const c = document.createElement('canvas'); c.width = res.w; c.height = res.h;
+  const x = c.getContext('2d'), im = x.createImageData(res.w, res.h), d = im.data, src = res.data, bits = res.kind === 'bits';
+  for (let i = 0, p = 0; i < src.length; i++, p += 4){ const v = bits ? (src[i] ? 0 : 255) : src[i]; d[p] = d[p+1] = d[p+2] = v; d[p+3] = 255; }
+  x.putImageData(im, 0, 0); return c;
+}
+function draw(){
+  const cv = $('cv'), st = $('stage');
+  if (sel < 0){ cv.width = 10; cv.height = 10; return; }
+  const it = items[sel];
+  const src = S.view === 'src' ? sourceCanvas(it) : (it.res ? (it.resCanvas && it.resCanvas.res === it.res ? it.resCanvas : (it.resCanvas = Object.assign(resultCanvas(it.res), { res: it.res }))) : null);
+  if (!src) return;
+  cv.width = src.width; cv.height = src.height; cv.getContext('2d').drawImage(src, 0, 0);
+  let z;
+  if (S.zoom === 'fit'){
+    const aw = st.clientWidth - 34, ah = st.clientHeight - 34;
+    z = Math.min(aw / src.width, ah / src.height, S.view === 'src' ? 4 : 1);
+    st.classList.remove('zoomed'); cv.classList.remove('px');
+  } else {
+    z = +S.zoom / (window.devicePixelRatio || 1); st.classList.add('zoomed'); cv.classList.add('px');
+  }
+  cv.style.width = Math.max(1, Math.round(src.width * z)) + 'px'; cv.style.height = Math.max(1, Math.round(src.height * z)) + 'px';
+}
+window.addEventListener('resize', () => { if (S.zoom === 'fit') draw(); });
+
+function fmtBytes(n){ return n < 1024 ? n + ' B' : n < 1048576 ? (n/1024).toFixed(1) + ' KB' : (n/1048576).toFixed(2) + ' MB'; }
+function updateInfo(){
+  const facts = $('facts'), checks = $('checks');
+  if (sel < 0 || !items[sel].res){ facts.innerHTML = '<div><span>상태</span><b>도면을 추가하세요</b></div>'; checks.innerHTML = ''; $('sheetSvg').innerHTML = sheetSvg(null); return; }
+  const r = items[sel].res, cmW = r.figW * 2.54 / r.dpi, cmH = r.figH * 2.54 / r.dpi;
+  const bw = r.kind === 'bits';
+  let est = '';
+  if (S.fmt === 'tif' && bw){ try { est = fmtBytes(g4Encode(r.data, r.w, r.h).length + 200); } catch(e){} }
+  facts.innerHTML = [
+    ['원본', `${r.srcW} × ${r.srcH} px`],
+    ['출력', `${r.w} × ${r.h} px`],
+    ['그림 실제 크기', `${cmW.toFixed(1)} × ${cmH.toFixed(1)} cm`],
+    ['해상도', `${r.dpi} dpi`],
+    ['형식', S.fmt === 'tif' ? (bw ? 'TIFF · G4 · 1비트' : 'TIFF · 무압축 · 8비트') : S.fmt === 'png' ? (bw ? 'PNG · 1비트' : 'PNG · 8비트') : 'JPG'],
+    ...(est ? [['예상 파일 크기', est]] : [])
+  ].map(([k,v]) => `<div><span>${k}</span><b>${v}</b></div>`).join('');
+  const fitOK = cmW <= 17.05 && cmH <= 26.25;
+  const c = [
+    [fitOK, fitOK ? '도면 영역 17.0×26.2 cm 이내' : '도면 영역 초과'],
+    [r.dpi === 300 || r.dpi === 400, r.dpi === 300 ? '300 dpi (공보 게재 해상도)' : '400 dpi (PCT·KIPO 허용 상한)'],
+    [bw, bw ? '흑백(1비트)' : '회색조: 선 도면에는 부적합'],
+    [S.fmt !== 'jpg', S.fmt === 'jpg' ? 'JPG 압축 잡음 주의' : '무손실 저장']
+  ];
+  if (r.thr != null) $('thrVal').textContent = `· 기준값 ${r.thr}`; else $('thrVal').textContent = '';
+  checks.innerHTML = c.map(([ok,t]) => `<span class="pill ${ok ? 'ok' : 'warn'}">${ok ? '✓' : '!'} ${t}</span>`).join('');
+  $('sheetSvg').innerHTML = sheetSvg({ w: cmW, h: cmH });
+}
+function sheetSvg(f){
+  // A4 21x29.7, printable area at (2.5,2.5) 17x26.2
+  let fig = '';
+  if (f){ const x = 2.5 + (17 - Math.min(f.w,17)) / 2, y = 2.5 + (26.2 - Math.min(f.h,26.2)) / 2;
+    fig = `<rect x="${x}" y="${y}" width="${Math.min(f.w,17)}" height="${Math.min(f.h,26.2)}" fill="var(--accent)" opacity=".35"/>`; }
+  return `<svg viewBox="-0.5 -0.5 22 30.7" role="img" aria-label="A4 용지 위 도면 배치"><rect x="0" y="0" width="21" height="29.7" fill="var(--panel)" stroke="var(--muted)" stroke-width=".25"/><rect x="2.5" y="2.5" width="17" height="26.2" fill="none" stroke="var(--muted)" stroke-width=".18" stroke-dasharray=".6 .5"/>${fig}</svg>`;
+}
+
+// ----- strip -----
+function renderStrip(){
+  const s = $('strip'); s.innerHTML = '';
+  items.forEach((it, i) => {
+    const el = document.createElement('div'); el.className = 'item'; el.setAttribute('aria-current', i === sel);
+    el.innerHTML = `<div class="th"></div><div class="nm" title="${it.name}">${it.sample ? '<span class="tag">예시</span> ' : ''}${it.name}</div><div class="ops"><button data-a="rot" title="반시계 방향 90° 회전 (도면 위쪽이 용지 왼쪽으로)">↺ 회전</button><button data-a="del" title="목록에서 빼기">✕ 빼기</button></div>`;
+    el.addEventListener('click', e => {
+      const a = e.target.closest('button')?.dataset.a;
+      if (a === 'rot'){ it.rot = (it.rot + 270) % 360; it.res = null; sel = i; renderStrip(); runSelected(); return; }
+      if (a === 'del'){ items.splice(i,1); sel = Math.min(sel, items.length - 1); renderStrip(); runSelected(); return; }
+      sel = i; renderStrip(); runSelected();
+    });
+    s.appendChild(el); it.el = el; renderThumb(it);
+  });
+  refreshUI();
+}
+function renderThumb(it){
+  if (!it.el) return; const th = it.el.querySelector('.th'); th.innerHTML = '';
+  const c = document.createElement('canvas'); const b = it.bmp, r = it.rot, swap = r === 90 || r === 270;
+  const W = swap ? b.height : b.width, H = swap ? b.width : b.height, k = Math.min(240 / W, 168 / H, 1);
+  c.width = Math.max(1, Math.round(W * k)); c.height = Math.max(1, Math.round(H * k));
+  const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0,0,c.width,c.height);
+  x.translate(c.width/2, c.height/2); x.rotate(r * Math.PI / 180); x.drawImage(b, -b.width*k/2, -b.height*k/2, b.width*k, b.height*k);
+  th.appendChild(c);
+}
+function refreshUI(){
+  const has = items.length > 0;
+  $('saveOne').disabled = !has; $('saveAll').disabled = items.length < 2; $('saveMulti').disabled = !has || S.fmt !== 'tif';
+}
+
+// ----- export -----
+function baseName(n){ return n.replace(/\.[^.]+$/, ''); }
+async function encode(res){
+  const bw = res.kind === 'bits';
+  if (S.fmt === 'tif') return buildTiff([{ w:res.w, h:res.h, dpi:res.dpi, kind: bw ? 'g4' : 'gray', data: bw ? g4Encode(res.data, res.w, res.h) : res.data }]);
+  if (S.fmt === 'png'){
+    if (typeof CompressionStream !== 'undefined') return buildPng(res.data, res.w, res.h, res.dpi, bw ? 1 : 8);
+    const blob = await new Promise(r => resultCanvas(res).toBlob(r, 'image/png')); return new Uint8Array(await blob.arrayBuffer());
+  }
+  const blob = await new Promise(r => resultCanvas(res).toBlob(r, 'image/jpeg', bw ? 1.0 : 0.95));
+  return jpegSetDpi(new Uint8Array(await blob.arrayBuffer()), res.dpi);
+}
+function download(name, u8, type){
+  const url = URL.createObjectURL(new Blob([u8], { type }));
+  const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+}
+const MIME = { tif:'image/tiff', png:'image/png', jpg:'image/jpeg' };
+async function withBusy(fn){ $('busy').hidden = false; await new Promise(r => requestAnimationFrame(() => setTimeout(r, 0))); try { await fn(); } catch(e){ msg('저장 중 오류: ' + e.message); } $('busy').hidden = true; }
+$('saveOne').addEventListener('click', () => withBusy(async () => {
+  const it = items[sel]; const res = processItem(it); download(baseName(it.name) + '.' + S.fmt, await encode(res), MIME[S.fmt]);
+}));
+$('saveAll').addEventListener('click', () => withBusy(async () => {
+  const files = [], used = new Set();
+  for (const it of items){ let n = baseName(it.name) + '.' + S.fmt, k = 2; while (used.has(n)) n = baseName(it.name) + `_${k++}.` + S.fmt; used.add(n);
+    files.push({ name:n, data: await encode(processItem(it)) }); }
+  download(`PCT_도면_${S.dpi}dpi.zip`, buildZip(files), 'application/zip'); renderStrip(); draw(); updateInfo();
+}));
+$('saveMulti').addEventListener('click', () => withBusy(async () => {
+  const pages = items.map(it => { const r = processItem(it); const bw = r.kind === 'bits';
+    return { w:r.w, h:r.h, dpi:r.dpi, kind: bw ? 'g4' : 'gray', data: bw ? g4Encode(r.data, r.w, r.h) : r.data }; });
+  download(`PCT_도면_${items.length}매.tif`, buildTiff(pages), 'image/tiff'); renderStrip(); draw(); updateInfo();
+}));
+
+// ----- sample drawing (low-res, anti-aliased, white paper) -----
+async function sample(){
+  const c = document.createElement('canvas'); c.width = 640; c.height = 430; const x = c.getContext('2d');
+  x.fillStyle = '#fff'; x.fillRect(0,0,640,430);
+  x.strokeStyle = '#3a3a3a'; x.fillStyle = '#3a3a3a'; x.lineWidth = 1.4; x.lineJoin = 'round';
+  x.strokeRect(90,110,220,150); x.strokeRect(120,140,70,90);
+  x.beginPath(); x.ellipse(250,185,34,34,0,0,Math.PI*2); x.stroke();
+  x.beginPath(); x.moveTo(310,185); x.lineTo(420,185); x.stroke();
+  x.beginPath(); x.moveTo(420,185); x.lineTo(410,179); x.lineTo(410,191); x.closePath(); x.fill();
+  x.strokeRect(420,140,130,90);
+  x.save(); x.setLineDash([5,4]); x.strokeRect(70,90,500,195); x.restore();
+  for (let i = 0; i < 6; i++){ x.beginPath(); x.moveTo(432 + i*20,150); x.lineTo(422 + i*20,220); x.stroke(); }
+  x.font = '15px sans-serif';
+  const lead = (tx,ty,lx,ly,t) => { x.beginPath(); x.moveTo(tx,ty); x.quadraticCurveTo((tx+lx)/2+10,(ty+ly)/2-10,lx,ly); x.stroke(); x.fillText(t, tx - 12, ty - 6); };
+  lead(95,60,130,112,'100'); lead(170,330,160,229,'110'); lead(275,330,262,216,'120'); lead(460,330,470,229,'130'); lead(590,60,565,92,'10');
+  x.font = 'bold 18px sans-serif'; x.fillText('FIG. 1', 280, 400);
+  const blob = await new Promise(r => c.toBlob(r, 'image/jpeg', 0.55));
+  const bmp = await createImageBitmap(blob);
+  items.push({ id:++seq, name:'예시_FIG1_저해상도.jpg', bmp, rot:0, res:null, sample:true });
+  sel = 0; renderStrip(); runSelected();
+}
+$('widthRow').hidden = true;
+sample();
+</script>
+</body>
+</html>

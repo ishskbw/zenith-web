@@ -1747,6 +1747,9 @@ body{background:${ivory}}
                 <a href="/priority-exam.html" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontSize: 12, color: "#fff", background: oxblood, padding: "8px 14px", borderRadius: 2, textDecoration: "none", letterSpacing: .3, fontWeight: 500, transition: "background .2s, transform .2s" }} onMouseEnter={(e)=>{e.currentTarget.style.background="#8b2a3d";}} onMouseLeave={(e)=>{e.currentTarget.style.background=oxblood;}}>
                   {lang==="ja"?"優先審査対象確認":lang==="en"?"Priority Examination Eligibility":lang==="zh"?"优先审查对象确认":"우선심사대상 여부 확인"}
                 </a>
+                <a href="/pct-drawing-converter.html" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontSize: 12, color: "#fff", background: oxblood, padding: "8px 14px", borderRadius: 2, textDecoration: "none", letterSpacing: .3, fontWeight: 500, transition: "background .2s, transform .2s" }} onMouseEnter={(e)=>{e.currentTarget.style.background="#8b2a3d";}} onMouseLeave={(e)=>{e.currentTarget.style.background=oxblood;}}>
+                  {lang==="ja"?"PCT図面変換ツール":lang==="en"?"PCT Drawing Converter":lang==="zh"?"PCT附图转换工具":"PCT 도면 변환기"}
+                </a>
               </div>
             </div>
             <div>
